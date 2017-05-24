@@ -1,0 +1,41 @@
+{
+    "name": "wshafer/psr11-monolog",
+    "type": "library",
+    "description": "Monolog Facotories for PSR-11",
+    "homepage": "https://github.com/wshafer/psr11-monolog",
+    "authors": [
+        {
+            "name": "Westin Shafer",
+            "email": "shafer_w2002@yahoo.com",
+            "homepage": "https://github.com/wshafer"
+        }
+    ],
+    "license" : "BSD-2-Clause",
+    "require": {
+        "php": "^7.0",
+        "psr/container": "^1.0.0",
+        "monolog/monolog": "^1.22"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0.8",
+        "squizlabs/php_codesniffer": "^2.8.1",
+        "phpmd/phpmd" : "@stable",
+        "satooshi/php-coveralls": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "WShafer\\PSR11MonoLog\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WShafer\\PSR11MonoLog\\Test\\": "tests/"
+        }
+    },
+
+    "extra": {
+        "zf": {
+            "config-provider": "WShafer\\PSR11MonoLog\\ConfigProvider"
+        }
+    }
+}
