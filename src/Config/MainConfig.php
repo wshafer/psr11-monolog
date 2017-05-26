@@ -19,7 +19,6 @@ class MainConfig
     public function __construct(array $config)
     {
         $this->validateConfig($config);
-        $this->config = $config;
         $this->buildFormatters($config);
         $this->buildHandlers($config);
         $this->buildChannels($config);
