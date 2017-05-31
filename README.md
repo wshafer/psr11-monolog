@@ -22,6 +22,11 @@
         - [LogglyFormatter](#loggly-formatter)
         - [FlowdockFormatter](#flowdock-formatter)
         - [MongoDBFormatter](#mongo-d-b-formatter)
+    - [Handlers](#handlers)
+        - [StreamHandler](#stream-handler)
+        - [RotatingFileHandler](#rotating-file-handler)
+        - [SyslogHandler](#syslog-handler)
+        - [ErrorLogHandler](#error-log-handler)
     
 
 # Installation
@@ -319,3 +324,108 @@ return [
 ];
 ```
 Monolog Docs: [MongoDBFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/MongoDBFormatter.php)
+
+### Handlers
+
+#### StreamHandler
+Logs records into any PHP stream, use this for log files.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatter' => [
+            'myHandlerName' => [
+                'type' => 'stream',
+                'options' => [
+                    'stream'         => '/tmp/stream_test.txt', // Required:  File Path | Resource | Service Name
+                    'level'          => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'         => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'filePermission' => null, // Optional: file permissions (default (0644) are only for owner read/write)
+                    'useLocking'     => false, // Optional: Try to lock log file before doing any writes
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [StreamHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/StreamHandler.php)
+
+#### RotatingFileHandler
+Logs records to a file and creates one logfile per day. It will also delete files older than $maxFiles. 
+You should use [logrotate](http://linuxcommand.org/man_pages/logrotate8.html) for high profile setups though, 
+this is just meant as a quick and dirty solution.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatter' => [
+            'myHandlerName' => [
+                'type' => 'rotating',
+                'options' => [
+                    'filename'       => '/tmp/stream_test.txt', // Required:  File Path
+                    'maxFiles'       => 0, // Optional:  The maximal amount of files to keep (0 means unlimited)
+                    'level'          => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'         => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'filePermission' => null, // Optional: file permissions (default (0644) are only for owner read/write)
+                    'useLocking'     => false, // Optional: Try to lock log file before doing any writes
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [RotatingFileHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RotatingFileHandler.php)
+
+#### SyslogHandler
+Logs records to the syslog.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatter' => [
+            'myHandlerName' => [
+                'type' => 'syslog',
+                'options' => [
+                    'ident'          => '/tmp/stream_test.txt', // Required:  The string ident is added to each message. 
+                    'facility'       => LOG_USER, // Optional:  The facility argument is used to specify what type of program is logging the message.
+                    'level'          => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'         => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'logOpts'        => LOG_PID, // Optional: Option flags for the openlog() call, defaults to LOG_PID
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [SyslogHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SyslogHandler.php)
+PHP openlog(): [openlog](http://php.net/manual/en/function.openlog.php)
+
+#### ErrorLogHandler
+Logs records to PHP's [error_log()](http://docs.php.net/manual/en/function.error-log.php) function.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatter' => [
+            'myHandlerName' => [
+                'type' => 'errorlog',
+                'options' => [
+                    'messageType'    => \Monolog\Handler\ErrorLogHandler::OPERATING_SYSTEM, // Optional:  Says where the error should go.
+                    'level'          => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'         => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'expandNewlines' => false, // Optional: If set to true, newlines in the message will be expanded to be take multiple log entries
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [ErrorLogHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ErrorLogHandler.php)
