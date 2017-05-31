@@ -11,7 +11,7 @@ class SyslogHandlerFactory implements FactoryInterface
 {
     public function __invoke(array $options)
     {
-        $ident = (string) $options['ident'] ?? false;
+        $ident = (string) $options['ident'] ?? '';
         $facility = (int) $options['facility'] ?? LOG_USER;
         $level = $options['level'] ?? Logger::DEBUG;
         $bubble = (boolean) $options['bubble'] ?? true;
