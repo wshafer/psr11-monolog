@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace WShafer\PSR11MonoLog\Test;
+namespace WShafer\PSR11MonoLog\Test\Formatter;
 
 use Monolog\Formatter\WildfireFormatter;
 use PHPUnit\Framework\TestCase;
