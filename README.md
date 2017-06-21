@@ -443,9 +443,9 @@ return [
             'myHandlerName' => [
                 'type' => 'nativeMailer',
                 'options' => [
-                    'to' => ['email1@test.com', 'email2@test.com'], // The receiver of the mail. Can be an array or string
-                    'subject' => 'Error Log', // The subject of the mail
-                    'from' => 'sender@test.com', // The sender of the mail
+                    'to'             => ['email1@test.com', 'email2@test.com'], // The receiver of the mail. Can be an array or string
+                    'subject'        => 'Error Log', // The subject of the mail
+                    'from'           => 'sender@test.com', // The sender of the mail
                     'level'          => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
                     'bubble'         => true, // Optional: Whether the messages that are handled can bubble up the stack or not
                     'maxColumnWidth' => 80, // Optional: The maximum column width that the message lines will have
@@ -456,3 +456,27 @@ return [
 ];
 ```
 Monolog Docs: [NativeMailerHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/NativeMailerHandler.php)
+
+#### SwiftMailerHandler
+Sends emails using PHP's [mail()](http://php.net/manual/en/function.mail.php) function.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatter' => [
+            'myHandlerName' => [
+                'type' => 'nativeMailer',
+                'options' => [
+                    'mailer'  => 'my-service', // The mailer to use.  Must be a valid service name in the container
+                    'message' => 'my-message', // An example message for real messages, only the body will be replaced.  Must be a valid service name or callable
+                    'level'   => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'  => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [SwiftMailerHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SwiftMailerHandler.php)
