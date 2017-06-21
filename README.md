@@ -27,6 +27,7 @@
         - [RotatingFileHandler](#rotating-file-handler)
         - [SyslogHandler](#syslog-handler)
         - [ErrorLogHandler](#error-log-handler)
+        - [NativeMailerHandler](#native-mailer-handler)
     
 
 # Installation
@@ -429,3 +430,29 @@ return [
 ];
 ```
 Monolog Docs: [ErrorLogHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ErrorLogHandler.php)
+
+#### NativeMailerHandler
+Sends emails using PHP's [mail()](http://php.net/manual/en/function.mail.php) function.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatter' => [
+            'myHandlerName' => [
+                'type' => 'nativeMailer',
+                'options' => [
+                    'to' => ['email1@test.com', 'email2@test.com'], // The receiver of the mail. Can be an array or string
+                    'subject' => 'Error Log', // The subject of the mail
+                    'from' => 'sender@test.com', // The sender of the mail
+                    'level'          => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'         => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'maxColumnWidth' => 80, // Optional: The maximum column width that the message lines will have
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [NativeMailerHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/NativeMailerHandler.php)

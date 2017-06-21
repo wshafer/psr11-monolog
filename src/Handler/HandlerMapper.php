@@ -28,6 +28,8 @@ class HandlerMapper extends MapperAbstract
                 return SyslogHandlerFactory::class;
             case 'errorlog':
                 return ErrorLogHandlerFactory::class;
+            case 'nativeMailer':
+                return NativeMailerHandlerFactory::class;
         }
 
         return null;
