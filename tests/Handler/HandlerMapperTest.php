@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\HandlerMapper;
+use WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\RotatingFileHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\StreamHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SyslogHandlerFactory;
@@ -55,6 +56,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = ErrorLogHandlerFactory::class;
         $result = $this->mapper->getFactoryClassName('errorlog');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGetFactoryClassNameNativeMailer()
+    {
+        $expected = NativeMailerHandlerFactory::class;
+        $result = $this->mapper->getFactoryClassName('nativeMailer');
         $this->assertEquals($expected, $result);
     }
 
