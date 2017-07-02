@@ -11,6 +11,9 @@ use WShafer\PSR11MonoLog\MapperAbstract;
 class HandlerMapper extends MapperAbstract
 {
     /**
+     * @param string $type
+     * @return null|string
+     *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public function getFactoryClassName(string $type)
@@ -30,7 +33,10 @@ class HandlerMapper extends MapperAbstract
                 return ErrorLogHandlerFactory::class;
             case 'nativeMailer':
                 return NativeMailerHandlerFactory::class;
-            case 'swift'
+            case 'swiftMailer':
+                return SwiftMailerHandlerFactory::class;
+            case 'pushover':
+                return PushoverHandlerFactory::class;
         }
 
         return null;
