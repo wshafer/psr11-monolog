@@ -29,6 +29,7 @@
         - [ErrorLogHandler](#errorloghandler)
         - [NativeMailerHandler](#nativemailerhandler)
         - [SwiftMailerHandler](#swiftmailerhandler)
+        - [PushoverHandler](#pushoverhandler)
     
 
 # Installation
@@ -468,7 +469,7 @@ return [
     'monolog' => [
         'formatter' => [
             'myHandlerName' => [
-                'type' => 'nativeMailer',
+                'type' => 'swiftMailer',
                 'options' => [
                     'mailer'  => 'my-service', // The mailer to use.  Must be a valid service name in the container
                     'message' => 'my-message', // An example message for real messages, only the body will be replaced.  Must be a valid service name or callable
@@ -481,3 +482,33 @@ return [
 ];
 ```
 Monolog Docs: [SwiftMailerHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SwiftMailerHandler.php)
+
+#### PushoverHandler
+Sends mobile notifications via the [Pushover](https://www.pushover.net/) API.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatter' => [
+            'myHandlerName' => [
+                'type' => 'pushover',
+                'options' => [
+                    'token' => 'sometokenhere', // Pushover api token
+                    'users' => ['email1@test.com', 'email2@test.com'], // Pushover user id or array of ids the message will be sent to
+                    'title' => 'Error Log', // Title sent to the Pushover API
+                    'level' => \Monolog\Logger::INFO, // The minimum logging level at which this handler will be triggered
+                    'bubble' => false, // Whether the messages that are handled can bubble up the stack or not
+                    'useSSL' => false, // Whether to connect via SSL. Required when pushing messages to users that are not the pushover.net app owner. OpenSSL is required for this option.
+                    'highPriorityLevel' => \Monolog\Logger::WARNING, //The minimum logging level at which this handler will start sending "high priority" requests to the Pushover API
+                    'emergencyLevel' => \Monolog\Logger::ERROR, // The minimum logging level at which this handler will start sending "emergency" requests to the Pushover API
+                    'retry' => '22', // The retry parameter specifies how often (in seconds) the Pushover servers will send the same notification to the user.
+                    'expire' => '300', // The expire parameter specifies how many seconds your notification will continue to be retried for (every retry seconds).
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [PushoverHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/PushoverHandler.php)

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
 
-use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SwiftMailerHandler;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;

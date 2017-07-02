@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
 
-use Monolog\Handler\NativeMailerHandler;
 use Monolog\Handler\PushoverHandler;
 use Monolog\Logger;
 use WShafer\PSR11MonoLog\FactoryInterface;
