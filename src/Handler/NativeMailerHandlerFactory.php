@@ -11,9 +11,9 @@ class NativeMailerHandlerFactory implements FactoryInterface
 {
     public function __invoke(array $options)
     {
-        $toEmail = (array) $options['to'] ?? true;
+        $toEmail = (array) $options['to'] ?? [];
         $subject = (string) $options['subject'] ?? true;
-        $fromEmail = (string) $options['from'] ?? true;
+        $fromEmail = (string) $options['from'] ?? '';
         $level = $options['level'] ?? Logger::DEBUG;
         $bubble = (boolean) $options['bubble'] ?? true;
         $maxColumnWidth = (int) $options['maxColumnWidth'] ?? 70;
