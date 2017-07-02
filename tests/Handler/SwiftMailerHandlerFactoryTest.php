@@ -72,7 +72,9 @@ class SwiftMailerHandlerFactoryTest extends TestCase
     {
         $options = [
             'mailer' => 'my-service',
-            'message' => function() { return true; },
+            'message' => function () {
+                return true;
+            },
             'level' => Logger::DEBUG,
             'bubble' => true,
         ];
