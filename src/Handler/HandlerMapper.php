@@ -30,6 +30,7 @@ class HandlerMapper extends MapperAbstract
                 return ErrorLogHandlerFactory::class;
             case 'nativeMailer':
                 return NativeMailerHandlerFactory::class;
+            case 'swift'
         }
 
         return null;

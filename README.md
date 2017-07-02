@@ -459,7 +459,7 @@ return [
 Monolog Docs: [NativeMailerHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/NativeMailerHandler.php)
 
 #### SwiftMailerHandler
-Sends emails using PHP's [mail()](http://php.net/manual/en/function.mail.php) function.
+Sends emails using a [Swift_Mailer](http://swiftmailer.org/) instance.
 
 ```php
 <?php
