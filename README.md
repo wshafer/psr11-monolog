@@ -28,6 +28,7 @@
         - [SyslogHandler](#sysloghandler)
         - [ErrorLogHandler](#errorloghandler)
         - [NativeMailerHandler](#nativemailerhandler)
+        - [SwiftMailerHandler](#swiftmailerhandler)
     
 
 # Installation
