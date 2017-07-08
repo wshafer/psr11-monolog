@@ -3,24 +3,18 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Formatter;
 
-use WShafer\PSR11MonoLog\MapperAbstract;
+use WShafer\PSR11MonoLog\MapperInterface;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class FormatterMapper extends MapperAbstract
+class FormatterMapper implements MapperInterface
 {
     /**
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function getFactoryClassName(string $type)
+    public function map(string $type)
     {
-        if (class_exists($type)
-            && $type != 'normalizer'  //  Clash with INTL ext
-        ) {
-            return $type;
-        }
-
         switch ($type) {
             case 'line':
                 return LineFormatterFactory::class;

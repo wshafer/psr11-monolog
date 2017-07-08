@@ -5,7 +5,6 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 
 use Monolog\Handler\NullHandler;
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\HandlerMapper;
 use WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory;
@@ -22,69 +21,61 @@ class HandlerMapperTest extends TestCase
 
     public function setup()
     {
-        $mockContainer = $this->createMock(ContainerInterface::class);
-        $this->mapper = new HandlerMapper($mockContainer);
+        $this->mapper = new HandlerMapper();
     }
 
-    public function testGetFactoryClassNameFullClassName()
-    {
-        $expected = NullHandler::class;
-        $result = $this->mapper->getFactoryClassName($expected);
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testGetFactoryClassNameStream()
+    public function testMapStream()
     {
         $expected = StreamHandlerFactory::class;
-        $result = $this->mapper->getFactoryClassName('stream');
+        $result = $this->mapper->map('stream');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameRotating()
+    public function testMapRotating()
     {
         $expected = RotatingFileHandlerFactory::class;
-        $result = $this->mapper->getFactoryClassName('rotating');
+        $result = $this->mapper->map('rotating');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameSyslog()
+    public function testMapSyslog()
     {
         $expected = SyslogHandlerFactory::class;
-        $result = $this->mapper->getFactoryClassName('syslog');
+        $result = $this->mapper->map('syslog');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameErrorLog()
+    public function testMapErrorLog()
     {
         $expected = ErrorLogHandlerFactory::class;
-        $result = $this->mapper->getFactoryClassName('errorlog');
+        $result = $this->mapper->map('errorlog');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameNativeMailer()
+    public function testMapNativeMailer()
     {
         $expected = NativeMailerHandlerFactory::class;
-        $result = $this->mapper->getFactoryClassName('nativeMailer');
+        $result = $this->mapper->map('nativeMailer');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameSwiftMailer()
+    public function testMapSwiftMailer()
     {
         $expected = SwiftMailerHandlerFactory::class;
-        $result = $this->mapper->getFactoryClassName('swiftMailer');
+        $result = $this->mapper->map('swiftMailer');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNamePushover()
+    public function testMapPushover()
     {
         $expected = PushoverHandlerFactory::class;
-        $result = $this->mapper->getFactoryClassName('pushover');
+        $result = $this->mapper->map('pushover');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameNotFound()
+    public function testMapNotFound()
     {
-        $result = $this->mapper->getFactoryClassName('notHere');
+        $result = $this->mapper->map('notHere');
         $this->assertNull($result);
     }
 }

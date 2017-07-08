@@ -6,25 +6,34 @@ namespace WShafer\PSR11MonoLog\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Exception\InvalidConfigException;
-use WShafer\PSR11MonoLog\MapperAbstract;
+use WShafer\PSR11MonoLog\FactoryInterface;
+use WShafer\PSR11MonoLog\ServiceManagerAbstract;
 use WShafer\PSR11MonoLog\MapperInterface;
 use WShafer\PSR11MonoLog\Test\Stub\FactoryStub;
 use WShafer\PSR11MonoLog\Test\Stub\MapperStub;
 
-class MapperAbstractTest extends TestCase
+class ServiceManagerAbstractTest extends TestCase
 {
     /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
     protected $mockContainer;
 
-    /** @var MapperInterface */
-    protected $mapper;
+    /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
+    protected $mockMapper;
+
+    /** @var ServiceManagerAbstract */
+    protected $serviceManagerAbstract;
 
     public function setup()
     {
         $this->mockContainer = $this->createMock(ContainerInterface::class);
-        $this->mapper = new MapperStub($this->mockContainer);
+        $this->mockMapper = $this->createMock(MapperInterface::class);
 
-        $this->assertInstanceOf(MapperAbstract::class, $this->mapper);
+        $this->serviceManagerAbstract = $this->getMockForAbstractClass(
+            ServiceManagerAbstract::class,
+            [$this->mockContainer, $this->mockMapper]
+        );
+
+        $this->assertInstanceOf(ServiceManagerAbstract::class, $this->serviceManagerAbstract);
     }
 
     public function testConstructor()
@@ -46,7 +55,7 @@ class MapperAbstractTest extends TestCase
             ->with('service')
             ->willReturn($service);
 
-        $result = $this->mapper->get('service', []);
+        $result = $this->serviceManagerAbstract->get('service', []);
         $this->assertEquals($service, $result);
     }
 
@@ -65,7 +74,7 @@ class MapperAbstractTest extends TestCase
             'test' => true
         ];
 
-        $result = $this->mapper->get(FactoryStub::class, $options);
+        $result = $this->serviceManagerAbstract->get(FactoryStub::class, $options);
         $this->assertInstanceOf(\stdClass::class, $result);
         $this->assertTrue($result->test);
     }
@@ -86,10 +95,30 @@ class MapperAbstractTest extends TestCase
             'test' => true
         ];
 
-        $this->mapper->get('doesNotExist', $options);
+        $this->serviceManagerAbstract->get('doesNotExist', $options);
     }
 
-    public function testGetWithInvalidFactory()
+    public function testGetUsingMapper()
+    {
+        $this->mockContainer->expects($this->once())
+            ->method('has')
+            ->with('FactoryStub')
+            ->willReturn(false);
+
+        $this->mockMapper->expects($this->once())
+            ->method('map')
+            ->willReturn(FactoryStub::class);
+
+        $options = [
+            'test' => true
+        ];
+
+        $result = $this->serviceManagerAbstract->get('FactoryStub', $options);
+
+        $this->assertInstanceOf(\stdClass::class, $result);
+    }
+
+    public function testGetClassNotFound()
     {
         $this->expectException(InvalidConfigException::class);
 
@@ -106,7 +135,31 @@ class MapperAbstractTest extends TestCase
             'test' => true
         ];
 
-        $this->mapper->get(\stdClass::class, $options);
+        $this->serviceManagerAbstract->get(\stdClass::class, $options);
+    }
+
+    public function testGetWithInvalidFactory()
+    {
+        $this->expectException(InvalidConfigException::class);
+
+        $this->mockContainer->expects($this->once())
+            ->method('has')
+            ->with(\stdClass::class)
+            ->willReturn(false);
+
+        $this->mockContainer->expects($this->never())
+            ->method('get')
+            ->with('service');
+
+        $this->mockMapper->expects($this->once())
+            ->method('map')
+            ->willReturn(\stdClass::class);
+
+        $options = [
+            'test' => true
+        ];
+
+        $this->serviceManagerAbstract->get(\stdClass::class, $options);
     }
 
     public function testHasWithService()
@@ -116,17 +169,31 @@ class MapperAbstractTest extends TestCase
             ->with('service')
             ->willReturn(true);
 
-        $this->assertTrue($this->mapper->has('service'));
+        $this->assertTrue($this->serviceManagerAbstract->has('service'));
     }
 
     public function testHasWithFactoryClass()
     {
         $this->mockContainer->expects($this->once())
             ->method('has')
+            ->with(FactoryStub::class)
+            ->willReturn(false);
+
+        $this->assertTrue($this->serviceManagerAbstract->has(FactoryStub::class));
+    }
+
+    public function testHasUsingMapper()
+    {
+        $this->mockContainer->expects($this->once())
+            ->method('has')
             ->with(\stdClass::class)
             ->willReturn(false);
 
-        $this->assertTrue($this->mapper->has(\stdClass::class));
+        $this->mockMapper->expects($this->once())
+            ->method('map')
+            ->willReturn(FactoryStub::class);
+
+        $this->assertTrue($this->serviceManagerAbstract->has(\stdClass::class));
     }
 
     public function testHasNotFound()
@@ -136,6 +203,6 @@ class MapperAbstractTest extends TestCase
             ->with('notHere')
             ->willReturn(false);
 
-        $this->assertFalse($this->mapper->has('notHere'));
+        $this->assertFalse($this->serviceManagerAbstract->has('notHere'));
     }
 }
