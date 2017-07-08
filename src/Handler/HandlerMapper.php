@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
 
-use WShafer\PSR11MonoLog\MapperAbstract;
+use WShafer\PSR11MonoLog\MapperInterface;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class HandlerMapper extends MapperAbstract
+class HandlerMapper implements MapperInterface
 {
     /**
      * @param string $type
@@ -16,12 +16,8 @@ class HandlerMapper extends MapperAbstract
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function getFactoryClassName(string $type)
+    public function map(string $type)
     {
-        if (class_exists($type)) {
-            return $type;
-        }
-
         switch ($type) {
             case 'stream':
                 return StreamHandlerFactory::class;

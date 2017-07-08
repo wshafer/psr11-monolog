@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace WShafer\PSR11MonoLog\Test\Formatter;
 
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Formatter\ChromePHPFormatterFactory;
 use WShafer\PSR11MonoLog\Formatter\ElasticaFormatterFactory;
 use WShafer\PSR11MonoLog\Formatter\FlowdockFormatterFactory;
@@ -27,111 +26,103 @@ class FormatterMapperTest extends TestCase
 
     public function setup()
     {
-        $mockContainer = $this->createMock(ContainerInterface::class);
-        $this->mapper = new FormatterMapper($mockContainer);
+        $this->mapper = new FormatterMapper();
     }
 
-    public function testGetFactoryClassNameFullClassName()
-    {
-        $expected = HtmlFormatterFactory::class;
-        $result = $this->mapper->getFactoryClassName($expected);
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testGetFactoryClassNameLine()
+    public function testMapLine()
     {
         $expected = LineFormatterFactory::class;
-        $result = $this->mapper->getFactoryClassName('line');
+        $result = $this->mapper->map('line');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameHtml()
+    public function testMapHtml()
     {
         $expected = HtmlFormatterFactory::class;
-        $result = $this->mapper->getFactoryClassName('html');
+        $result = $this->mapper->map('html');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameNormalizer()
+    public function testMapNormalizer()
     {
         $expected = NormalizerFormatterFactory::class;
-        $result = $this->mapper->getFactoryClassName('normalizer');
+        $result = $this->mapper->map('normalizer');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameScalar()
+    public function testMapScalar()
     {
         $expected = ScalarFormatterFactory::class;
-        $result = $this->mapper->getFactoryClassName('scalar');
+        $result = $this->mapper->map('scalar');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameJson()
+    public function testMapJson()
     {
         $expected = JsonFormatterFactory::class;
-        $result = $this->mapper->getFactoryClassName('json');
+        $result = $this->mapper->map('json');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameWildfire()
+    public function testMapWildfire()
     {
         $expected = WildfireFormatterFactory::class;
-        $result = $this->mapper->getFactoryClassName('wildfire');
+        $result = $this->mapper->map('wildfire');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameChromePHP()
+    public function testMapChromePHP()
     {
         $expected = ChromePHPFormatterFactory::class;
-        $result = $this->mapper->getFactoryClassName('chromePHP');
+        $result = $this->mapper->map('chromePHP');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameGelf()
+    public function testMapGelf()
     {
         $expected = GelfMessageFormatterFactory::class;
-        $result = $this->mapper->getFactoryClassName('gelf');
+        $result = $this->mapper->map('gelf');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameLogStash()
+    public function testMapLogStash()
     {
         $expected = LogstashFormatterFactory::class;
-        $result = $this->mapper->getFactoryClassName('logstash');
+        $result = $this->mapper->map('logstash');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameElastica()
+    public function testMapElastica()
     {
         $expected = ElasticaFormatterFactory::class;
-        $result = $this->mapper->getFactoryClassName('elastica');
+        $result = $this->mapper->map('elastica');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameLoggly()
+    public function testMapLoggly()
     {
         $expected = LogglyFormatterFactory::class;
-        $result = $this->mapper->getFactoryClassName('loggly');
+        $result = $this->mapper->map('loggly');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameFlowdock()
+    public function testMapFlowdock()
     {
         $expected = FlowdockFormatterFactory::class;
-        $result = $this->mapper->getFactoryClassName('flowdock');
+        $result = $this->mapper->map('flowdock');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameMongoDb()
+    public function testMapMongoDb()
     {
         $expected = MongoDBFormatterFactory::class;
-        $result = $this->mapper->getFactoryClassName('mongodb');
+        $result = $this->mapper->map('mongodb');
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetFactoryClassNameNotFound()
+    public function testMapNotFound()
     {
-        $result = $this->mapper->getFactoryClassName('notHere');
+        $result = $this->mapper->map('notHere');
         $this->assertNull($result);
     }
 }

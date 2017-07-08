@@ -5,7 +5,5 @@ namespace WShafer\PSR11MonoLog;
 
 interface MapperInterface
 {
-    public function get(string $type, array $options);
-    public function has(string $type);
-    public function getFactoryClassName(string $type);
+    public function map(string $type);
 }

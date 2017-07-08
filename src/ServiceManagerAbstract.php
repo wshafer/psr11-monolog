@@ -6,14 +6,20 @@ namespace WShafer\PSR11MonoLog;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Exception\InvalidConfigException;
 
-abstract class MapperAbstract implements MapperInterface
+abstract class ServiceManagerAbstract implements ServiceManagerInterface
 {
     /** @var ContainerInterface */
     protected $container;
 
-    public function __construct(ContainerInterface $container)
-    {
+    /** @var MapperInterface */
+    protected $mapper;
+
+    public function __construct(
+        ContainerInterface $container,
+        MapperInterface $mapper
+    ) {
         $this->container = $container;
+        $this->mapper = $mapper;
     }
 
     public function get(string $type, array $options)
@@ -22,7 +28,17 @@ abstract class MapperAbstract implements MapperInterface
             return $this->container->get($type);
         }
 
-        $className = $this->getFactoryClassName($type);
+        $className = null;
+
+        if (class_exists($type)
+            && in_array(FactoryInterface::class, class_implements($type))
+        ) {
+            $className = $type;
+        }
+
+        if (empty($className)) {
+            $className = $this->mapper->map($type);
+        }
 
         if (!$className) {
             throw new InvalidConfigException(
@@ -52,14 +68,18 @@ abstract class MapperAbstract implements MapperInterface
             return true;
         }
 
-        $className = $this->getFactoryClassName($type);
-
-        if (!$className) {
-            return false;
+        if (class_exists($type)
+            && in_array(FactoryInterface::class, class_implements($type))
+        ) {
+            return true;
         }
 
-        return true;
-    }
+        $className = $this->mapper->map($type);
 
-    abstract public function getFactoryClassName(string $type);
+        if ($className) {
+            return true;
+        }
+
+        return false;
+    }
 }
