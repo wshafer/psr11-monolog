@@ -12,6 +12,7 @@ use WShafer\PSR11MonoLog\Handler\HipChatHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\PushoverHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\RotatingFileHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\SlackbotHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\StreamHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SwiftMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SyslogHandlerFactory;
@@ -86,6 +87,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = FlowdockHandlerFactory::class;
         $result = $this->mapper->map('flowdock');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapSlack()
+    {
+        $expected = SlackbotHandlerFactory::class;
+        $result = $this->mapper->map('slackbot');
         $this->assertEquals($expected, $result);
     }
 
