@@ -18,6 +18,8 @@ class HandlerMapper implements MapperInterface
      */
     public function map(string $type)
     {
+        $type = strtolower($type);
+
         switch ($type) {
             case 'stream':
                 return StreamHandlerFactory::class;
@@ -27,12 +29,14 @@ class HandlerMapper implements MapperInterface
                 return SyslogHandlerFactory::class;
             case 'errorlog':
                 return ErrorLogHandlerFactory::class;
-            case 'nativeMailer':
+            case 'nativemailer':
                 return NativeMailerHandlerFactory::class;
-            case 'swiftMailer':
+            case 'swiftmailer':
                 return SwiftMailerHandlerFactory::class;
             case 'pushover':
                 return PushoverHandlerFactory::class;
+            case 'hipchat':
+                return HipChatHandlerFactory::class;
         }
 
         return null;
