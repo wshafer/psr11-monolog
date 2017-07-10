@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Handler;
 
-use Monolog\Handler\NullHandler;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FlowdockHandlerFactory;
@@ -13,6 +12,7 @@ use WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\PushoverHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\RotatingFileHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SlackbotHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\SlackHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SlackWebhookHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\StreamHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SwiftMailerHandlerFactory;
@@ -102,6 +102,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = SlackWebhookHandlerFactory::class;
         $result = $this->mapper->map('slackWebhook');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapSlack()
+    {
+        $expected = SlackHandlerFactory::class;
+        $result = $this->mapper->map('slack');
         $this->assertEquals($expected, $result);
     }
 

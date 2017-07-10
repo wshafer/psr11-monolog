@@ -34,6 +34,7 @@
         - [FlowdockHandler](#flowdockhandler)
         - [SlackbotHandler](#slackbothandler)
         - [SlackWebhookHandler](#slackwebhookhandler)
+        - [SlackHandler](#slackhandler)
     
 
 # Installation
@@ -607,16 +608,16 @@ return [
             'myHandlerName' => [
                 'type' => 'slackWebhook',
                 'options' => [
-                    'webhookUrl'             => 'webhook.slack.com',
-                    'channel'                => 'channel',
-                    'userName'               => 'Monolog',
-                    'useAttachment'          => false,
-                    'iconEmoji'              => null,
-                    'useShortAttachment'     => true,
-                    'includeContextAndExtra' => true,
-                    'level'                  => \Monolog\Logger::INFO,
-                    'bubble'                 => false,
-                    'excludeFields'          => [],
+                    'webhookUrl'             => 'webhook.slack.com', // Slack Webhook URL
+                    'channel'                => 'channel', // Slack channel (encoded ID or name)
+                    'userName'               => 'Monolog', // Name of a bot
+                    'useAttachment'          => false, // Whether the message should be added to Slack as attachment (plain text otherwise)
+                    'iconEmoji'              => null, // The emoji name to use (or null)
+                    'useShortAttachment'     => true, //Whether the the context/extra messages added to Slack as attachments are in a short style
+                    'includeContextAndExtra' => true, // Whether the attachment should include context and extra data
+                    'level'                  => \Monolog\Logger::INFO, // The minimum logging level at which this handler will be triggered
+                    'bubble'                 => false, // Whether the messages that are handled can bubble up the stack or not
+                    'excludeFields'          => ['context.field1', 'extra.field2'], // Dot separated list of fields to exclude from slack message.
                 ],
             ],
         ],
@@ -625,4 +626,33 @@ return [
 ```
 Monolog Docs: [SlackWebhookHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SlackWebhookHandler.php)
 
+#### SlackHandler
+Logs records to a [SlackHandler](https://www.slack.com/) account using the Slack API (complex setup).
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'slackWebhook',
+                'options' => [
+                    'token     '             => 'apiToken', // Slack API token
+                    'channel'                => 'channel', // Slack channel (encoded ID or name)
+                    'userName'               => 'Monolog', // Name of a bot
+                    'useAttachment'          => false, // Whether the message should be added to Slack as attachment (plain text otherwise)
+                    'iconEmoji'              => null, // The emoji name to use (or null)
+                    'useShortAttachment'     => true, //Whether the the context/extra messages added to Slack as attachments are in a short style
+                    'includeContextAndExtra' => true, // Whether the attachment should include context and extra data
+                    'level'                  => \Monolog\Logger::INFO, // The minimum logging level at which this handler will be triggered
+                    'bubble'                 => false, // Whether the messages that are handled can bubble up the stack or not
+                    'excludeFields'          => ['context.field1', 'extra.field2'], // Dot separated list of fields to exclude from slack message.
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [SlackHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SlackHandler.php)
 

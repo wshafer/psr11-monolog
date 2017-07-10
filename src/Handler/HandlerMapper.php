@@ -43,6 +43,8 @@ class HandlerMapper implements MapperInterface
                 return SlackbotHandlerFactory::class;
             case 'slackwebhook':
                 return SlackWebhookHandlerFactory::class;
+            case 'slack':
+                return SlackHandlerFactory::class;
         }
 
         return null;
