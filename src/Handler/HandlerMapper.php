@@ -37,6 +37,8 @@ class HandlerMapper implements MapperInterface
                 return PushoverHandlerFactory::class;
             case 'hipchat':
                 return HipChatHandlerFactory::class;
+            case 'flowdock':
+                return FlowdockHandlerFactory::class;
         }
 
         return null;
