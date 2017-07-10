@@ -33,6 +33,7 @@
         - [HipChatHandler](#hipchathandler)
         - [FlowdockHandler](#flowdockhandler)
         - [SlackbotHandler](#slackbothandler)
+        - [SlackWebhookHandler](#slackwebhookhandler)
     
 
 # Installation
@@ -498,16 +499,16 @@ return [
             'myHandlerName' => [
                 'type' => 'pushover',
                 'options' => [
-                    'token' => 'sometokenhere', // Pushover api token
-                    'users' => ['email1@test.com', 'email2@test.com'], // Pushover user id or array of ids the message will be sent to
-                    'title' => 'Error Log', // Title sent to the Pushover API
-                    'level' => \Monolog\Logger::INFO, // The minimum logging level at which this handler will be triggered
-                    'bubble' => false, // Whether the messages that are handled can bubble up the stack or not
-                    'useSSL' => false, // Whether to connect via SSL. Required when pushing messages to users that are not the pushover.net app owner. OpenSSL is required for this option.
+                    'token'             => 'sometokenhere', // Pushover api token
+                    'users'             => ['email1@test.com', 'email2@test.com'], // Pushover user id or array of ids the message will be sent to
+                    'title'             => 'Error Log', // Title sent to the Pushover API
+                    'level'             => \Monolog\Logger::INFO, // The minimum logging level at which this handler will be triggered
+                    'bubble'            => false, // Whether the messages that are handled can bubble up the stack or not
+                    'useSSL'            => false, // Whether to connect via SSL. Required when pushing messages to users that are not the pushover.net app owner. OpenSSL is required for this option.
                     'highPriorityLevel' => \Monolog\Logger::WARNING, //The minimum logging level at which this handler will start sending "high priority" requests to the Pushover API
-                    'emergencyLevel' => \Monolog\Logger::ERROR, // The minimum logging level at which this handler will start sending "emergency" requests to the Pushover API
-                    'retry' => '22', // The retry parameter specifies how often (in seconds) the Pushover servers will send the same notification to the user.
-                    'expire' => '300', // The expire parameter specifies how many seconds your notification will continue to be retried for (every retry seconds).
+                    'emergencyLevel'    => \Monolog\Logger::ERROR, // The minimum logging level at which this handler will start sending "emergency" requests to the Pushover API
+                    'retry'             => '22', // The retry parameter specifies how often (in seconds) the Pushover servers will send the same notification to the user.
+                    'expire'            => '300', // The expire parameter specifies how many seconds your notification will continue to be retried for (every retry seconds).
                 ],
             ],
         ],
@@ -528,15 +529,15 @@ return [
             'myHandlerName' => [
                 'type' => 'hipChat',
                 'options' => [
-                    'token' => 'sometokenhere', // HipChat API Token
-                    'room' => 'some-room', // The room that should be alerted of the message (Id or Name)
-                    'name' => 'Error Log', // Name used in the "from" field.
+                    'token'  => 'sometokenhere', // HipChat API Token
+                    'room'   => 'some-room', // The room that should be alerted of the message (Id or Name)
+                    'name'   => 'Error Log', // Name used in the "from" field.
                     'notify' => false, // Trigger a notification in clients or not
-                    'level' => \Monolog\Logger::DEBUG, // The minimum logging level at which this handler will be triggered
+                    'level'  => \Monolog\Logger::DEBUG, // The minimum logging level at which this handler will be triggered
                     'bubble' => true, // Whether the messages that are handled can bubble up the stack or not
                     'useSSL' => false, // Whether to connect via SSL
                     'format' => 'text', // The format of the messages (default to text, can be set to html if you have html in the messages)
-                    'host' => 'api.hipchat.com', // The HipChat server hostname.
+                    'host'   => 'api.hipchat.com', // The HipChat server hostname.
                 ],
             ],
         ],
@@ -558,8 +559,8 @@ return [
                 'type' => 'flowdock',
                 'options' => [
                     'apiToken' => 'sometokenhere', // HipChat API Token
-                    'level' => \Monolog\Logger::DEBUG, // The minimum logging level at which this handler will be triggered
-                    'bubble' => true, // Whether the messages that are handled can bubble up the stack or not
+                    'level'    => \Monolog\Logger::DEBUG, // The minimum logging level at which this handler will be triggered
+                    'bubble'   => true, // Whether the messages that are handled can bubble up the stack or not
                 ],
             ],
         ],
@@ -582,10 +583,10 @@ return [
                 'type' => 'slackbot',
                 'options' => [
                     'slackTeam' => 'Team', // Slackbot token
-                    'token' => 'sometokenhere', // HipChat API Token
-                    'channel' => '#channel', // Slack channel (encoded ID or name)
-                    'level' => \Monolog\Logger::DEBUG, // The minimum logging level at which this handler will be triggered
-                    'bubble' => true, // Whether the messages that are handled can bubble up the stack or not
+                    'token'     => 'sometokenhere', // HipChat API Token
+                    'channel'   => '#channel', // Slack channel (encoded ID or name)
+                    'level'     => \Monolog\Logger::DEBUG, // The minimum logging level at which this handler will be triggered
+                    'bubble'    => true, // Whether the messages that are handled can bubble up the stack or not
                 ],
             ],
         ],
@@ -593,4 +594,35 @@ return [
 ];
 ```
 Monolog Docs: [SlackbotHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SlackbotHandler.php)
+
+#### SlackWebhookHandler
+Logs records to a [Slack](https://www.slack.com/) account using Slack Webhooks.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'slackWebhook',
+                'options' => [
+                    'webhookUrl'             => 'webhook.slack.com',
+                    'channel'                => 'channel',
+                    'userName'               => 'Monolog',
+                    'useAttachment'          => false,
+                    'iconEmoji'              => null,
+                    'useShortAttachment'     => true,
+                    'includeContextAndExtra' => true,
+                    'level'                  => \Monolog\Logger::INFO,
+                    'bubble'                 => false,
+                    'excludeFields'          => [],
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [SlackWebhookHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SlackWebhookHandler.php)
+
 

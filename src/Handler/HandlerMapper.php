@@ -41,6 +41,8 @@ class HandlerMapper implements MapperInterface
                 return FlowdockHandlerFactory::class;
             case 'slackbot':
                 return SlackbotHandlerFactory::class;
+            case 'slackwebhook':
+                return SlackWebhookHandlerFactory::class;
         }
 
         return null;

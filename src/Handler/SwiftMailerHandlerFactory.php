@@ -18,10 +18,11 @@ class SwiftMailerHandlerFactory implements FactoryInterface, ContainerAwareInter
 
     public function __invoke(array $options)
     {
-        $mailer = $this->getMailer($options);
+        $mailer  = $this->getMailer($options);
         $message = $this->getSwiftMessage($options);
-        $level = $options['level'] ?? Logger::DEBUG;
-        $bubble = (boolean) $options['bubble'] ?? true;
+
+        $level   = (int)     ($options['level']  ?? Logger::DEBUG);
+        $bubble  = (boolean) ($options['bubble'] ?? true);
 
         return new SwiftMailerHandler($mailer, $message, $level, $bubble);
     }

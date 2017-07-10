@@ -13,6 +13,7 @@ use WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\PushoverHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\RotatingFileHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SlackbotHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\SlackWebhookHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\StreamHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SwiftMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SyslogHandlerFactory;
@@ -90,10 +91,17 @@ class HandlerMapperTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testMapSlack()
+    public function testMapSlackBot()
     {
         $expected = SlackbotHandlerFactory::class;
         $result = $this->mapper->map('slackbot');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapSlackWebhook()
+    {
+        $expected = SlackWebhookHandlerFactory::class;
+        $result = $this->mapper->map('slackWebhook');
         $this->assertEquals($expected, $result);
     }
 
