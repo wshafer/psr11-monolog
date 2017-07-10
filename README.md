@@ -31,6 +31,7 @@
         - [SwiftMailerHandler](#swiftmailerhandler)
         - [PushoverHandler](#pushoverhandler)
         - [HipChatHandler](#hipchathandler)
+        - [FlowdockHandler](#flowdockhandler)
     
 
 # Installation
@@ -339,7 +340,7 @@ Logs records into any PHP stream, use this for log files.
 
 return [
     'monolog' => [
-        'formatter' => [
+        'handler' => [
             'myHandlerName' => [
                 'type' => 'stream',
                 'options' => [
@@ -366,7 +367,7 @@ this is just meant as a quick and dirty solution.
 
 return [
     'monolog' => [
-        'formatter' => [
+        'handler' => [
             'myHandlerName' => [
                 'type' => 'rotating',
                 'options' => [
@@ -392,7 +393,7 @@ Logs records to the syslog.
 
 return [
     'monolog' => [
-        'formatter' => [
+        'handler' => [
             'myHandlerName' => [
                 'type' => 'syslog',
                 'options' => [
@@ -418,7 +419,7 @@ Logs records to PHP's [error_log()](http://docs.php.net/manual/en/function.error
 
 return [
     'monolog' => [
-        'formatter' => [
+        'handler' => [
             'myHandlerName' => [
                 'type' => 'errorlog',
                 'options' => [
@@ -442,7 +443,7 @@ Sends emails using PHP's [mail()](http://php.net/manual/en/function.mail.php) fu
 
 return [
     'monolog' => [
-        'formatter' => [
+        'handler' => [
             'myHandlerName' => [
                 'type' => 'nativeMailer',
                 'options' => [
@@ -468,7 +469,7 @@ Sends emails using a [Swift_Mailer](http://swiftmailer.org/) instance.
 
 return [
     'monolog' => [
-        'formatter' => [
+        'handler' => [
             'myHandlerName' => [
                 'type' => 'swiftMailer',
                 'options' => [
@@ -492,7 +493,7 @@ Sends mobile notifications via the [Pushover](https://www.pushover.net/) API.
 
 return [
     'monolog' => [
-        'formatter' => [
+        'handler' => [
             'myHandlerName' => [
                 'type' => 'pushover',
                 'options' => [
@@ -522,7 +523,7 @@ Sends notifications through the [HipChat](http://hipchat.com/) api to a hipchat 
 
 return [
     'monolog' => [
-        'formatter' => [
+        'handler' => [
             'myHandlerName' => [
                 'type' => 'hipChat',
                 'options' => [
@@ -542,3 +543,26 @@ return [
 ];
 ```
 Monolog Docs: [HipChatHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/HipChatHandler.php)
+
+#### FlowdockHandler
+Logs records to a [Flowdock](https://www.flowdock.com/) account.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'flowdock',
+                'options' => [
+                    'apiToken' => 'sometokenhere', // HipChat API Token
+                    'level' => \Monolog\Logger::DEBUG, // The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [FlowdockHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/FlowdockHandler.php)
