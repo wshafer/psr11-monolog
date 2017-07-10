@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
 
-use Monolog\Handler\SlackbotHandler;
 use Monolog\Handler\SlackWebhookHandler;
 use Monolog\Logger;
 use WShafer\PSR11MonoLog\FactoryInterface;
