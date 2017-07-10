@@ -3,31 +3,31 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Handler;
 
-use Monolog\Handler\SlackWebhookHandler;
+use Monolog\Handler\SlackHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
-use WShafer\PSR11MonoLog\Handler\SlackWebhookHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\SlackHandlerFactory;
 
-class SlackWebhookHandlerFactoryTest extends TestCase
+class SlackHandlerFactoryTest extends TestCase
 {
     public function testInvoke()
     {
         $options = [
-            'webhookUrl' => 'webhook',
+            'token' => 'webhook',
             'channel' => 'channel',
             'userName' => 'Monolog',
             'useAttachment' => false,
             'iconEmoji' => null,
-            'useShortAttachment' => true,
-            'includeContextAndExtra' => true,
             'level' => Logger::INFO,
             'bubble' => false,
+            'useShortAttachment' => true,
+            'includeContextAndExtra' => true,
             'excludeFields' => [],
         ];
 
-        $factory = new SlackWebhookHandlerFactory();
+        $factory = new SlackHandlerFactory();
         $handler = $factory($options);
 
-        $this->assertInstanceOf(SlackWebhookHandler::class, $handler);
+        $this->assertInstanceOf(SlackHandler::class, $handler);
     }
 }
