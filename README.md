@@ -32,6 +32,7 @@
         - [PushoverHandler](#pushoverhandler)
         - [HipChatHandler](#hipchathandler)
         - [FlowdockHandler](#flowdockhandler)
+        - [SlackbotHandler](#slackbothandler)
     
 
 # Installation
@@ -566,3 +567,30 @@ return [
 ];
 ```
 Monolog Docs: [FlowdockHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/FlowdockHandler.php)
+
+
+#### SlackbotHandler
+Logs records to a [Slack](https://www.slack.com/) account using the Slackbot incoming hook.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'slackbot',
+                'options' => [
+                    'slackTeam' => 'Team', // Slackbot token
+                    'token' => 'sometokenhere', // HipChat API Token
+                    'channel' => '#channel', // Slack channel (encoded ID or name)
+                    'level' => \Monolog\Logger::DEBUG, // The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [SlackbotHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SlackbotHandler.php)
+

@@ -39,6 +39,8 @@ class HandlerMapper implements MapperInterface
                 return HipChatHandlerFactory::class;
             case 'flowdock':
                 return FlowdockHandlerFactory::class;
+            case 'slackbot':
+                return SlackbotHandlerFactory::class;
         }
 
         return null;
