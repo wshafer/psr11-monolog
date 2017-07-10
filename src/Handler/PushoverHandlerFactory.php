@@ -11,16 +11,16 @@ class PushoverHandlerFactory implements FactoryInterface
 {
     public function __invoke(array $options)
     {
-        $token = (string) $options['token'] ?? true;
-        $users = $options['users'] ?? [];
-        $title = (string) $options['title'] ?? true;
-        $level = $options['level'] ?? Logger::DEBUG;
+        $token = (string) $options['token'] ?? '';
+        $users = (array) $options['users'] ?? [];
+        $title = (string) $options['title'] ?? '';
+        $level = (int) $options['level'] ?? Logger::DEBUG;
         $bubble = (boolean) $options['bubble'] ?? true;
         $useSSL = (boolean) $options['useSSL'] ?? true;
-        $highPriorityLevel = $options['highPriorityLevel'] ?? Logger::CRITICAL;
-        $emergencyLevel = $options['emergencyLevel'] ?? Logger::EMERGENCY;
-        $retry = $options['retry'] ?? 30;
-        $expire = $options['expire'] ?? 25200;
+        $highPriorityLevel = (int) $options['highPriorityLevel'] ?? Logger::CRITICAL;
+        $emergencyLevel = (int) $options['emergencyLevel'] ?? Logger::EMERGENCY;
+        $retry = (int) $options['retry'] ?? 30;
+        $expire = (int) $options['expire'] ?? 25200;
 
         return new PushoverHandler(
             $token,

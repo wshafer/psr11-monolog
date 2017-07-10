@@ -30,6 +30,7 @@
         - [NativeMailerHandler](#nativemailerhandler)
         - [SwiftMailerHandler](#swiftmailerhandler)
         - [PushoverHandler](#pushoverhandler)
+        - [HipChatHandler](#hipchathandler)
     
 
 # Installation
@@ -512,3 +513,32 @@ return [
 ];
 ```
 Monolog Docs: [PushoverHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/PushoverHandler.php)
+
+#### HipChatHandler
+Sends notifications through the [HipChat](http://hipchat.com/) api to a hipchat room
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatter' => [
+            'myHandlerName' => [
+                'type' => 'hipChat',
+                'options' => [
+                    'token' => 'sometokenhere', // HipChat API Token
+                    'room' => 'some-room', // The room that should be alerted of the message (Id or Name)
+                    'name' => 'Error Log', // Name used in the "from" field.
+                    'notify' => false, // Trigger a notification in clients or not
+                    'level' => \Monolog\Logger::DEBUG, // The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Whether the messages that are handled can bubble up the stack or not
+                    'useSSL' => false, // Whether to connect via SSL
+                    'format' => 'text', // The format of the messages (default to text, can be set to html if you have html in the messages)
+                    'host' => 'api.hipchat.com', // The HipChat server hostname.
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [HipChatHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/HipChatHandler.php)

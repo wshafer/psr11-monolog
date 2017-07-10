@@ -7,6 +7,7 @@ use Monolog\Handler\NullHandler;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\HandlerMapper;
+use WShafer\PSR11MonoLog\Handler\HipChatHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\PushoverHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\RotatingFileHandlerFactory;
@@ -70,6 +71,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = PushoverHandlerFactory::class;
         $result = $this->mapper->map('pushover');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapHipChat()
+    {
+        $expected = HipChatHandlerFactory::class;
+        $result = $this->mapper->map('hipChat');
         $this->assertEquals($expected, $result);
     }
 
