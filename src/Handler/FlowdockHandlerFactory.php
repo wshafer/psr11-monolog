@@ -11,9 +11,9 @@ class FlowdockHandlerFactory implements FactoryInterface
 {
     public function __invoke(array $options)
     {
-        $apiToken = (string) $options['apiToken'] ?? '';
-        $level = (int) $options['level'] ?? Logger::DEBUG;
-        $bubble = (boolean) $options['bubble'] ?? true;
+        $apiToken = (string)  ($options['apiToken'] ?? '');
+        $level    = (int)     ($options['level']    ?? Logger::DEBUG);
+        $bubble   = (boolean) ($options['bubble']   ?? true);
 
         return new FlowdockHandler(
             $apiToken,

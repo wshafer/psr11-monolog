@@ -11,12 +11,12 @@ class RotatingFileHandlerFactory implements FactoryInterface
 {
     public function __invoke(array $options)
     {
-        $filename = (string) $options['filename'] ?? '';
-        $maxFiles = (int) $options['maxFiles'] ?? 0;
-        $level = $options['level'] ?? Logger::DEBUG;
-        $bubble = (boolean) $options['bubble'] ?? true;
-        $filePermission = $options['filePermission'] ?? null;
-        $useLocking = (boolean) $options['useLocking'] ?? false;
+        $filename       = (string)  ($options['filename']       ?? '');
+        $maxFiles       = (int)     ($options['maxFiles']       ?? 0);
+        $level          = (int)     ($options['level']          ?? Logger::DEBUG);
+        $bubble         = (boolean) ($options['bubble']         ?? true);
+        $filePermission = (int)     ($options['filePermission'] ?? null);
+        $useLocking     = (boolean) ($options['useLocking']     ?? false);
 
         return new RotatingFileHandler($filename, $maxFiles, $level, $bubble, $filePermission, $useLocking);
     }

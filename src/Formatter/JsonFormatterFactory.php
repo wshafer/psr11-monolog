@@ -10,7 +10,7 @@ class JsonFormatterFactory implements FactoryInterface
 {
     public function __invoke(array $options)
     {
-        $batchMode     =            $options['batchMode']     ?? JsonFormatter::BATCH_MODE_JSON;
+        $batchMode     = (int)     ($options['batchMode']     ?? JsonFormatter::BATCH_MODE_JSON);
         $appendNewline = (boolean) ($options['appendNewline'] ?? true);
         return new JsonFormatter($batchMode, $appendNewline);
     }

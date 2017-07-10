@@ -11,11 +11,11 @@ class SlackbotHandlerFactory implements FactoryInterface
 {
     public function __invoke(array $options)
     {
-        $slackTeam = (string) $options['slackTeam'] ?? '';
-        $token = (string) $options['token'] ?? '';
-        $channel = (string) $options['channel'] ?? '';
-        $level = (int) $options['level'] ?? Logger::DEBUG;
-        $bubble = (boolean) $options['bubble'] ?? true;
+        $slackTeam = (string)  ($options['slackTeam'] ?? '');
+        $token     = (string)  ($options['token']     ?? '');
+        $channel   = (string)  ($options['channel']   ?? '');
+        $level     = (int)     ($options['level']     ?? Logger::DEBUG);
+        $bubble    = (boolean) ($options['bubble']    ?? true);
 
         return new SlackbotHandler(
             $slackTeam,

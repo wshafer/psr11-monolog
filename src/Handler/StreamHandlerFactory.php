@@ -16,11 +16,12 @@ class StreamHandlerFactory implements FactoryInterface, ContainerAwareInterface
 
     public function __invoke(array $options)
     {
-        $stream = $this->getStream($options['stream'] ?? null);
-        $level = $options['level'] ?? Logger::DEBUG;
-        $bubble = (boolean) $options['bubble'] ?? true;
-        $filePermission = $options['filePermission'] ?? null;
-        $useLocking = (boolean) $options['useLocking'] ?? false;
+        $stream         = $this->getStream($options['stream'] ?? null);
+
+        $level          = (int)     ($options['level']          ?? Logger::DEBUG);
+        $bubble         = (boolean) ($options['bubble']         ?? true);
+        $filePermission = (int)     ($options['filePermission'] ?? null);
+        $useLocking     = (boolean) ($options['useLocking']     ?? false);
 
         return new StreamHandler($stream, $level, $bubble, $filePermission, $useLocking);
     }
