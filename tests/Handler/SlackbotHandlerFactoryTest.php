@@ -8,7 +8,7 @@ use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\SlackbotHandlerFactory;
 
-class HipChatHandlerFactoryTest extends TestCase
+class SlackbotHandlerFactoryTest extends TestCase
 {
     public function testInvoke()
     {
