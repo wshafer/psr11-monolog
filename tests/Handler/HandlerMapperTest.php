@@ -5,6 +5,7 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\AmqpHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\CubeHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FleepHookHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FlowdockHandlerFactory;
@@ -14,7 +15,9 @@ use WShafer\PSR11MonoLog\Handler\HipChatHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\IFTTTHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\MandrillHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\NewRelicHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\PushoverHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\RavenHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\RotatingFileHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SlackbotHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SlackHandlerFactory;
@@ -23,6 +26,7 @@ use WShafer\PSR11MonoLog\Handler\SocketHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\StreamHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SwiftMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SyslogHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\ZendMonitorHandlerFactory;
 
 /**
  * @covers \WShafer\PSR11MonoLog\Handler\HandlerMapper
@@ -160,6 +164,34 @@ class HandlerMapperTest extends TestCase
     {
         $expected = GelfHandlerFactory::class;
         $result = $this->mapper->map('gelf');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapCube()
+    {
+        $expected = CubeHandlerFactory::class;
+        $result = $this->mapper->map('cube');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapRaven()
+    {
+        $expected = RavenHandlerFactory::class;
+        $result = $this->mapper->map('raven');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapZend()
+    {
+        $expected = ZendMonitorHandlerFactory::class;
+        $result = $this->mapper->map('zend');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapNewRelic()
+    {
+        $expected = NewRelicHandlerFactory::class;
+        $result = $this->mapper->map('newRelic');
         $this->assertEquals($expected, $result);
     }
 

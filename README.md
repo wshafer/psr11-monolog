@@ -46,6 +46,8 @@
             - [GelfHandler](#gelfhandler)
             - [CubeHandler](#cubehandler)
             - [RavenHandler](#ravenhandler)
+            - [ZendMonitorHandler](#zendmonitorhandler)
+            - [NewRelicHandler](#newrelichandler)
     
 
 # Installation
@@ -801,7 +803,7 @@ return [
     'monolog' => [
         'handler' => [
             'myHandlerName' => [
-                'type' => 'amqp',
+                'type' => 'gelf',
                 'options' => [
                     'publisher' => 'my-service', // A Gelf\PublisherInterface object.  Must be a valid service.
                     'level'     => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -850,7 +852,7 @@ return [
     'monolog' => [
         'handler' => [
             'myHandlerName' => [
-                'type' => 'amqp',
+                'type' => 'raven',
                 'options' => [
                     'client' => 'my-service', // A \Raven_Client object.  Must be a valid service.
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -862,3 +864,48 @@ return [
 ];
 ```
 Monolog Docs: [RavenHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RavenHandler.php)
+
+#### ZendMonitorHandler
+Logs records to the Zend Monitor present in [Zend Server](http://www.zend.com/en/products/zend_server).
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'zend',
+                'options' => [
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [ZendMonitorHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ZendMonitorHandler.php)
+
+#### NewRelicHandler
+Logs records to a [NewRelic](http://newrelic.com/) application.
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'newRelic',
+                'options' => [
+                    'level'           => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'          => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'appName'         => 'my-app', // Optional: Application name
+                    'explodeArrays'   => 'false', // Optional: Explode Arrays
+                    'transactionName' => 'my-transaction', // Optional: Explode Arrays
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [NewRelicHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/NewRelicHandler.php)

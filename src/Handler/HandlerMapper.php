@@ -61,6 +61,10 @@ class HandlerMapper implements MapperInterface
                 return CubeHandlerFactory::class;
             case 'raven':
                 return RavenHandlerFactory::class;
+            case 'zend':
+                return ZendMonitorHandlerFactory::class;
+            case 'newrelic':
+                return NewRelicHandlerFactory::class;
         }
 
         return null;
