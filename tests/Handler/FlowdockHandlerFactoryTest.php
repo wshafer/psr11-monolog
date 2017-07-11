@@ -8,7 +8,7 @@ use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\FlowdockHandlerFactory;
 
-class HipChatHandlerFactoryTest extends TestCase
+class FlowdockHandlerFactoryTest extends TestCase
 {
     public function testInvoke()
     {

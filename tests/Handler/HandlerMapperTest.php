@@ -5,6 +5,7 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\FleepHookHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FlowdockHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\HandlerMapper;
 use WShafer\PSR11MonoLog\Handler\HipChatHandlerFactory;
@@ -117,6 +118,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = MandrillHandlerFactory::class;
         $result = $this->mapper->map('Mandrill');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapFleepHook()
+    {
+        $expected = FleepHookHandlerFactory::class;
+        $result = $this->mapper->map('fleepHook');
         $this->assertEquals($expected, $result);
     }
 

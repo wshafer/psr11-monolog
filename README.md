@@ -35,6 +35,8 @@
         - [SlackbotHandler](#slackbothandler)
         - [SlackWebhookHandler](#slackwebhookhandler)
         - [SlackHandler](#slackhandler)
+        - [MandrillHandler](#mandrillhandler)
+        - [FleepHookHandler](#fleephookhandler)
     
 
 # Installation
@@ -502,14 +504,14 @@ return [
                 'options' => [
                     'token'             => 'sometokenhere', // Pushover api token
                     'users'             => ['email1@test.com', 'email2@test.com'], // Pushover user id or array of ids the message will be sent to
-                    'title'             => 'Error Log', // Title sent to the Pushover API
-                    'level'             => \Monolog\Logger::INFO, // The minimum logging level at which this handler will be triggered
-                    'bubble'            => false, // Whether the messages that are handled can bubble up the stack or not
-                    'useSSL'            => false, // Whether to connect via SSL. Required when pushing messages to users that are not the pushover.net app owner. OpenSSL is required for this option.
-                    'highPriorityLevel' => \Monolog\Logger::WARNING, //The minimum logging level at which this handler will start sending "high priority" requests to the Pushover API
-                    'emergencyLevel'    => \Monolog\Logger::ERROR, // The minimum logging level at which this handler will start sending "emergency" requests to the Pushover API
-                    'retry'             => '22', // The retry parameter specifies how often (in seconds) the Pushover servers will send the same notification to the user.
-                    'expire'            => '300', // The expire parameter specifies how many seconds your notification will continue to be retried for (every retry seconds).
+                    'title'             => 'Error Log', // Optional: Title sent to the Pushover API
+                    'level'             => \Monolog\Logger::INFO, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'            => false, // Optional:  Whether the messages that are handled can bubble up the stack or not
+                    'useSSL'            => false, // Optional:  Whether to connect via SSL. Required when pushing messages to users that are not the pushover.net app owner. OpenSSL is required for this option.
+                    'highPriorityLevel' => \Monolog\Logger::WARNING, // Optional: The minimum logging level at which this handler will start sending "high priority" requests to the Pushover API
+                    'emergencyLevel'    => \Monolog\Logger::ERROR, // Optional: The minimum logging level at which this handler will start sending "emergency" requests to the Pushover API
+                    'retry'             => '22', // Optional: The retry parameter specifies how often (in seconds) the Pushover servers will send the same notification to the user.
+                    'expire'            => '300', // Optional: The expire parameter specifies how many seconds your notification will continue to be retried for (every retry seconds).
                 ],
             ],
         ],
@@ -532,13 +534,13 @@ return [
                 'options' => [
                     'token'  => 'sometokenhere', // HipChat API Token
                     'room'   => 'some-room', // The room that should be alerted of the message (Id or Name)
-                    'name'   => 'Error Log', // Name used in the "from" field.
-                    'notify' => false, // Trigger a notification in clients or not
-                    'level'  => \Monolog\Logger::DEBUG, // The minimum logging level at which this handler will be triggered
-                    'bubble' => true, // Whether the messages that are handled can bubble up the stack or not
-                    'useSSL' => false, // Whether to connect via SSL
-                    'format' => 'text', // The format of the messages (default to text, can be set to html if you have html in the messages)
-                    'host'   => 'api.hipchat.com', // The HipChat server hostname.
+                    'name'   => 'Error Log', // Optional: Name used in the "from" field.
+                    'notify' => false, // Optional: Trigger a notification in clients or not
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'useSSL' => false, // Optional: Whether to connect via SSL
+                    'format' => 'text', // Optional: The format of the messages (default to text, can be set to html if you have html in the messages)
+                    'host'   => 'api.hipchat.com', // Optional: The HipChat server hostname.
                 ],
             ],
         ],
@@ -560,8 +562,8 @@ return [
                 'type' => 'flowdock',
                 'options' => [
                     'apiToken' => 'sometokenhere', // HipChat API Token
-                    'level'    => \Monolog\Logger::DEBUG, // The minimum logging level at which this handler will be triggered
-                    'bubble'   => true, // Whether the messages that are handled can bubble up the stack or not
+                    'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
                 ],
             ],
         ],
@@ -586,8 +588,8 @@ return [
                     'slackTeam' => 'Team', // Slackbot token
                     'token'     => 'sometokenhere', // HipChat API Token
                     'channel'   => '#channel', // Slack channel (encoded ID or name)
-                    'level'     => \Monolog\Logger::DEBUG, // The minimum logging level at which this handler will be triggered
-                    'bubble'    => true, // Whether the messages that are handled can bubble up the stack or not
+                    'level'     => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'    => true, // Optional: Whether the messages that are handled can bubble up the stack or not
                 ],
             ],
         ],
@@ -611,13 +613,13 @@ return [
                     'webhookUrl'             => 'webhook.slack.com', // Slack Webhook URL
                     'channel'                => 'channel', // Slack channel (encoded ID or name)
                     'userName'               => 'Monolog', // Name of a bot
-                    'useAttachment'          => false, // Whether the message should be added to Slack as attachment (plain text otherwise)
-                    'iconEmoji'              => null, // The emoji name to use (or null)
-                    'useShortAttachment'     => true, //Whether the the context/extra messages added to Slack as attachments are in a short style
-                    'includeContextAndExtra' => true, // Whether the attachment should include context and extra data
-                    'level'                  => \Monolog\Logger::INFO, // The minimum logging level at which this handler will be triggered
-                    'bubble'                 => false, // Whether the messages that are handled can bubble up the stack or not
-                    'excludeFields'          => ['context.field1', 'extra.field2'], // Dot separated list of fields to exclude from slack message.
+                    'useAttachment'          => false, // Optional: Whether the message should be added to Slack as attachment (plain text otherwise)
+                    'iconEmoji'              => null, // Optional: The emoji name to use (or null)
+                    'useShortAttachment'     => true, // Optional: Whether the the context/extra messages added to Slack as attachments are in a short style
+                    'includeContextAndExtra' => true, // Optional: Whether the attachment should include context and extra data
+                    'level'                  => \Monolog\Logger::INFO, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'                 => false, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'excludeFields'          => ['context.field1', 'extra.field2'], // Optional: Dot separated list of fields to exclude from slack message.
                 ],
             ],
         ],
@@ -636,18 +638,18 @@ return [
     'monolog' => [
         'handler' => [
             'myHandlerName' => [
-                'type' => 'slackWebhook',
+                'type' => 'slack',
                 'options' => [
                     'token     '             => 'apiToken', // Slack API token
                     'channel'                => 'channel', // Slack channel (encoded ID or name)
                     'userName'               => 'Monolog', // Name of a bot
-                    'useAttachment'          => false, // Whether the message should be added to Slack as attachment (plain text otherwise)
-                    'iconEmoji'              => null, // The emoji name to use (or null)
-                    'useShortAttachment'     => true, //Whether the the context/extra messages added to Slack as attachments are in a short style
-                    'includeContextAndExtra' => true, // Whether the attachment should include context and extra data
-                    'level'                  => \Monolog\Logger::INFO, // The minimum logging level at which this handler will be triggered
-                    'bubble'                 => false, // Whether the messages that are handled can bubble up the stack or not
-                    'excludeFields'          => ['context.field1', 'extra.field2'], // Dot separated list of fields to exclude from slack message.
+                    'useAttachment'          => false, // Optional: Whether the message should be added to Slack as attachment (plain text otherwise)
+                    'iconEmoji'              => null, // Optional: The emoji name to use (or null)
+                    'useShortAttachment'     => true, // Optional: Whether the the context/extra messages added to Slack as attachments are in a short style
+                    'includeContextAndExtra' => true, // Optional: Whether the attachment should include context and extra data
+                    'level'                  => \Monolog\Logger::INFO, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'                 => false, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'excludeFields'          => ['context.field1', 'extra.field2'], // Optional: Dot separated list of fields to exclude from slack message.
                 ],
             ],
         ],
@@ -679,3 +681,26 @@ return [
 ];
 ```
 Monolog Docs: [MandrillHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/MandrillHandler.php)
+
+#### FleepHookHandler
+Sends emails via the [Mandrill](http://www.mandrill.com/) API using a [Swift_Message](http://swiftmailer.org/) instance.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'fleepHook',
+                'options' => [
+                    'apiToken' => 'sometokenhere', // Webhook token
+                    'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [FleepHookHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/FleepHookHandler.php)

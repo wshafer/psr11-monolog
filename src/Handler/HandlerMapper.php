@@ -47,6 +47,8 @@ class HandlerMapper implements MapperInterface
                 return SlackHandlerFactory::class;
             case 'mandrill':
                 return MandrillHandlerFactory::class;
+            case 'fleephook':
+                return FleepHookHandlerFactory::class;
         }
 
         return null;
