@@ -5,8 +5,10 @@ namespace WShafer\PSR11MonoLog\Handler;
 
 use Monolog\Handler\MandrillHandler;
 use Monolog\Logger;
+use WShafer\PSR11MonoLog\ContainerAwareInterface;
+use WShafer\PSR11MonoLog\FactoryInterface;
 
-class MandrillHandlerFactory
+class MandrillHandlerFactory implements FactoryInterface, ContainerAwareInterface
 {
     use SwiftMessageTrait;
 
