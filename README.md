@@ -23,21 +23,23 @@
         - [FlowdockFormatter](#flowdockformatter)
         - [MongoDBFormatter](#mongodbformatter)
     - [Handlers](#handlers)
-        - [StreamHandler](#streamhandler)
-        - [RotatingFileHandler](#rotatingfilehandler)
-        - [SyslogHandler](#sysloghandler)
-        - [ErrorLogHandler](#errorloghandler)
-        - [NativeMailerHandler](#nativemailerhandler)
-        - [SwiftMailerHandler](#swiftmailerhandler)
-        - [PushoverHandler](#pushoverhandler)
-        - [HipChatHandler](#hipchathandler)
-        - [FlowdockHandler](#flowdockhandler)
-        - [SlackbotHandler](#slackbothandler)
-        - [SlackWebhookHandler](#slackwebhookhandler)
-        - [SlackHandler](#slackhandler)
-        - [MandrillHandler](#mandrillhandler)
-        - [FleepHookHandler](#fleephookhandler)
-        - [IFTTTHandler](#ifttthandler)
+        - [Log to files and syslog](#log-to-files-and-syslog)
+            - [StreamHandler](#streamhandler)
+            - [RotatingFileHandler](#rotatingfilehandler)
+            - [SyslogHandler](#sysloghandler)
+            - [ErrorLogHandler](#errorloghandler)
+        - [Send alerts and emails](#send-alerts-and-emails)
+            - [NativeMailerHandler](#nativemailerhandler)
+            - [SwiftMailerHandler](#swiftmailerhandler)
+            - [PushoverHandler](#pushoverhandler)
+            - [HipChatHandler](#hipchathandler)
+            - [FlowdockHandler](#flowdockhandler)
+            - [SlackbotHandler](#slackbothandler)
+            - [SlackWebhookHandler](#slackwebhookhandler)
+            - [SlackHandler](#slackhandler)
+            - [MandrillHandler](#mandrillhandler)
+            - [FleepHookHandler](#fleephookhandler)
+            - [IFTTTHandler](#ifttthandler)
     
 
 # Installation
@@ -49,7 +51,7 @@ composer require wshafer/psr11-monolog
 # Configuration
 
 
-### Formatters
+## Formatters
 
 #### LineFomatter
 Formats a log record into a one-line string.
@@ -336,7 +338,9 @@ return [
 ```
 Monolog Docs: [MongoDBFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/MongoDBFormatter.php)
 
-### Handlers
+## Handlers
+
+### Log to files and syslog
 
 #### StreamHandler
 Logs records into any PHP stream, use this for log files.
@@ -440,6 +444,8 @@ return [
 ];
 ```
 Monolog Docs: [ErrorLogHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ErrorLogHandler.php)
+
+### Send alerts and emails
 
 #### NativeMailerHandler
 Sends emails using PHP's [mail()](http://php.net/manual/en/function.mail.php) function.
