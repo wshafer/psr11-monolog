@@ -53,6 +53,8 @@ class HandlerMapper implements MapperInterface
                 return IFTTTHandlerFactory::class;
             case 'socket':
                 return SocketHandlerFactory::class;
+            case 'amqp':
+                return AmqpHandlerFactory::class;
         }
 
         return null;

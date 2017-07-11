@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace WShafer\PSR11MonoLog\Test\Handler;
 
 use PHPUnit\Framework\TestCase;
+use WShafer\PSR11MonoLog\Handler\AmqpHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FleepHookHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FlowdockHandlerFactory;
@@ -144,6 +145,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = SocketHandlerFactory::class;
         $result = $this->mapper->map('socket');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapAmqp()
+    {
+        $expected = AmqpHandlerFactory::class;
+        $result = $this->mapper->map('amqp');
         $this->assertEquals($expected, $result);
     }
 
