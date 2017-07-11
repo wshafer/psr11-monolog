@@ -65,6 +65,8 @@ class HandlerMapper implements MapperInterface
                 return ZendMonitorHandlerFactory::class;
             case 'newrelic':
                 return NewRelicHandlerFactory::class;
+            case 'loggly':
+                return LogglyHandlerFactory::class;
         }
 
         return null;
