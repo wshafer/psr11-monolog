@@ -23,7 +23,8 @@
         "satooshi/php-coveralls": "^1.0",
         "swiftmailer/swiftmailer": "^6.0",
         "php-amqplib/php-amqplib": "2.6.*",
-        "graylog2/gelf-php": "^1.5"
+        "graylog2/gelf-php": "^1.5",
+        "raven/raven": "^0.15.0"
     },
     "autoload": {
         "psr-4": {
