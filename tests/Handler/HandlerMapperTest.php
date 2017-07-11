@@ -13,6 +13,7 @@ use WShafer\PSR11MonoLog\Handler\GelfHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\HandlerMapper;
 use WShafer\PSR11MonoLog\Handler\HipChatHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\IFTTTHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\LogglyHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\MandrillHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NewRelicHandlerFactory;
@@ -192,6 +193,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = NewRelicHandlerFactory::class;
         $result = $this->mapper->map('newRelic');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapLoggly()
+    {
+        $expected = LogglyHandlerFactory::class;
+        $result = $this->mapper->map('loggly');
         $this->assertEquals($expected, $result);
     }
 

@@ -48,6 +48,7 @@
             - [RavenHandler](#ravenhandler)
             - [ZendMonitorHandler](#zendmonitorhandler)
             - [NewRelicHandler](#newrelichandler)
+            - [LogglyHandler](#logglyhandler)
     
 
 # Installation
@@ -709,9 +710,9 @@ return [
             'myHandlerName' => [
                 'type' => 'fleepHook',
                 'options' => [
-                    'apiToken' => 'sometokenhere', // Webhook token
-                    'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
-                    'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'token'  => 'sometokenhere', // Webhook token
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
                 ],
             ],
         ],
@@ -909,3 +910,26 @@ return [
 ];
 ```
 Monolog Docs: [NewRelicHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/NewRelicHandler.php)
+
+#### LogglyHandler
+Logs records to a [Loggly](http://www.loggly.com/) account.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'loggly',
+                'options' => [
+                    'token'  => 'sometokenhere', // Webhook token
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [LogglyHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/LogglyHandler.php)
