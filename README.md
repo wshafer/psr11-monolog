@@ -43,6 +43,8 @@
         - [Log specific servers and networked logging](#log-specific-servers-and-networked-logging)
             - [SocketHandler](#sockethandler)
             - [AmqpHandler](#amqphandler)
+            - [GelfHandler](#gelfhandler)
+            - [CubeHandler](#cubehandler)
     
 
 # Installation
@@ -788,3 +790,55 @@ return [
 ];
 ```
 Monolog Docs: [AmqpHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/AmqpHandler.php)
+
+#### GelfHandler
+Logs records to a [Graylog2](http://www.graylog2.org) server. Requires package [graylog2/gelf-php](https://github.com/bzikarsky/gelf-php).
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'amqp',
+                'options' => [
+                    'publisher' => 'my-service', // A Gelf\PublisherInterface object.  Must be a valid service.
+                    'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [GelfHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/GelfHandler.php)
+
+#### CubeHandler
+Logs records to a [Cube](http://square.github.com/cube/) server.
+
+_note: Cube is not under active development, maintenance or support by 
+Square (or by its original author Mike Bostock). It has been deprecated 
+internally for over a year. We keep it running for historical interest 
+because it powers some interesting visualizations, but new production 
+systems have replaced it for analytics purposes._
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'cube',
+                'options' => [
+                    'url' => 'http://test.com:80', // A valid url.  Must consist of three parts : protocol://host:port
+                    'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [CubeHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/CubeHandler.php)
+
