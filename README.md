@@ -37,6 +37,7 @@
         - [SlackHandler](#slackhandler)
         - [MandrillHandler](#mandrillhandler)
         - [FleepHookHandler](#fleephookhandler)
+        - [IFTTTHandler](#ifttthandler)
     
 
 # Installation
@@ -683,7 +684,7 @@ return [
 Monolog Docs: [MandrillHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/MandrillHandler.php)
 
 #### FleepHookHandler
-Sends emails via the [Mandrill](http://www.mandrill.com/) API using a [Swift_Message](http://swiftmailer.org/) instance.
+Logs records to a [Fleep](https://fleep.io/) conversation using Webhooks.
 
 ```php
 <?php
@@ -704,3 +705,26 @@ return [
 ];
 ```
 Monolog Docs: [FleepHookHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/FleepHookHandler.php)
+
+#### IFTTTHandler
+Notifies an [IFTTT](https://ifttt.com/maker) trigger with the log channel, level name and message.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'fleepHook',
+                'options' => [
+                    'apiToken' => 'sometokenhere', // Webhook token
+                    'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [IFTTTHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/IFTTTHandler.php)

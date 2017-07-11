@@ -49,6 +49,8 @@ class HandlerMapper implements MapperInterface
                 return MandrillHandlerFactory::class;
             case 'fleephook':
                 return FleepHookHandlerFactory::class;
+            case 'ifttt':
+                return IFTTTHandlerFactory::class;
         }
 
         return null;
