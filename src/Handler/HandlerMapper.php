@@ -55,6 +55,8 @@ class HandlerMapper implements MapperInterface
                 return SocketHandlerFactory::class;
             case 'amqp':
                 return AmqpHandlerFactory::class;
+            case 'gelf':
+                return GelfHandlerFactory::class;
         }
 
         return null;

@@ -8,6 +8,7 @@ use WShafer\PSR11MonoLog\Handler\AmqpHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FleepHookHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FlowdockHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\GelfHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\HandlerMapper;
 use WShafer\PSR11MonoLog\Handler\HipChatHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\IFTTTHandlerFactory;
@@ -152,6 +153,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = AmqpHandlerFactory::class;
         $result = $this->mapper->map('amqp');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapGelf()
+    {
+        $expected = GelfHandlerFactory::class;
+        $result = $this->mapper->map('gelf');
         $this->assertEquals($expected, $result);
     }
 
