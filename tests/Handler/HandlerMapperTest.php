@@ -8,6 +8,7 @@ use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FlowdockHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\HandlerMapper;
 use WShafer\PSR11MonoLog\Handler\HipChatHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\MandrillHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\PushoverHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\RotatingFileHandlerFactory;
@@ -109,6 +110,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = SlackHandlerFactory::class;
         $result = $this->mapper->map('slack');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapMandrill()
+    {
+        $expected = MandrillHandlerFactory::class;
+        $result = $this->mapper->map('Mandrill');
         $this->assertEquals($expected, $result);
     }
 
