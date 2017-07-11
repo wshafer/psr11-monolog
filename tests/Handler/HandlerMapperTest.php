@@ -9,6 +9,7 @@ use WShafer\PSR11MonoLog\Handler\FleepHookHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FlowdockHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\HandlerMapper;
 use WShafer\PSR11MonoLog\Handler\HipChatHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\IFTTTHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\MandrillHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\PushoverHandlerFactory;
@@ -125,6 +126,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = FleepHookHandlerFactory::class;
         $result = $this->mapper->map('fleepHook');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapIFTTT()
+    {
+        $expected = IFTTTHandlerFactory::class;
+        $result = $this->mapper->map('IFTTT');
         $this->assertEquals($expected, $result);
     }
 

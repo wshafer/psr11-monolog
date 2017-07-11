@@ -11,9 +11,9 @@ class FleepHookHandlerFactory implements FactoryInterface
 {
     public function __invoke(array $options)
     {
-        $token     = (string)  ($options['token']     ?? '');
-        $level     = (int)     ($options['level']     ?? Logger::DEBUG);
-        $bubble    = (boolean) ($options['bubble']    ?? true);
+        $token  = (string)  ($options['token']     ?? '');
+        $level  = (int)     ($options['level']     ?? Logger::DEBUG);
+        $bubble = (boolean) ($options['bubble']    ?? true);
 
         return new FleepHookHandler(
             $token,
