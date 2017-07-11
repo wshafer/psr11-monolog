@@ -45,6 +45,7 @@
             - [AmqpHandler](#amqphandler)
             - [GelfHandler](#gelfhandler)
             - [CubeHandler](#cubehandler)
+            - [RavenHandler](#ravenhandler)
     
 
 # Installation
@@ -755,10 +756,10 @@ return [
                 'type' => 'socket',
                 'options' => [
                     'connectionString' => 'unix:///var/log/httpd_app_log.socket', // Socket connection string.  You can use a unix:// prefix to access unix sockets and udp:// to open UDP sockets instead of the default TCP.
-                    'timeout' => 30, // Optional: The connection timeout, in seconds.
-                    'writeTimeout' => 90, // Optional: Set timeout period on a stream.
-                    'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
-                    'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'timeout'          => 30, // Optional: The connection timeout, in seconds.
+                    'writeTimeout'     => 90, // Optional: Set timeout period on a stream.
+                    'level'            => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'           => true, // Optional: Whether the messages that are handled can bubble up the stack or not
                 ],
             ],
         ],
@@ -779,10 +780,10 @@ return [
             'myHandlerName' => [
                 'type' => 'amqp',
                 'options' => [
-                    'exchange' => 'my-service', // AMQPExchange (php AMQP ext) or PHP AMQP lib channel.  Must be a valid service.
+                    'exchange'     => 'my-service', // AMQPExchange (php AMQP ext) or PHP AMQP lib channel.  Must be a valid service.
                     'exchangeName' => 'log-name', // Optional: Exchange name, for AMQPChannel (PhpAmqpLib) only
-                    'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
-                    'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'level'        => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'       => true, // Optional: Whether the messages that are handled can bubble up the stack or not
                 ],
             ],
         ],
@@ -803,8 +804,8 @@ return [
                 'type' => 'amqp',
                 'options' => [
                     'publisher' => 'my-service', // A Gelf\PublisherInterface object.  Must be a valid service.
-                    'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
-                    'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'level'     => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'    => true, // Optional: Whether the messages that are handled can bubble up the stack or not
                 ],
             ],
         ],
@@ -816,11 +817,9 @@ Monolog Docs: [GelfHandler](https://github.com/Seldaek/monolog/blob/master/src/M
 #### CubeHandler
 Logs records to a [Cube](http://square.github.com/cube/) server.
 
-_note: Cube is not under active development, maintenance or support by 
+_Note: Cube is not under active development, maintenance or support by 
 Square (or by its original author Mike Bostock). It has been deprecated 
-internally for over a year. We keep it running for historical interest 
-because it powers some interesting visualizations, but new production 
-systems have replaced it for analytics purposes._
+internally for over a year._
 
 ```php
 <?php
@@ -831,9 +830,9 @@ return [
             'myHandlerName' => [
                 'type' => 'cube',
                 'options' => [
-                    'url' => 'http://test.com:80', // A valid url.  Must consist of three parts : protocol://host:port
-                    'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
-                    'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'url'    => 'http://test.com:80', // A valid url.  Must consist of three parts : protocol://host:port
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
                 ],
             ],
         ],
@@ -842,3 +841,24 @@ return [
 ```
 Monolog Docs: [CubeHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/CubeHandler.php)
 
+#### RavenHandler
+Logs records to a [Sentry](http://getsentry.com/) server using [raven](https://packagist.org/packages/raven/raven).
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'amqp',
+                'options' => [
+                    'client' => 'my-service', // A \Raven_Client object.  Must be a valid service.
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [RavenHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RavenHandler.php)

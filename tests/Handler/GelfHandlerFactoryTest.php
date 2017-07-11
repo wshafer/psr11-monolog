@@ -53,7 +53,7 @@ class GelfHandlerFactoryTest extends TestCase
         $this->assertInstanceOf(GelfHandler::class, $handler);
     }
 
-    public function testGetAmqpExchange()
+    public function testGetPublisher()
     {
         $options = [
             'publisher' => 'my-service',
@@ -78,7 +78,7 @@ class GelfHandlerFactoryTest extends TestCase
     /**
      * @expectedException \WShafer\PSR11MonoLog\Exception\MissingServiceException
      */
-    public function testGetAmqpExchangeMissingService()
+    public function testGetPublisherMissingService()
     {
         $options = [
             'publisher' => 'my-service',
@@ -98,7 +98,7 @@ class GelfHandlerFactoryTest extends TestCase
     /**
      * @expectedException \WShafer\PSR11MonoLog\Exception\MissingConfigException
      */
-    public function testGetAmqpExchangeMissingConfig()
+    public function testGetPublisherMissingConfig()
     {
         $options = [];
 

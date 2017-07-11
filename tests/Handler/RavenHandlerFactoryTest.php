@@ -3,19 +3,18 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Handler;
 
-use Monolog\Handler\AmqpHandler;
+use Monolog\Handler\RavenHandler;
 use Monolog\Logger;
-use PhpAmqpLib\Channel\AMQPChannel;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
-use WShafer\PSR11MonoLog\Handler\AmqpHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\RavenHandlerFactory;
 
 /**
- * @covers \WShafer\PSR11MonoLog\Handler\AmqpHandlerFactory
+ * @covers \WShafer\PSR11MonoLog\Handler\RavenHandlerFactory
  */
-class AmqpHandlerFactoryTest extends TestCase
+class RavenHandlerFactoryTest extends TestCase
 {
-    /** @var AmqpHandlerFactory */
+    /** @var RavenHandlerFactory */
     protected $factory;
 
     /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
@@ -23,7 +22,7 @@ class AmqpHandlerFactoryTest extends TestCase
 
     public function setup()
     {
-        $this->factory = new AmqpHandlerFactory();
+        $this->factory = new RavenHandlerFactory();
         $this->mockContainer = $this->createMock(ContainerInterface::class);
         $this->factory->setContainer($this->mockContainer);
     }
@@ -31,13 +30,13 @@ class AmqpHandlerFactoryTest extends TestCase
     public function testInvoke()
     {
         $options = [
-            'exchange'     => 'my-service',
+            'client'       => 'my-service',
             'exchangeName' => 'logger',
             'level'        => Logger::INFO,
             'bubble'       => false
         ];
 
-        $mockService = $this->createMock(AMQPChannel::class);
+        $mockService = $this->createMock(\Raven_Client::class);
 
         $this->mockContainer->expects($this->once())
             ->method('has')
@@ -51,16 +50,16 @@ class AmqpHandlerFactoryTest extends TestCase
 
         $handler = $this->factory->__invoke($options);
 
-        $this->assertInstanceOf(AmqpHandler::class, $handler);
+        $this->assertInstanceOf(RavenHandler::class, $handler);
     }
 
-    public function testGetAmqpExchange()
+    public function testGetClient()
     {
         $options = [
-            'exchange' => 'my-service',
+            'client' => 'my-service',
         ];
 
-        $mockService = $this->createMock(AMQPChannel::class);
+        $mockService = $this->createMock(\Raven_Client::class);
 
         $this->mockContainer->expects($this->once())
             ->method('has')
@@ -72,17 +71,17 @@ class AmqpHandlerFactoryTest extends TestCase
             ->with($this->equalTo('my-service'))
             ->willReturn($mockService);
 
-        $service = $this->factory->getAmqpExchange($options);
+        $service = $this->factory->getClient($options);
         $this->assertEquals($mockService, $service);
     }
 
     /**
      * @expectedException \WShafer\PSR11MonoLog\Exception\MissingServiceException
      */
-    public function testGetAmqpExchangeMissingService()
+    public function testGetClientMissingService()
     {
         $options = [
-            'exchange' => 'my-service',
+            'client' => 'my-service',
         ];
 
         $this->mockContainer->expects($this->once())
@@ -93,13 +92,13 @@ class AmqpHandlerFactoryTest extends TestCase
         $this->mockContainer->expects($this->never())
             ->method('get');
 
-        $this->factory->getAmqpExchange($options);
+        $this->factory->getClient($options);
     }
 
     /**
      * @expectedException \WShafer\PSR11MonoLog\Exception\MissingConfigException
      */
-    public function testGetAmqpExchangeMissingConfig()
+    public function testGetClientMissingConfig()
     {
         $options = [];
 
@@ -109,6 +108,6 @@ class AmqpHandlerFactoryTest extends TestCase
         $this->mockContainer->expects($this->never())
             ->method('get');
 
-        $this->factory->getAmqpExchange($options);
+        $this->factory->getClient($options);
     }
 }
