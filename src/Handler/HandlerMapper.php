@@ -67,6 +67,8 @@ class HandlerMapper implements MapperInterface
                 return NewRelicHandlerFactory::class;
             case 'loggly':
                 return LogglyHandlerFactory::class;
+            case 'syslogudp':
+                return SyslogUdpHandlerFactory::class;
         }
 
         return null;

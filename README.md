@@ -50,6 +50,7 @@
             - [NewRelicHandler](#newrelichandler)
             - [LogglyHandler](#logglyhandler)
             - [RollbarHandler](#rollbarhandler)
+            - [SyslogUdpHandler](#syslogudphandler)
     
 
 # Installation
@@ -942,3 +943,29 @@ _Note: RollerbarHandler is out of date with upstream changes.  We can not suppor
 Upstream ticket: https://github.com/Seldaek/monolog/issues/1021_
 
 Monolog Docs: [RollbarHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RollbarHandler.php)
+
+#### SyslogUdpHandler
+Logs records to a remote [Syslogd](http://www.rsyslog.com/) server.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'syslogUdp',
+                'options' => [
+                    'host'     => 'somewhere.com', // Host
+                    'port'     => 513, //  Optional: Port
+                    'facility' => 'Me', // Optional: Facility
+                    'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'ident'    => 'me-too', // Optional: Program name or tag for each log message.
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [SyslogUdpHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SyslogUdpHandler.php)
