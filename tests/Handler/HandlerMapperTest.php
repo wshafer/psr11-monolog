@@ -27,6 +27,7 @@ use WShafer\PSR11MonoLog\Handler\SocketHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\StreamHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SwiftMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SyslogHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\SyslogUdpHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ZendMonitorHandlerFactory;
 
 /**
@@ -200,6 +201,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = LogglyHandlerFactory::class;
         $result = $this->mapper->map('loggly');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapSyslogUdp()
+    {
+        $expected = SyslogUdpHandlerFactory::class;
+        $result = $this->mapper->map('syslogUdp');
         $this->assertEquals($expected, $result);
     }
 
