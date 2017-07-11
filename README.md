@@ -42,6 +42,7 @@
             - [IFTTTHandler](#ifttthandler)
         - [Log specific servers and networked logging](#log-specific-servers-and-networked-logging)
             - [SocketHandler](#sockethandler)
+            - [AmqpHandler](#amqphandler)
     
 
 # Installation
@@ -751,9 +752,9 @@ return [
             'myHandlerName' => [
                 'type' => 'socket',
                 'options' => [
-                    'connectionString' => 'sometokenhere', // Socket connection string
-                    'timeout' => 300, // Optional: The connection timeout, in seconds.
-                    'writeTimeout' => 300, // Optional: Set timeout period on a stream.
+                    'connectionString' => 'unix:///var/log/httpd_app_log.socket', // Socket connection string.  You can use a unix:// prefix to access unix sockets and udp:// to open UDP sockets instead of the default TCP.
+                    'timeout' => 30, // Optional: The connection timeout, in seconds.
+                    'writeTimeout' => 90, // Optional: Set timeout period on a stream.
                     'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
                     'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
                 ],
@@ -763,3 +764,27 @@ return [
 ];
 ```
 Monolog Docs: [SocketHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SocketHandler.php)
+
+#### AmqpHandler
+Logs records to an [AMQP](http://www.amqp.org/) compatible server. Requires the [php-amqp](http://pecl.php.net/package/amqp) extension (1.0+) or the [php-amqplib](https://github.com/php-amqplib/php-amqplib) library.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'amqp',
+                'options' => [
+                    'exchange' => 'my-service', // AMQPExchange (php AMQP ext) or PHP AMQP lib channel.  Must be a valid service.
+                    'exchangeName' => 'log-name', // Optional: Exchange name, for AMQPChannel (PhpAmqpLib) only
+                    'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [AmqpHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/AmqpHandler.php)
