@@ -6,12 +6,14 @@ namespace WShafer\PSR11MonoLog\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Exception\InvalidConfigException;
-use WShafer\PSR11MonoLog\FactoryInterface;
 use WShafer\PSR11MonoLog\ServiceManagerAbstract;
 use WShafer\PSR11MonoLog\MapperInterface;
 use WShafer\PSR11MonoLog\Test\Stub\FactoryStub;
 use WShafer\PSR11MonoLog\Test\Stub\MapperStub;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\ServiceManagerAbstract
+ */
 class ServiceManagerAbstractTest extends TestCase
 {
     /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */

@@ -7,6 +7,9 @@ use Monolog\Formatter\FlowdockFormatter;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Formatter\FlowdockFormatterFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Formatter\FlowdockFormatterFactory
+ */
 class FlowdockFormatterFactoryTest extends TestCase
 {
     public function testInvoke()

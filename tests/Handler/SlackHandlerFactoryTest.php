@@ -8,6 +8,9 @@ use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\SlackHandlerFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Handler\SlackHandlerFactory
+ */
 class SlackHandlerFactoryTest extends TestCase
 {
     public function testInvoke()

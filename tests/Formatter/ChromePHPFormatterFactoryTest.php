@@ -7,6 +7,9 @@ use Monolog\Formatter\ChromePHPFormatter;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Formatter\ChromePHPFormatterFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Formatter\ChromePHPFormatterFactory
+ */
 class ChromePHPFormatterFactoryTest extends TestCase
 {
     public function testInvoke()

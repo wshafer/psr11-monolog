@@ -7,6 +7,9 @@ use Monolog\Formatter\ElasticaFormatter;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Formatter\ElasticaFormatterFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Formatter\ElasticaFormatterFactory
+ */
 class ElasticaFormatterFactoryTest extends TestCase
 {
     public function testInvoke()

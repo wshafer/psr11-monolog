@@ -6,8 +6,10 @@ namespace WShafer\PSR11MonoLog\Handler;
 use Monolog\Handler\MandrillHandler;
 use Monolog\Logger;
 
-class MandrillHandlerFactory extends SwiftMailerHandlerFactory
+class MandrillHandlerFactory
 {
+    use SwiftMessageTrait;
+
     public function __invoke(array $options)
     {
         $apiKey  = (string)  ($options['apiKey']  ?? '');

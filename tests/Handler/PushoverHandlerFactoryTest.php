@@ -8,6 +8,9 @@ use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\PushoverHandlerFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Handler\PushoverHandlerFactory
+ */
 class PushoverHandlerFactoryTest extends TestCase
 {
     public function testInvoke()

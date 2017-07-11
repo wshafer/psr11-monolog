@@ -8,6 +8,9 @@ use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\HipChatHandlerFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Handler\HipChatHandlerFactory
+ */
 class HipChatHandlerFactoryTest extends TestCase
 {
     public function testInvoke()

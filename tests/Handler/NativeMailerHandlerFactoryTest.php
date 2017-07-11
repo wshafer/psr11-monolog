@@ -8,6 +8,9 @@ use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory
+ */
 class NativeMailerHandlerFactoryTest extends TestCase
 {
     public function testInvoke()

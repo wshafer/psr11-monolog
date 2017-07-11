@@ -8,6 +8,9 @@ use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\FlowdockHandlerFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Handler\FlowdockHandlerFactory
+ */
 class FlowdockHandlerFactoryTest extends TestCase
 {
     public function testInvoke()

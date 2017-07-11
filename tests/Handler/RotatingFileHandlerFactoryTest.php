@@ -8,6 +8,9 @@ use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\RotatingFileHandlerFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Handler\RotatingFileHandlerFactory
+ */
 class RotatingFileHandlerFactoryTest extends TestCase
 {
     public function testInvoke()

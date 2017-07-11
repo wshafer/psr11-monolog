@@ -7,6 +7,9 @@ use Monolog\Formatter\MongoDBFormatter;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Formatter\MongoDBFormatterFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Formatter\MongoDBFormatterFactory
+ */
 class MongoDBFormatterFactoryTest extends TestCase
 {
     public function testInvoke()

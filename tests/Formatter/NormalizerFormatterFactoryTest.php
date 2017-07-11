@@ -7,6 +7,9 @@ use Monolog\Formatter\NormalizerFormatter;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Formatter\NormalizerFormatterFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Formatter\NormalizerFormatterFactory
+ */
 class NormalizerFormatterFactoryTest extends TestCase
 {
     public function testInvoke()

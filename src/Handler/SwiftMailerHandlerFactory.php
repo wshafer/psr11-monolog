@@ -5,7 +5,6 @@ namespace WShafer\PSR11MonoLog\Handler;
 
 use Monolog\Handler\SwiftMailerHandler;
 use Monolog\Logger;
-use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\ContainerAwareInterface;
 use WShafer\PSR11MonoLog\Exception\MissingConfigException;
 use WShafer\PSR11MonoLog\Exception\MissingServiceException;
@@ -13,8 +12,7 @@ use WShafer\PSR11MonoLog\FactoryInterface;
 
 class SwiftMailerHandlerFactory implements FactoryInterface, ContainerAwareInterface
 {
-    /** @var ContainerInterface */
-    protected $container;
+    use SwiftMessageTrait;
 
     public function __invoke(array $options)
     {
@@ -25,16 +23,6 @@ class SwiftMailerHandlerFactory implements FactoryInterface, ContainerAwareInter
         $bubble  = (boolean) ($options['bubble'] ?? true);
 
         return new SwiftMailerHandler($mailer, $message, $level, $bubble);
-    }
-
-    public function getContainer(): ContainerInterface
-    {
-        return $this->container;
-    }
-
-    public function setContainer(ContainerInterface $container)
-    {
-        $this->container = $container;
     }
 
     protected function getMailer($options)
@@ -52,26 +40,5 @@ class SwiftMailerHandlerFactory implements FactoryInterface, ContainerAwareInter
         }
 
         return $this->getContainer()->get($options['mailer']);
-    }
-
-    protected function getSwiftMessage($options)
-    {
-        if (empty($options['message'])) {
-            throw new MissingConfigException(
-                'No message service name or callback provided'
-            );
-        }
-
-        if (is_callable($options['message'])) {
-            return $options['message'];
-        }
-
-        if (!$this->getContainer()->has($options['message'])) {
-            throw new MissingServiceException(
-                'No Message service found'
-            );
-        }
-
-        return $this->getContainer()->get($options['message']);
     }
 }

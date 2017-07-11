@@ -8,6 +8,9 @@ use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\FleepHookHandlerFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Handler\FleepHookHandlerFactory
+ */
 class FleepHookHandlerFactoryTest extends TestCase
 {
     public function testInvoke()

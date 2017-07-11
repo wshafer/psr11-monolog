@@ -8,6 +8,9 @@ use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\IFTTTHandlerFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Handler\IFTTTHandlerFactory
+ */
 class IFTTTHandlerFactoryTest extends TestCase
 {
     public function testInvoke()

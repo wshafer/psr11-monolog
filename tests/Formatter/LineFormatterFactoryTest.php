@@ -7,6 +7,9 @@ use Monolog\Formatter\LineFormatter;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Formatter\LineFormatterFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Formatter\LineFormatterFactory
+ */
 class LineFormatterFactoryTest extends TestCase
 {
     public function testInvoke()

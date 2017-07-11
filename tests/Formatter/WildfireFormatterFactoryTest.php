@@ -7,6 +7,9 @@ use Monolog\Formatter\WildfireFormatter;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Formatter\WildfireFormatterFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Formatter\WildfireFormatterFactory
+ */
 class WildfireFormatterFactoryTest extends TestCase
 {
     public function testInvoke()
