@@ -17,6 +17,7 @@ use WShafer\PSR11MonoLog\Handler\RotatingFileHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SlackbotHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SlackHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SlackWebhookHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\SocketHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\StreamHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SwiftMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SyslogHandlerFactory;
@@ -136,6 +137,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = IFTTTHandlerFactory::class;
         $result = $this->mapper->map('IFTTT');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapSocket()
+    {
+        $expected = SocketHandlerFactory::class;
+        $result = $this->mapper->map('socket');
         $this->assertEquals($expected, $result);
     }
 

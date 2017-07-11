@@ -51,6 +51,8 @@ class HandlerMapper implements MapperInterface
                 return FleepHookHandlerFactory::class;
             case 'ifttt':
                 return IFTTTHandlerFactory::class;
+            case 'socket':
+                return SocketHandlerFactory::class;
         }
 
         return null;

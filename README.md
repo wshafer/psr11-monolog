@@ -40,6 +40,8 @@
             - [MandrillHandler](#mandrillhandler)
             - [FleepHookHandler](#fleephookhandler)
             - [IFTTTHandler](#ifttthandler)
+        - [Log specific servers and networked logging](#log-specific-servers-and-networked-logging)
+            - [SocketHandler](#sockethandler)
     
 
 # Installation
@@ -722,7 +724,7 @@ return [
     'monolog' => [
         'handler' => [
             'myHandlerName' => [
-                'type' => 'fleepHook',
+                'type' => 'IFTTT',
                 'options' => [
                     'apiToken' => 'sometokenhere', // Webhook token
                     'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -734,3 +736,30 @@ return [
 ];
 ```
 Monolog Docs: [IFTTTHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/IFTTTHandler.php)
+
+### Log specific servers and networked logging
+
+#### SocketHandler
+Logs records to [sockets](http://php.net/fsockopen), use this for UNIX and TCP sockets. See an [example](https://github.com/Seldaek/monolog/blob/master/doc/sockets.md).
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'socket',
+                'options' => [
+                    'connectionString' => 'sometokenhere', // Socket connection string
+                    'timeout' => 300, // Optional: The connection timeout, in seconds.
+                    'writeTimeout' => 300, // Optional: Set timeout period on a stream.
+                    'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [SocketHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SocketHandler.php)
