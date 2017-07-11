@@ -9,19 +9,11 @@ use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Handler\StreamHandlerFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Handler\StreamHandlerFactory
+ */
 class StreamHandlerFactoryTest extends TestCase
 {
-    public function testGetSetContainer()
-    {
-        $mockContainer = $this->createMock(ContainerInterface::class);
-
-        $factory = new StreamHandlerFactory();
-        $factory->setContainer($mockContainer);
-        $container = $factory->getContainer();
-
-        $this->assertEquals($mockContainer, $container);
-    }
-
     public function testInvokeWithFilePath()
     {
         $options = [

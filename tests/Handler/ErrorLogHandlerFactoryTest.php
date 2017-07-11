@@ -8,6 +8,9 @@ use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory
+ */
 class ErrorLogHandlerFactoryTest extends TestCase
 {
     public function testInvoke()

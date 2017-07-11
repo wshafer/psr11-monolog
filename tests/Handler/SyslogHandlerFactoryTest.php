@@ -8,6 +8,9 @@ use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\SyslogHandlerFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Handler\SyslogHandlerFactory
+ */
 class SyslogHandlerFactoryTest extends TestCase
 {
     public function testInvoke()

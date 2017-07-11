@@ -19,6 +19,9 @@ use WShafer\PSR11MonoLog\Formatter\NormalizerFormatterFactory;
 use WShafer\PSR11MonoLog\Formatter\ScalarFormatterFactory;
 use WShafer\PSR11MonoLog\Formatter\WildfireFormatterFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Formatter\FormatterMapper
+ */
 class FormatterMapperTest extends TestCase
 {
     /** @var FormatterMapper */

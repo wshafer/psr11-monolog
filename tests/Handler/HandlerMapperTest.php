@@ -21,6 +21,9 @@ use WShafer\PSR11MonoLog\Handler\StreamHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SwiftMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SyslogHandlerFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Handler\HandlerMapper
+ */
 class HandlerMapperTest extends TestCase
 {
     /** @var HandlerMapper */

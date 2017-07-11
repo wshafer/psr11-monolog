@@ -8,6 +8,9 @@ use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\SlackbotHandlerFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Handler\SlackbotHandlerFactory
+ */
 class SlackbotHandlerFactoryTest extends TestCase
 {
     public function testInvoke()

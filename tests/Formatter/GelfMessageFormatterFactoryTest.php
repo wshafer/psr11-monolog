@@ -7,6 +7,9 @@ use Monolog\Formatter\GelfMessageFormatter;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Formatter\GelfMessageFormatterFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Formatter\GelfMessageFormatterFactory
+ */
 class GelfMessageFormatterFactoryTest extends TestCase
 {
     public function testInvoke()

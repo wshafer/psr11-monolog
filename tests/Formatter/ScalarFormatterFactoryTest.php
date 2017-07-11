@@ -7,6 +7,9 @@ use Monolog\Formatter\ScalarFormatter;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Formatter\ScalarFormatterFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Formatter\ScalarFormatterFactory
+ */
 class ScalarFormatterFactoryTest extends TestCase
 {
     public function testInvoke()

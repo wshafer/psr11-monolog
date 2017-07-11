@@ -7,6 +7,9 @@ use Monolog\Formatter\JsonFormatter;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Formatter\JsonFormatterFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Formatter\JsonFormatterFactory
+ */
 class JsonFormatterFactoryTest extends TestCase
 {
     public function testInvoke()

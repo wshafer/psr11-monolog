@@ -7,6 +7,9 @@ use Monolog\Formatter\LogstashFormatter;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Formatter\LogstashFormatterFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Formatter\LogstashFormatterFactory
+ */
 class LogstashFormatterFactoryTest extends TestCase
 {
     public function testInvoke()

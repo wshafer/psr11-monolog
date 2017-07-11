@@ -7,6 +7,9 @@ use Monolog\Formatter\LogglyFormatter;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Formatter\LogglyFormatterFactory;
 
+/**
+ * @covers \WShafer\PSR11MonoLog\Formatter\LogglyFormatterFactory
+ */
 class LogglyFormatterFactoryTest extends TestCase
 {
     public function testInvoke()

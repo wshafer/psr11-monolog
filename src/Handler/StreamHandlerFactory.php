@@ -7,10 +7,13 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\ContainerAwareInterface;
+use WShafer\PSR11MonoLog\ContainerTrait;
 use WShafer\PSR11MonoLog\FactoryInterface;
 
 class StreamHandlerFactory implements FactoryInterface, ContainerAwareInterface
 {
+    use ContainerTrait;
+
     /** @var ContainerInterface */
     protected $container;
 
@@ -24,16 +27,6 @@ class StreamHandlerFactory implements FactoryInterface, ContainerAwareInterface
         $useLocking     = (boolean) ($options['useLocking']     ?? false);
 
         return new StreamHandler($stream, $level, $bubble, $filePermission, $useLocking);
-    }
-
-    public function getContainer(): ContainerInterface
-    {
-        return $this->container;
-    }
-
-    public function setContainer(ContainerInterface $container)
-    {
-        $this->container = $container;
     }
 
     protected function getStream($stream)
