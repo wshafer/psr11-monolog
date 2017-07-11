@@ -49,6 +49,7 @@
             - [ZendMonitorHandler](#zendmonitorhandler)
             - [NewRelicHandler](#newrelichandler)
             - [LogglyHandler](#logglyhandler)
+            - [RollbarHandler](#rollbarhandler)
     
 
 # Installation
@@ -933,3 +934,11 @@ return [
 ];
 ```
 Monolog Docs: [LogglyHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/LogglyHandler.php)
+
+#### RollbarHandler:
+Logs records to a [Rollbar](https://rollbar.com/) account.
+
+_Note: RollerbarHandler is out of date with upstream changes.  We can not support this factory until this handler is fixed.
+Upstream ticket: https://github.com/Seldaek/monolog/issues/1021_
+
+Monolog Docs: [RollbarHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RollbarHandler.php)
