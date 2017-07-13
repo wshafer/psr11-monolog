@@ -75,6 +75,8 @@ class HandlerMapper implements MapperInterface
                 return FirePHPHandlerFactory::class;
             case 'chromephp':
                 return ChromePHPHandlerFactory::class;
+            case 'browserconsole':
+                return BrowserConsoleHandlerFactory::class;
         }
 
         return null;

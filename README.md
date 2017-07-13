@@ -54,6 +54,8 @@
             - [LogEntriesHandler](#logentrieshandler)
         - [Logging in development](#logging-in-development)
             - [LogEntriesHandler](#logentrieshandler)
+            - [ChromePHPHandler](#chromephphandler)
+            - [BrowserConsoleHandler](#browserconsolehandler)
     
 
 # Installation
@@ -1044,3 +1046,28 @@ return [
 ];
 ```
 Monolog Docs: [ChromePHPHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ChromePHPHandler.php)
+
+#### BrowserConsoleHandler
+Handler to send logs to browser's Javascript console with no browser extension required. Most browsers supporting 
+console API are supported.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'browserConsole',
+                'options' => [
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [BrowserConsoleHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/BrowserConsoleHandler.php)
+
+
