@@ -5,6 +5,7 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\AmqpHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\BrowserConsoleHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ChromePHPHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\CubeHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
@@ -232,6 +233,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = ChromePHPHandlerFactory::class;
         $result = $this->mapper->map('chromePHP');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapBrowserConsole()
+    {
+        $expected = BrowserConsoleHandlerFactory::class;
+        $result = $this->mapper->map('browserConsole');
         $this->assertEquals($expected, $result);
     }
 
