@@ -52,6 +52,8 @@
             - [RollbarHandler](#rollbarhandler)
             - [SyslogUdpHandler](#syslogudphandler)
             - [LogEntriesHandler](#logentrieshandler)
+        - [Logging in development](#logging-in-development)
+            - [LogEntriesHandler](#logentrieshandler)
     
 
 # Installation
@@ -995,4 +997,30 @@ return [
 ```
 Monolog Docs: [LogEntriesHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/LogEntriesHandler.php)
 
+### Logging in development
 
+#### FirePHPHandler
+Handler for [FirePHP](http://www.firephp.org/), providing inline console messages within [FireBug](http://getfirebug.com/).
+
+_Note: The Firebug extension isn't being developed or maintained any longer._
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'firePHP',
+                'options' => [
+                    'token'  => 'sometokenhere', // Log token supplied by LogEntries
+                    'useSSL' => 'sometokenhere', // Optional: Whether or not SSL encryption should be used.
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [FirePHPHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/LogEntriesHandler.php)
