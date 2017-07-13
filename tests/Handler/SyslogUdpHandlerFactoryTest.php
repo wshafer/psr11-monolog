@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\SyslogUdpHandlerFactory;
 
 /**
- * @covers \WShafer\PSR11MonoLog\Handler\FleepHookHandlerFactory
+ * @covers \WShafer\PSR11MonoLog\Handler\SyslogUdpHandlerFactory
  */
 class SyslogUdpHandlerFactoryTest extends TestCase
 {
