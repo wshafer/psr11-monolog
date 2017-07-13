@@ -71,6 +71,8 @@ class HandlerMapper implements MapperInterface
                 return SyslogUdpHandlerFactory::class;
             case 'logentries':
                 return LogEntriesHandlerFactory::class;
+            case 'firephp':
+                return FirePHPHandlerFactory::class;
         }
 
         return null;

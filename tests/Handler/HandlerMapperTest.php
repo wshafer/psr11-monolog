@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\AmqpHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\CubeHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\FirePHPHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FleepHookHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FlowdockHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\GelfHandlerFactory;
@@ -216,6 +217,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = LogEntriesHandlerFactory::class;
         $result = $this->mapper->map('logEntries');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapFirePHP()
+    {
+        $expected = FirePHPHandlerFactory::class;
+        $result = $this->mapper->map('firePHP');
         $this->assertEquals($expected, $result);
     }
 
