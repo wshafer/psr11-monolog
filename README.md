@@ -986,7 +986,7 @@ return [
                 'type' => 'logEntries',
                 'options' => [
                     'token'  => 'sometokenhere', // Log token supplied by LogEntries
-                    'useSSL' => 'sometokenhere', // Optional: Whether or not SSL encryption should be used.
+                    'useSSL' => true, // Optional: Whether or not SSL encryption should be used.
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
                     'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
                 ],
@@ -1013,8 +1013,6 @@ return [
             'myHandlerName' => [
                 'type' => 'firePHP',
                 'options' => [
-                    'token'  => 'sometokenhere', // Log token supplied by LogEntries
-                    'useSSL' => 'sometokenhere', // Optional: Whether or not SSL encryption should be used.
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
                     'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
                 ],
@@ -1024,3 +1022,25 @@ return [
 ];
 ```
 Monolog Docs: [FirePHPHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/LogEntriesHandler.php)
+
+#### ChromePHPHandler
+Handler for [ChromePHP](http://www.chromephp.com/), providing inline console messages within Chrome.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'chromePHP',
+                'options' => [
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [ChromePHPHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ChromePHPHandler.php)
