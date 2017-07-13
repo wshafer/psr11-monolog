@@ -13,6 +13,7 @@ use WShafer\PSR11MonoLog\Handler\GelfHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\HandlerMapper;
 use WShafer\PSR11MonoLog\Handler\HipChatHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\IFTTTHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\LogEntriesHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\LogglyHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\MandrillHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory;
@@ -208,6 +209,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = SyslogUdpHandlerFactory::class;
         $result = $this->mapper->map('syslogUdp');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapLogEntries()
+    {
+        $expected = LogEntriesHandlerFactory::class;
+        $result = $this->mapper->map('logEntries');
         $this->assertEquals($expected, $result);
     }
 

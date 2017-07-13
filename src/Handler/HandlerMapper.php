@@ -69,6 +69,8 @@ class HandlerMapper implements MapperInterface
                 return LogglyHandlerFactory::class;
             case 'syslogudp':
                 return SyslogUdpHandlerFactory::class;
+            case 'logentries':
+                return LogEntriesHandlerFactory::class;
         }
 
         return null;

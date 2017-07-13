@@ -51,6 +51,7 @@
             - [LogglyHandler](#logglyhandler)
             - [RollbarHandler](#rollbarhandler)
             - [SyslogUdpHandler](#syslogudphandler)
+            - [LogEntriesHandler](#logentrieshandler)
     
 
 # Installation
@@ -969,3 +970,29 @@ return [
 ];
 ```
 Monolog Docs: [SyslogUdpHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SyslogUdpHandler.php)
+
+#### LogEntriesHandler
+Logs records to a [LogEntries](http://logentries.com/) account.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'logEntries',
+                'options' => [
+                    'token'  => 'sometokenhere', // Log token supplied by LogEntries
+                    'useSSL' => 'sometokenhere', // Optional: Whether or not SSL encryption should be used.
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [LogEntriesHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/LogEntriesHandler.php)
+
+
