@@ -73,6 +73,8 @@ class HandlerMapper implements MapperInterface
                 return LogEntriesHandlerFactory::class;
             case 'firephp':
                 return FirePHPHandlerFactory::class;
+            case 'chromephp':
+                return ChromePHPHandlerFactory::class;
         }
 
         return null;
