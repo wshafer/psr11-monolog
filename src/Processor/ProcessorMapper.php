@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace WShafer\PSR11MonoLog\Processor;
 
 use Monolog\Processor\PsrLogMessageProcessor;
+use Monolog\Processor\WebProcessor;
 use WShafer\PSR11MonoLog\MapperInterface;
 
 /**
@@ -26,6 +27,8 @@ class ProcessorMapper implements MapperInterface
                 return PsrLogMessageProcessorFactory::class;
             case 'introspection':
                 return IntrospectionProcessorFactory::class;
+            case 'web':
+                return WebProcessor::class;
         }
 
         return null;

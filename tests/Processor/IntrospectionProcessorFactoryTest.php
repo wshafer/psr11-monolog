@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Processor\IntrospectionProcessorFactory;
 
 /**
- * @covers \WShafer\PSR11MonoLog\Processor\PsrLogMessageProcessorFactory
+ * @covers \WShafer\PSR11MonoLog\Processor\IntrospectionProcessorFactory
  */
 class IntrospectionProcessorFactoryTest extends TestCase
 {

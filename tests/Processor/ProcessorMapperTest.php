@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Handler;
 
+use Monolog\Processor\WebProcessor;
 use PHPUnit\Framework\TestCase;
 
 use WShafer\PSR11MonoLog\Processor\IntrospectionProcessorFactory;
@@ -22,17 +23,24 @@ class ProcessorMapperTest extends TestCase
         $this->mapper = new ProcessorMapper();
     }
 
-    public function testPsrLogMessage()
+    public function testMapPsrLogMessage()
     {
         $expected = PsrLogMessageProcessorFactory::class;
         $result = $this->mapper->map('psrLogMessage');
         $this->assertEquals($expected, $result);
     }
 
-    public function testIntrospection()
+    public function testMapIntrospection()
     {
         $expected = IntrospectionProcessorFactory::class;
         $result = $this->mapper->map('introspection');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapWebProcessor()
+    {
+        $expected = WebProcessor::class;
+        $result = $this->mapper->map('web');
         $this->assertEquals($expected, $result);
     }
 
