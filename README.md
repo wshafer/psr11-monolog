@@ -67,6 +67,7 @@
         - [UidProcessor](#uidprocessor)
         - [GitProcessor](#gitprocessor)
         - [MercurialProcessor](#mercurialprocessor)
+        - [TagProcessor](#tagprocessor)
     
 
 # Installation
@@ -1325,3 +1326,24 @@ return [
 ];
 ```
 Monolog Docs: [MercurialProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/MercurialProcessor.php)
+
+### TagProcessor
+Adds an array of predefined tags to a log record.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'processors' => [
+            'myProcessorsName' => [
+                'type' => 'tags',
+                'options' => [
+                    'tags'  => [], // Optional: Array of tags to add to records
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [TagProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/TagProcessor.php)
