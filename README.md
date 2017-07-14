@@ -53,9 +53,10 @@
             - [SyslogUdpHandler](#syslogudphandler)
             - [LogEntriesHandler](#logentrieshandler)
         - [Logging in development](#logging-in-development)
-            - [LogEntriesHandler](#logentrieshandler)
+            - [FirePHPHandler](#firephphandler)
             - [ChromePHPHandler](#chromephphandler)
             - [BrowserConsoleHandler](#browserconsolehandler)
+            - [PHPConsoleHandler](#phpconsolehandler)
     
 
 # Installation
@@ -1070,4 +1071,27 @@ return [
 ```
 Monolog Docs: [BrowserConsoleHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/BrowserConsoleHandler.php)
 
+#### PHPConsoleHandler
+Handler for [PHP Console](https://chrome.google.com/webstore/detail/php-console/nfhmhhlpfleoednkpnnnkolmclajemef), 
+providing inline console and notification popup messages within Chrome.
 
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handler' => [
+            'myHandlerName' => [
+                'type' => 'phpConsole',
+                'options' => [
+                    'options' => [], // Optional: See \Monolog\Handler\PHPConsoleHandler::$options for more details
+                    'connector' => 'my-service', // Optional:  Instance of \PhpConsole\Connector class. Must be a valid service.
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [PHPConsoleHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/PHPConsoleHandler.php)

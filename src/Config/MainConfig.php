@@ -16,12 +16,16 @@ class MainConfig
     /** @var ChannelConfig[] */
     protected $channels = [];
 
+    /** @var ProcessorConfig[] */
+    protected $processors = [];
+
     public function __construct(array $config)
     {
         $this->validateConfig($config);
         $this->buildFormatters($config);
         $this->buildHandlers($config);
         $this->buildChannels($config);
+        $this->buildProcessors($config);
     }
 
     /**
@@ -38,6 +42,14 @@ class MainConfig
     public function getFormatters()
     {
         return $this->formatters;
+    }
+
+    /**
+     * @return FormatterConfig[]
+     */
+    public function getProcessors()
+    {
+        return $this->processors;
     }
 
     /**
@@ -93,6 +105,17 @@ class MainConfig
 
         foreach ($config['monolog']['formatters'] as $name => $formatterConfig) {
             $this->formatters[$name] = new FormatterConfig($formatterConfig);
+        }
+    }
+
+    protected function buildProcessors($config)
+    {
+        if (empty($config['monolog']['processors'])) {
+            return;
+        }
+
+        foreach ($config['monolog']['processors'] as $name => $processorConfig) {
+            $this->processors[$name] = new ProcessorConfig($processorConfig);
         }
     }
 }
