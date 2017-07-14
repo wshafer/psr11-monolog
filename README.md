@@ -66,6 +66,7 @@
         - [ProcessIdProcessor](#processidprocessor)
         - [UidProcessor](#uidprocessor)
         - [GitProcessor](#gitprocessor)
+        - [MercurialProcessor](#mercurialprocessor)
     
 
 # Installation
@@ -1301,3 +1302,26 @@ return [
 ];
 ```
 Monolog Docs: [GitProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/GitProcessor.php)
+
+### MercurialProcessor
+Adds the current hg branch and commit to a log record.
+
+_Note:  Only works if the hg executable is in your working path._
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'processors' => [
+            'myProcessorsName' => [
+                'type' => 'mercurial',
+                'options' => [
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this processor will be triggered
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [MercurialProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/MercurialProcessor.php)

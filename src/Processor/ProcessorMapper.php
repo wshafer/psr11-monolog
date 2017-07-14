@@ -37,6 +37,8 @@ class ProcessorMapper implements MapperInterface
                 return UidProcessorFactory::class;
             case 'git':
                 return GitProcessorFactory::class;
+            case 'mercurial':
+                return MercurialProcessorFactory::class;
         }
 
         return null;
