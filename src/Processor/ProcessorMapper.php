@@ -33,6 +33,8 @@ class ProcessorMapper implements MapperInterface
                 return MemoryPeakUsageProcessorFactory::class;
             case 'processid':
                 return ProcessIdProcessorFactory::class;
+            case 'uid':
+                return UidProcessorFactory::class;
         }
 
         return null;

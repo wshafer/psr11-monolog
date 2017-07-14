@@ -64,6 +64,7 @@
         - [MemoryUsageProcessor](#memoryusageprocessor)
         - [MemoryPeakUsageProcessor](#memorypeakusageprocessor)
         - [ProcessIdProcessor](#processidprocessor)
+        - [UidProcessor](#uidprocessor)
     
 
 # Installation
@@ -1255,3 +1256,24 @@ return [
 ];
 ```
 Monolog Docs: [ProcessIdProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/ProcessIdProcessor.php)
+
+### UidProcessor
+Adds a unique identifier to a log record.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'processors' => [
+            'myProcessorsName' => [
+                'type' => 'uid',
+                'options' => [
+                    'length'  => 7, // Optional: The uid length. Must be an integer between 1 and 32
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [UidProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/UidProcessor.php)
