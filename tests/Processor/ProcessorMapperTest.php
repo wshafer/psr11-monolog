@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Processor\IntrospectionProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\MemoryPeakUsageProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\MemoryUsageProcessorFactory;
+use WShafer\PSR11MonoLog\Processor\ProcessIdProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\ProcessorMapper;
 use WShafer\PSR11MonoLog\Processor\PsrLogMessageProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\WebProcessorFactory;
@@ -50,6 +51,13 @@ class ProcessorMapperTest extends TestCase
     {
         $expected = MemoryUsageProcessorFactory::class;
         $result = $this->mapper->map('memoryUsage');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapMemoryUsageProcessId()
+    {
+        $expected = ProcessIdProcessorFactory::class;
+        $result = $this->mapper->map('processid');
         $this->assertEquals($expected, $result);
     }
 
