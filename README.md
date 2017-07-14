@@ -61,6 +61,7 @@
         - [PsrLogMessageProcessor](#psrlogmessageprocessor)
         - [IntrospectionProcessor](#introspectionprocessor)
         - [WebProcessor](#webprocessor)
+        - [MemoryUsageProcessor](#memoryusageprocessor)
     
 
 # Installation
@@ -1196,3 +1197,21 @@ return [
 ```
 Monolog Docs: [WebProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/WebProcessor.php)
 
+### MemoryUsageProcessor
+Adds the current memory usage to a log record.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'processors' => [
+            'myHandlerName' => [
+                'type' => 'memoryUsage',
+                'options' => [], // No options
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [MemoryUsageProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/MemoryUsageProcessor.php)
