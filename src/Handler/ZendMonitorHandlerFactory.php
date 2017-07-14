@@ -9,6 +9,8 @@ use WShafer\PSR11MonoLog\FactoryInterface;
 
 /**
  * @codeCoverageIgnore
+ *
+ * No Zend Server available to test against
  */
 class ZendMonitorHandlerFactory implements FactoryInterface
 {
