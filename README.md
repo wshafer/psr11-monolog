@@ -60,6 +60,7 @@
     - [Processors](#processors)
         - [PsrLogMessageProcessor](#psrlogmessageprocessor)
         - [IntrospectionProcessor](#introspectionprocessor)
+        - [WebProcessor](#webprocessor)
     
 
 # Installation
@@ -1172,3 +1173,26 @@ return [
 ];
 ```
 Monolog Docs: [IntrospectionProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/IntrospectionProcessor.php)
+
+### WebProcessor
+Adds the current request URI, request method and client IP to a log record.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'processors' => [
+            'myHandlerName' => [
+                'type' => 'web',
+                'options' => [
+                    'serverData'  => 'my-service', // Optional: Array, object w/ ArrayAccess, or valid service name that provides access to the $_SERVER data
+                    'extraFields' => [], // Optional: Field names and the related key inside $serverData to be added. If not provided it defaults to: url, ip, http_method, server, referrer
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [WebProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/WebProcessor.php)
+
