@@ -12,6 +12,7 @@ use WShafer\PSR11MonoLog\Processor\MemoryUsageProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\ProcessIdProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\ProcessorMapper;
 use WShafer\PSR11MonoLog\Processor\PsrLogMessageProcessorFactory;
+use WShafer\PSR11MonoLog\Processor\TagProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\UidProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\WebProcessorFactory;
 
@@ -81,6 +82,13 @@ class ProcessorMapperTest extends TestCase
     {
         $expected = GitProcessorFactory::class;
         $result = $this->mapper->map('git');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testTagProcessor()
+    {
+        $expected = TagProcessorFactory::class;
+        $result = $this->mapper->map('tags');
         $this->assertEquals($expected, $result);
     }
 
