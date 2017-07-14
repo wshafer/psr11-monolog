@@ -5,6 +5,7 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 
 use PHPUnit\Framework\TestCase;
 
+use WShafer\PSR11MonoLog\Processor\GitProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\IntrospectionProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\MemoryPeakUsageProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\MemoryUsageProcessorFactory;
@@ -73,6 +74,13 @@ class ProcessorMapperTest extends TestCase
     {
         $expected = UidProcessorFactory::class;
         $result = $this->mapper->map('uid');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGitProcessor()
+    {
+        $expected = GitProcessorFactory::class;
+        $result = $this->mapper->map('git');
         $this->assertEquals($expected, $result);
     }
 
