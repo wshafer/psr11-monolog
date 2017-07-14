@@ -63,6 +63,7 @@
         - [WebProcessor](#webprocessor)
         - [MemoryUsageProcessor](#memoryusageprocessor)
         - [MemoryPeakUsageProcessor](#memorypeakusageprocessor)
+        - [ProcessIdProcessor](#processidprocessor)
     
 
 # Installation
@@ -1143,7 +1144,7 @@ Processes a log record's message according to PSR-3 rules, replacing {foo} with 
 return [
     'monolog' => [
         'processors' => [
-            'myHandlerName' => [
+            'myProcessorsName' => [
                 'type' => 'psrLogMessage',
                 'options' => [], // No options
             ],
@@ -1162,7 +1163,7 @@ Adds the line/file/class/method from which the log call originated.
 return [
     'monolog' => [
         'processors' => [
-            'myHandlerName' => [
+            'myProcessorsName' => [
                 'type' => 'introspection',
                 'options' => [
                     'level'                => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -1185,7 +1186,7 @@ Adds the current request URI, request method and client IP to a log record.
 return [
     'monolog' => [
         'processors' => [
-            'myHandlerName' => [
+            'myProcessorsName' => [
                 'type' => 'web',
                 'options' => [
                     'serverData'  => 'my-service', // Optional: Array, object w/ ArrayAccess, or valid service name that provides access to the $_SERVER data
@@ -1207,7 +1208,7 @@ Adds the current memory usage to a log record.
 return [
     'monolog' => [
         'processors' => [
-            'myHandlerName' => [
+            'myProcessorsName' => [
                 'type' => 'memoryUsage',
                 'options' => [], // No options
             ],
@@ -1226,7 +1227,7 @@ Adds the peak memory usage to a log record.
 return [
     'monolog' => [
         'processors' => [
-            'myHandlerName' => [
+            'myProcessorsName' => [
                 'type' => 'memoryPeak',
                 'options' => [], // No options
             ],
@@ -1235,3 +1236,22 @@ return [
 ];
 ```
 Monolog Docs: [MemoryPeakUsageProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/MemoryPeakUsageProcessor.php)
+
+### ProcessIdProcessor
+Adds the process id to a log record.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'processors' => [
+            'myProcessorsName' => [
+                'type' => 'processId',
+                'options' => [], // No options
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [ProcessIdProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/ProcessIdProcessor.php)
