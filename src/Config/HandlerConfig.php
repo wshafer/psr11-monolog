@@ -3,12 +3,10 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Config;
 
-use WShafer\PSR11MonoLog\Exception\MissingConfigException;
-
 class HandlerConfig extends AbstractServiceConfig
 {
-    public function getFormatter()
+    public function getFormatters()
     {
-        return $this->config['formatter'] ?? null;
+        return $this->config['formatters'] ?? [];
     }
 }

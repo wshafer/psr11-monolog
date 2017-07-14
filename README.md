@@ -8,20 +8,6 @@
 #### Table of Contents
 - [Installation](#installation)
 - [Configuration](#configuration)
-    - [Formatters](#formatters)
-        - [LineFomatter](#linefomatter)
-        - [HtmlFormatter](#htmlformatter)
-        - [NormalizerFormatter](#normalizerformatter)
-        - [ScalarFormatter](#scalarformatter)
-        - [JsonFormatter](#jsonformatter)
-        - [WildfireFormatter](#wildfireformatter)
-        - [ChromePHPFormatter](#chromephpformatter)
-        - [GelfMessageFormatter](#gelfmessageformatter)
-        - [LogstashFormatter](#logstashformatter)
-        - [ElasticaFormatter](#elasticaformatter)
-        - [LogglyFormatter](#logglyformatter)
-        - [FlowdockFormatter](#flowdockformatter)
-        - [MongoDBFormatter](#mongodbformatter)
     - [Handlers](#handlers)
         - [Log to files and syslog](#log-to-files-and-syslog)
             - [StreamHandler](#streamhandler)
@@ -57,6 +43,22 @@
             - [ChromePHPHandler](#chromephphandler)
             - [BrowserConsoleHandler](#browserconsolehandler)
             - [PHPConsoleHandler](#phpconsolehandler)
+    - [Formatters](#formatters)
+        - [LineFomatter](#linefomatter)
+        - [HtmlFormatter](#htmlformatter)
+        - [NormalizerFormatter](#normalizerformatter)
+        - [ScalarFormatter](#scalarformatter)
+        - [JsonFormatter](#jsonformatter)
+        - [WildfireFormatter](#wildfireformatter)
+        - [ChromePHPFormatter](#chromephpformatter)
+        - [GelfMessageFormatter](#gelfmessageformatter)
+        - [LogstashFormatter](#logstashformatter)
+        - [ElasticaFormatter](#elasticaformatter)
+        - [LogglyFormatter](#logglyformatter)
+        - [FlowdockFormatter](#flowdockformatter)
+        - [MongoDBFormatter](#mongodbformatter)
+    - [Processors](#processors)
+        - [PsrLogMessageProcessor](#psrlogmessageprocessor)
     
 
 # Installation
@@ -67,297 +69,10 @@ composer require wshafer/psr11-monolog
 
 # Configuration
 
-
-## Formatters
-
-#### LineFomatter
-Formats a log record into a one-line string.
-
-```php
-<?php
-
-return [
-    'monolog' => [
-        'formatter' => [
-            'myFormatterName' => [
-                'type' => 'line',
-                'options' => [
-                    'format'                     => "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n",  // Optional
-                    'dateFormat'                 => "c", // Optional : The format of the timestamp: one supported by DateTime::format
-                    'allowInlineLineBreaks'      => false, // Optional : Whether to allow inline line breaks in log entries
-                    'ignoreEmptyContextAndExtra' => false, // Optional
-                ],
-            ],
-        ],
-    ],
-];
-```
-Monolog Docs: [LineFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/LineFormatter.php)
-
-
-#### HtmlFormatter
-Used to format log records into a human readable html table, mainly suitable for emails.
-
-```php
-<?php
-
-return [
-    'monolog' => [
-        'formatter' => [
-            'myFormatterName' => [
-                'type' => 'html',
-                'options' => [
-                    'dateFormat' => "c", // Optional
-                ],
-            ],
-        ],
-    ],
-];
-```
-Monolog Docs: [HtmlFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/HtmlFormatter.php)
-
-#### NormalizerFormatter
-Normalizes objects/resources down to strings so a record can easily be serialized/encoded.
-
-```php
-<?php
-
-return [
-    'monolog' => [
-        'formatter' => [
-            'myFormatterName' => [
-                'type' => 'normalizer',
-                'options' => [
-                    'dateFormat' => "c", // Optional
-                ],
-            ],
-        ],
-    ],
-];
-```
-Monolog Docs: [NormalizerFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/NormalizerFormatter.php)
-
-#### ScalarFormatter
-Used to format log records into an associative array of scalar values.
-
-```php
-<?php
-
-return [
-    'monolog' => [
-        'formatter' => [
-            'myFormatterName' => [
-                'type' => 'scalar',
-                'options' => [], // No options available
-            ],
-        ],
-    ],
-];
-```
-Monolog Docs: [ScalarFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/ScalarFormatter.php)
-
-#### JsonFormatter
-Encodes a log record into json.
-
-```php
-<?php
-
-return [
-    'monolog' => [
-        'formatter' => [
-            'myFormatterName' => [
-                'type' => 'json',
-                'options' => [
-                    'batchMode'     => \Monolog\Formatter\JsonFormatter::BATCH_MODE_JSON, //optional
-                    'appendNewline' => true, //optional
-                ],
-            ],
-        ],
-    ],
-];
-```
-Monolog Docs: [JsonFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/JsonFormatter.php)
-
-#### WildfireFormatter
-Used to format log records into the Wildfire/FirePHP protocol, only useful for the FirePHPHandler.
-
-```php
-<?php
-
-return [
-    'monolog' => [
-        'formatter' => [
-            'myFormatterName' => [
-                'type' => 'wildfire',
-                'options' => [
-                    'dateFormat' => "c", // Optional
-                ],
-            ],
-        ],
-    ],
-];
-```
-Monolog Docs: [WildfireFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/WildfireFormatter.php)
-
-#### ChromePHPFormatter
-Used to format log records into the ChromePHP format, only useful for the ChromePHPHandler.
-
-```php
-<?php
-
-return [
-    'monolog' => [
-        'formatter' => [
-            'myFormatterName' => [
-                'type' => 'chromePHP',
-                'options' => [], // No options available
-            ],
-        ],
-    ],
-];
-```
-Monolog Docs: [ChromePHPFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/ScalarFormatter.php)
-
-#### GelfMessageFormatter
-Used to format log records into Gelf message instances, only useful for the GelfHandler.
-
-```php
-<?php
-
-return [
-    'monolog' => [
-        'formatter' => [
-            'myFormatterName' => [
-                'type' => 'gelf',
-                'options' => [
-                    'systemName'    => "my-system",  // Optional : the name of the system for the Gelf log message, defaults to the hostname of the machine
-                    'extraPrefix'   => "extra_", // Optional : a prefix for 'extra' fields from the Monolog record
-                    'contextPrefix' => 'ctxt_', // Optional : a prefix for 'context' fields from the Monolog record
-                ],
-            ],
-        ],
-    ],
-];
-```
-Monolog Docs: [GelfMessageFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/GelfMessageFormatter.php)
-
-#### LogstashFormatter
-Used to format log records into logstash event json, useful for any handler listed under inputs here.
-
-```php
-<?php
-
-return [
-    'monolog' => [
-        'formatter' => [
-            'myFormatterName' => [
-                'type' => 'logstash',
-                'options' => [
-                    'applicationName' => 'app-name', // the application that sends the data, used as the "type" field of logstash
-                    'systemName'      => "my-system",  // Optional : the system/machine name, used as the "source" field of logstash, defaults to the hostname of the machine
-                    'extraPrefix'     => "extra_", // Optional : prefix for extra keys inside logstash "fields"
-                    'contextPrefix'   => 'ctxt_', // Optional : prefix for context keys inside logstash "fields", defaults to ctxt_
-                ],
-            ],
-        ],
-    ],
-];
-```
-Monolog Docs: [LogstashFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/LogstashFormatter.php)
-
-
-#### ElasticaFormatter
-Used to format log records into [logstash](http://logstash.net/) event json, useful for any handler listed 
-under inputs [here](http://logstash.net/docs/latest).
-
-```php
-<?php
-
-return [
-    'monolog' => [
-        'formatter' => [
-            'ElasticaFormatter' => [
-                'type' => 'elastica',
-                'options' => [
-                    'index'   => 'some-index', // Elastic search index name
-                    'type'    => "doc-type",  // Elastic search document type
-                ],
-            ],
-        ],
-    ],
-];
-```
-Monolog Docs: [ElasticaFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/ElasticaFormatter.php)
-
-#### LogglyFormatter
-Used to format log records into Loggly messages, only useful for the LogglyHandler.
-
-```php
-<?php
-
-return [
-    'monolog' => [
-        'formatter' => [
-            'myFormatterName' => [
-                'type' => 'loggly',
-                'options' => [
-                    'batchMode'     => \Monolog\Formatter\JsonFormatter::BATCH_MODE_NEWLINES, //optional
-                    'appendNewline' => false, //optional
-                ],
-            ],
-        ],
-    ],
-];
-```
-Monolog Docs: [LogglyFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/LogglyFormatter.php)
-
-#### FlowdockFormatter
-Used to format log records into Flowdock messages, only useful for the FlowdockHandler.
-
-```php
-<?php
-
-return [
-    'monolog' => [
-        'formatter' => [
-            'myFormatterName' => [
-                'type' => 'flowdock',
-                'options' => [
-                    'source'      => 'Some Source',
-                    'sourceEmail' => 'source@email.com'
-                ],
-            ],
-        ],
-    ],
-];
-```
-Monolog Docs: [FlowdockFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/FlowdockFormatter.php)
-
-#### MongoDBFormatter
-Converts \DateTime instances to \MongoDate and objects recursively to arrays, only useful with the MongoDBHandler.
-
-```php
-<?php
-
-return [
-    'monolog' => [
-        'formatter' => [
-            'myFormatterName' => [
-                'type' => 'mongodb',
-                'options' => [
-                    'maxNestingLevel'        => 3, // optional : 0 means infinite nesting, the $record itself is level 1, $record['context'] is 2
-                    'exceptionTraceAsString' => true, // optional : set to false to log exception traces as a sub documents instead of strings
-                ],
-            ],
-        ],
-    ],
-];
-```
-Monolog Docs: [MongoDBFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/MongoDBFormatter.php)
-
 ## Handlers
 
 ### Log to files and syslog
+
 
 #### StreamHandler
 Logs records into any PHP stream, use this for log files.
@@ -367,9 +82,10 @@ Logs records into any PHP stream, use this for log files.
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'stream',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'stream'         => '/tmp/stream_test.txt', // Required:  File Path | Resource | Service Name
                     'level'          => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -394,9 +110,10 @@ this is just meant as a quick and dirty solution.
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'rotating',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'filename'       => '/tmp/stream_test.txt', // Required:  File Path
                     'maxFiles'       => 0, // Optional:  The maximal amount of files to keep (0 means unlimited)
@@ -420,9 +137,10 @@ Logs records to the syslog.
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'syslog',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'ident'          => '/tmp/stream_test.txt', // Required:  The string ident is added to each message. 
                     'facility'       => LOG_USER, // Optional:  The facility argument is used to specify what type of program is logging the message.
@@ -446,9 +164,10 @@ Logs records to PHP's [error_log()](http://docs.php.net/manual/en/function.error
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'errorlog',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'messageType'    => \Monolog\Handler\ErrorLogHandler::OPERATING_SYSTEM, // Optional:  Says where the error should go.
                     'level'          => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -472,9 +191,10 @@ Sends emails using PHP's [mail()](http://php.net/manual/en/function.mail.php) fu
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'nativeMailer',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'to'             => ['email1@test.com', 'email2@test.com'], // The receiver of the mail. Can be an array or string
                     'subject'        => 'Error Log', // The subject of the mail
@@ -498,9 +218,10 @@ Sends emails using a [Swift_Mailer](http://swiftmailer.org/) instance.
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'swiftMailer',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'mailer'  => 'my-service', // The mailer to use.  Must be a valid service name in the container
                     'message' => 'my-message', // An example message for real messages, only the body will be replaced.  Must be a valid service name or callable
@@ -522,9 +243,10 @@ Sends mobile notifications via the [Pushover](https://www.pushover.net/) API.
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'pushover',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'token'             => 'sometokenhere', // Pushover api token
                     'users'             => ['email1@test.com', 'email2@test.com'], // Pushover user id or array of ids the message will be sent to
@@ -552,9 +274,10 @@ Sends notifications through the [HipChat](http://hipchat.com/) api to a hipchat 
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'hipChat',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'token'  => 'sometokenhere', // HipChat API Token
                     'room'   => 'some-room', // The room that should be alerted of the message (Id or Name)
@@ -581,9 +304,10 @@ Logs records to a [Flowdock](https://www.flowdock.com/) account.
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'flowdock',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'apiToken' => 'sometokenhere', // HipChat API Token
                     'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -605,9 +329,10 @@ Logs records to a [Slack](https://www.slack.com/) account using the Slackbot inc
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'slackbot',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'slackTeam' => 'Team', // Slackbot token
                     'token'     => 'sometokenhere', // HipChat API Token
@@ -630,9 +355,10 @@ Logs records to a [Slack](https://www.slack.com/) account using Slack Webhooks.
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'slackWebhook',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'webhookUrl'             => 'webhook.slack.com', // Slack Webhook URL
                     'channel'                => 'channel', // Slack channel (encoded ID or name)
@@ -660,9 +386,10 @@ Logs records to a [SlackHandler](https://www.slack.com/) account using the Slack
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'slack',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'token     '             => 'apiToken', // Slack API token
                     'channel'                => 'channel', // Slack channel (encoded ID or name)
@@ -690,9 +417,10 @@ Sends emails via the [Mandrill](http://www.mandrill.com/) API using a [Swift_Mes
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'mandrill',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'apiKey'  => 'my-service', // A valid Mandrill API key
                     'message' => 'my-message', // An example \Swiftmail message for real messages, only the body will be replaced.  Must be a valid service name or callable
@@ -714,9 +442,10 @@ Logs records to a [Fleep](https://fleep.io/) conversation using Webhooks.
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'fleepHook',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'token'  => 'sometokenhere', // Webhook token
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -737,9 +466,10 @@ Notifies an [IFTTT](https://ifttt.com/maker) trigger with the log channel, level
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'IFTTT',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'apiToken' => 'sometokenhere', // Webhook token
                     'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -762,9 +492,10 @@ Logs records to [sockets](http://php.net/fsockopen), use this for UNIX and TCP s
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'socket',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'connectionString' => 'unix:///var/log/httpd_app_log.socket', // Socket connection string.  You can use a unix:// prefix to access unix sockets and udp:// to open UDP sockets instead of the default TCP.
                     'timeout'          => 30, // Optional: The connection timeout, in seconds.
@@ -787,9 +518,10 @@ Logs records to an [AMQP](http://www.amqp.org/) compatible server. Requires the 
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'amqp',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'exchange'     => 'my-service', // AMQPExchange (php AMQP ext) or PHP AMQP lib channel.  Must be a valid service.
                     'exchangeName' => 'log-name', // Optional: Exchange name, for AMQPChannel (PhpAmqpLib) only
@@ -810,9 +542,10 @@ Logs records to a [Graylog2](http://www.graylog2.org) server. Requires package [
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'gelf',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'publisher' => 'my-service', // A Gelf\PublisherInterface object.  Must be a valid service.
                     'level'     => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -837,9 +570,10 @@ internally for over a year._
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'cube',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'url'    => 'http://test.com:80', // A valid url.  Must consist of three parts : protocol://host:port
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -859,9 +593,10 @@ Logs records to a [Sentry](http://getsentry.com/) server using [raven](https://p
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'raven',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'client' => 'my-service', // A \Raven_Client object.  Must be a valid service.
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -881,9 +616,10 @@ Logs records to the Zend Monitor present in [Zend Server](http://www.zend.com/en
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'zend',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
                     'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
@@ -902,9 +638,10 @@ Logs records to a [NewRelic](http://newrelic.com/) application.
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'newRelic',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'level'           => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
                     'bubble'          => true, // Optional: Whether the messages that are handled can bubble up the stack or not
@@ -927,9 +664,10 @@ Logs records to a [Loggly](http://www.loggly.com/) account.
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'loggly',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'token'  => 'sometokenhere', // Webhook token
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -958,9 +696,10 @@ Logs records to a remote [Syslogd](http://www.rsyslog.com/) server.
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'syslogUdp',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'host'     => 'somewhere.com', // Host
                     'port'     => 513, //  Optional: Port
@@ -984,9 +723,10 @@ Logs records to a [LogEntries](http://logentries.com/) account.
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'logEntries',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'token'  => 'sometokenhere', // Log token supplied by LogEntries
                     'useSSL' => true, // Optional: Whether or not SSL encryption should be used.
@@ -1012,9 +752,10 @@ _Note: The Firebug extension isn't being developed or maintained any longer._
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'firePHP',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
                     'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
@@ -1034,9 +775,10 @@ Handler for [ChromePHP](http://www.chromephp.com/), providing inline console mes
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'chromePHP',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
                     'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
@@ -1057,9 +799,10 @@ console API are supported.
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'browserConsole',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
                     'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
@@ -1080,9 +823,10 @@ providing inline console and notification popup messages within Chrome.
 
 return [
     'monolog' => [
-        'handler' => [
+        'handlers' => [
             'myHandlerName' => [
                 'type' => 'phpConsole',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'options' => [], // Optional: See \Monolog\Handler\PHPConsoleHandler::$options for more details
                     'connector' => 'my-service', // Optional:  Instance of \PhpConsole\Connector class. Must be a valid service.
@@ -1095,3 +839,312 @@ return [
 ];
 ```
 Monolog Docs: [PHPConsoleHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/PHPConsoleHandler.php)
+
+
+## Formatters
+
+#### LineFomatter
+Formats a log record into a one-line string.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatters' => [
+            'myFormatterName' => [
+                'type' => 'line',
+                'options' => [
+                    'format'                     => "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n",  // Optional
+                    'dateFormat'                 => "c", // Optional : The format of the timestamp: one supported by DateTime::format
+                    'allowInlineLineBreaks'      => false, // Optional : Whether to allow inline line breaks in log entries
+                    'ignoreEmptyContextAndExtra' => false, // Optional
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [LineFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/LineFormatter.php)
+
+
+#### HtmlFormatter
+Used to format log records into a human readable html table, mainly suitable for emails.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatters' => [
+            'myFormatterName' => [
+                'type' => 'html',
+                'options' => [
+                    'dateFormat' => "c", // Optional
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [HtmlFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/HtmlFormatter.php)
+
+#### NormalizerFormatter
+Normalizes objects/resources down to strings so a record can easily be serialized/encoded.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatters' => [
+            'myFormatterName' => [
+                'type' => 'normalizer',
+                'options' => [
+                    'dateFormat' => "c", // Optional
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [NormalizerFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/NormalizerFormatter.php)
+
+#### ScalarFormatter
+Used to format log records into an associative array of scalar values.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatters' => [
+            'myFormatterName' => [
+                'type' => 'scalar',
+                'options' => [], // No options available
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [ScalarFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/ScalarFormatter.php)
+
+#### JsonFormatter
+Encodes a log record into json.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatters' => [
+            'myFormatterName' => [
+                'type' => 'json',
+                'options' => [
+                    'batchMode'     => \Monolog\Formatter\JsonFormatter::BATCH_MODE_JSON, //optional
+                    'appendNewline' => true, //optional
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [JsonFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/JsonFormatter.php)
+
+#### WildfireFormatter
+Used to format log records into the Wildfire/FirePHP protocol, only useful for the FirePHPHandler.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatters' => [
+            'myFormatterName' => [
+                'type' => 'wildfire',
+                'options' => [
+                    'dateFormat' => "c", // Optional
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [WildfireFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/WildfireFormatter.php)
+
+#### ChromePHPFormatter
+Used to format log records into the ChromePHP format, only useful for the ChromePHPHandler.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatters' => [
+            'myFormatterName' => [
+                'type' => 'chromePHP',
+                'options' => [], // No options available
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [ChromePHPFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/ScalarFormatter.php)
+
+#### GelfMessageFormatter
+Used to format log records into Gelf message instances, only useful for the GelfHandler.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatters' => [
+            'myFormatterName' => [
+                'type' => 'gelf',
+                'options' => [
+                    'systemName'    => "my-system",  // Optional : the name of the system for the Gelf log message, defaults to the hostname of the machine
+                    'extraPrefix'   => "extra_", // Optional : a prefix for 'extra' fields from the Monolog record
+                    'contextPrefix' => 'ctxt_', // Optional : a prefix for 'context' fields from the Monolog record
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [GelfMessageFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/GelfMessageFormatter.php)
+
+#### LogstashFormatter
+Used to format log records into logstash event json, useful for any handler listed under inputs here.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatters' => [
+            'myFormatterName' => [
+                'type' => 'logstash',
+                'options' => [
+                    'applicationName' => 'app-name', // the application that sends the data, used as the "type" field of logstash
+                    'systemName'      => "my-system",  // Optional : the system/machine name, used as the "source" field of logstash, defaults to the hostname of the machine
+                    'extraPrefix'     => "extra_", // Optional : prefix for extra keys inside logstash "fields"
+                    'contextPrefix'   => 'ctxt_', // Optional : prefix for context keys inside logstash "fields", defaults to ctxt_
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [LogstashFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/LogstashFormatter.php)
+
+
+#### ElasticaFormatter
+Used to format log records into [logstash](http://logstash.net/) event json, useful for any handler listed 
+under inputs [here](http://logstash.net/docs/latest).
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatters' => [
+            'ElasticaFormatter' => [
+                'type' => 'elastica',
+                'options' => [
+                    'index'   => 'some-index', // Elastic search index name
+                    'type'    => "doc-type",  // Elastic search document type
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [ElasticaFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/ElasticaFormatter.php)
+
+#### LogglyFormatter
+Used to format log records into Loggly messages, only useful for the LogglyHandler.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatters' => [
+            'myFormatterName' => [
+                'type' => 'loggly',
+                'options' => [
+                    'batchMode'     => \Monolog\Formatter\JsonFormatter::BATCH_MODE_NEWLINES, //optional
+                    'appendNewline' => false, //optional
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [LogglyFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/LogglyFormatter.php)
+
+#### FlowdockFormatter
+Used to format log records into Flowdock messages, only useful for the FlowdockHandler.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatters' => [
+            'myFormatterName' => [
+                'type' => 'flowdock',
+                'options' => [
+                    'source'      => 'Some Source',
+                    'sourceEmail' => 'source@email.com'
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [FlowdockFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/FlowdockFormatter.php)
+
+#### MongoDBFormatter
+Converts \DateTime instances to \MongoDate and objects recursively to arrays, only useful with the MongoDBHandler.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatters' => [
+            'myFormatterName' => [
+                'type' => 'mongodb',
+                'options' => [
+                    'maxNestingLevel'        => 3, // optional : 0 means infinite nesting, the $record itself is level 1, $record['context'] is 2
+                    'exceptionTraceAsString' => true, // optional : set to false to log exception traces as a sub documents instead of strings
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [MongoDBFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/MongoDBFormatter.php)
+
+## Processors
+
+### PsrLogMessageProcessor
+Processes a log record's message according to PSR-3 rules, replacing {foo} with the value from $context['foo'].
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'processors' => [
+            'myHandlerName' => [
+                'type' => 'psrLogMessage',
+                'options' => [], // No options
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [PsrLogMessageProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/PsrLogMessageProcessor.php)

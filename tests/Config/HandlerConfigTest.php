@@ -21,7 +21,7 @@ class HandlerConfigTest extends TestCase
     {
         return [
             'type' => 'StreamHandler',
-            'formatter' => 'formatterOne',
+            'formatters' => ['formatterOne'],
             'options' => [
                 'stream' => '/tmp/logOne.txt',
                 'level' => Logger::ERROR,
@@ -84,16 +84,16 @@ class HandlerConfigTest extends TestCase
     public function testGetFormatter()
     {
         $config = $this->getConfigArray();
-        $formatter = $this->config->getFormatter();
-        $this->assertEquals($config['formatter'], $formatter);
+        $formatter = $this->config->getFormatters();
+        $this->assertEquals($config['formatters'], $formatter);
     }
 
     public function testGetFormatterMissingFormatter()
     {
         $config = $this->getConfigArray();
-        unset($config['formatter']);
+        unset($config['formatters']);
         $configService = new HandlerConfig($config);
-        $formatter = $configService->getFormatter();
-        $this->assertNull($formatter);
+        $formatter = $configService->getFormatters();
+        $this->assertEmpty($formatter);
     }
 }
