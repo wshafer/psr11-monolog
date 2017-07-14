@@ -65,6 +65,7 @@
         - [MemoryPeakUsageProcessor](#memorypeakusageprocessor)
         - [ProcessIdProcessor](#processidprocessor)
         - [UidProcessor](#uidprocessor)
+        - [GitProcessor](#gitprocessor)
     
 
 # Installation
@@ -1167,7 +1168,7 @@ return [
             'myProcessorsName' => [
                 'type' => 'introspection',
                 'options' => [
-                    'level'                => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'level'                => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this processor will be triggered
                     'skipClassesPartials'  => [], // Optional
                     'skipStackFramesCount' => 0, // Optional
                 ],
@@ -1277,3 +1278,26 @@ return [
 ];
 ```
 Monolog Docs: [UidProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/UidProcessor.php)
+
+### GitProcessor
+Adds the current git branch and commit to a log record.
+
+_Note:  Only works if the git executable is in your working path._
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'processors' => [
+            'myProcessorsName' => [
+                'type' => 'git',
+                'options' => [
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this processor will be triggered
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [GitProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/GitProcessor.php)

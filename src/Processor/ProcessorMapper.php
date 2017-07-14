@@ -35,6 +35,8 @@ class ProcessorMapper implements MapperInterface
                 return ProcessIdProcessorFactory::class;
             case 'uid':
                 return UidProcessorFactory::class;
+            case 'git':
+                return GitProcessorFactory::class;
         }
 
         return null;
