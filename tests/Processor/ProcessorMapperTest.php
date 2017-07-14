@@ -11,6 +11,7 @@ use WShafer\PSR11MonoLog\Processor\MemoryUsageProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\ProcessIdProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\ProcessorMapper;
 use WShafer\PSR11MonoLog\Processor\PsrLogMessageProcessorFactory;
+use WShafer\PSR11MonoLog\Processor\UidProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\WebProcessorFactory;
 
 /**
@@ -65,6 +66,13 @@ class ProcessorMapperTest extends TestCase
     {
         $expected = MemoryPeakUsageProcessorFactory::class;
         $result = $this->mapper->map('memoryPeak');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapUidProcessor()
+    {
+        $expected = UidProcessorFactory::class;
+        $result = $this->mapper->map('uid');
         $this->assertEquals($expected, $result);
     }
 
