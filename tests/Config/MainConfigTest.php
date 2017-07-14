@@ -9,6 +9,7 @@ use WShafer\PSR11MonoLog\Config\ChannelConfig;
 use WShafer\PSR11MonoLog\Config\FormatterConfig;
 use WShafer\PSR11MonoLog\Config\HandlerConfig;
 use WShafer\PSR11MonoLog\Config\MainConfig;
+use WShafer\PSR11MonoLog\Config\ProcessorConfig;
 use WShafer\PSR11MonoLog\Exception\MissingConfigException;
 
 /**
@@ -63,6 +64,15 @@ class MainConfigTest extends TestCase
                             'bubble' =>  true,
                             'filePermission' => 755,
                             'useLocking' => true
+                        ],
+                    ],
+                ],
+
+                'processors' => [
+                    'processorOne' => [
+                        'type' => 'introspection',
+                        'options' => [
+                            'dateFormat' => 'Y n j, g:i a',
                         ],
                     ],
                 ],
@@ -154,6 +164,29 @@ class MainConfigTest extends TestCase
         foreach ($formatterConfigs as $formatterConfig) {
             $this->assertInstanceOf(FormatterConfig::class, $formatterConfig);
         }
+    }
+
+    public function testGetProcessors()
+    {
+        $config = $this->getConfigArray();
+
+        $processorConfigs = $this->config->getProcessors();
+        $expectedCount = count($config['monolog']['processors']);
+        $this->assertCount($expectedCount, $processorConfigs);
+
+        foreach ($processorConfigs as $processorConfig) {
+            $this->assertInstanceOf(ProcessorConfig::class, $processorConfig);
+        }
+    }
+
+    public function testGetProcessorsNoneConfigured()
+    {
+        $config = $this->getConfigArray();
+        unset($config['monolog']['processors']);
+
+        $this->config = new MainConfig($config);
+        $processorConfigs = $this->config->getProcessors();
+        $this->assertEmpty($processorConfigs);
     }
 
     public function testGetChannels()

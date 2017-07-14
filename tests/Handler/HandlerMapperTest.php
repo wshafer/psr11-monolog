@@ -21,6 +21,7 @@ use WShafer\PSR11MonoLog\Handler\LogglyHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\MandrillHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NewRelicHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\PHPConsoleHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\PushoverHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\RavenHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\RotatingFileHandlerFactory;
@@ -240,6 +241,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = BrowserConsoleHandlerFactory::class;
         $result = $this->mapper->map('browserConsole');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapPHPConsole()
+    {
+        $expected = PHPConsoleHandlerFactory::class;
+        $result = $this->mapper->map('phpConsole');
         $this->assertEquals($expected, $result);
     }
 
