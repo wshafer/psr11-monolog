@@ -62,6 +62,7 @@
         - [IntrospectionProcessor](#introspectionprocessor)
         - [WebProcessor](#webprocessor)
         - [MemoryUsageProcessor](#memoryusageprocessor)
+        - [MemoryPeakUsageProcessor](#memorypeakusageprocessor)
     
 
 # Installation
@@ -1215,3 +1216,22 @@ return [
 ];
 ```
 Monolog Docs: [MemoryUsageProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/MemoryUsageProcessor.php)
+
+### MemoryPeakUsageProcessor
+Adds the peak memory usage to a log record.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'processors' => [
+            'myHandlerName' => [
+                'type' => 'memoryPeak',
+                'options' => [], // No options
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [MemoryPeakUsageProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/MemoryPeakUsageProcessor.php)

@@ -29,6 +29,8 @@ class ProcessorMapper implements MapperInterface
                 return WebProcessorFactory::class;
             case 'memoryusage':
                 return MemoryUsageProcessorFactory::class;
+            case 'memorypeak':
+                return MemoryPeakUsageProcessorFactory::class;
         }
 
         return null;
