@@ -9,6 +9,7 @@ use WShafer\PSR11MonoLog\Processor\GitProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\IntrospectionProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\MemoryPeakUsageProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\MemoryUsageProcessorFactory;
+use WShafer\PSR11MonoLog\Processor\MercurialProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\ProcessIdProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\ProcessorMapper;
 use WShafer\PSR11MonoLog\Processor\PsrLogMessageProcessorFactory;
@@ -82,6 +83,13 @@ class ProcessorMapperTest extends TestCase
     {
         $expected = GitProcessorFactory::class;
         $result = $this->mapper->map('git');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMercurialProcessor()
+    {
+        $expected = MercurialProcessorFactory::class;
+        $result = $this->mapper->map('mercurial');
         $this->assertEquals($expected, $result);
     }
 
