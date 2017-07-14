@@ -24,6 +24,8 @@ class ProcessorMapper implements MapperInterface
         switch ($type) {
             case 'psrlogmessage':
                 return PsrLogMessageProcessorFactory::class;
+            case 'introspection':
+                return IntrospectionProcessorFactory::class;
         }
 
         return null;

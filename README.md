@@ -59,6 +59,7 @@
         - [MongoDBFormatter](#mongodbformatter)
     - [Processors](#processors)
         - [PsrLogMessageProcessor](#psrlogmessageprocessor)
+        - [IntrospectionProcessor](#introspectionprocessor)
     
 
 # Installation
@@ -1148,3 +1149,26 @@ return [
 ];
 ```
 Monolog Docs: [PsrLogMessageProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/PsrLogMessageProcessor.php)
+
+### IntrospectionProcessor
+Adds the line/file/class/method from which the log call originated.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'processors' => [
+            'myHandlerName' => [
+                'type' => 'introspection',
+                'options' => [
+                    'level'                => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'skipClassesPartials'  => [], // Optional
+                    'skipStackFramesCount' => 0, // Optional
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [IntrospectionProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/IntrospectionProcessor.php)
