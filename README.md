@@ -45,6 +45,7 @@
             - [PHPConsoleHandler](#phpconsolehandler)
         - [Log to databases](#log-to-databases)
             - [RedisHandler](#redishandler)
+            - [MongoDBHandler](#mongodbhandler)
     - [Formatters](#formatters)
         - [LineFomatter](#linefomatter)
         - [HtmlFormatter](#htmlformatter)
@@ -881,7 +882,32 @@ return [
 ```
 Monolog Docs: [RedisHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RedisHandler.php)
 
+#### MongoDBHandler
+Handler to write records in MongoDB via a [Mongo extension](http://php.net/manual/en/mongodb.tutorial.library.php) connection.
 
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'mongo',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'options' => [
+                    'client'     => 'my-mongo-service-name', // MongoDB library or driver instance.
+                    'database'   => 'my-db', // Database name
+                    'collection' => 'collectionName', // Collection name
+                    'level'      => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'     => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'capSize'    => true, // Optional: Number of entries to limit list size to, 0 = unlimited
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [MongoDBHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/MongoDBHandler.php)
 
 
 
