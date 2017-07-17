@@ -19,11 +19,13 @@ use WShafer\PSR11MonoLog\Handler\IFTTTHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\LogEntriesHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\LogglyHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\MandrillHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\MongoDBHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NewRelicHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\PHPConsoleHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\PushoverHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\RavenHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\RedisHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\RotatingFileHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SlackbotHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SlackHandlerFactory;
@@ -248,6 +250,20 @@ class HandlerMapperTest extends TestCase
     {
         $expected = PHPConsoleHandlerFactory::class;
         $result = $this->mapper->map('phpConsole');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapRedis()
+    {
+        $expected = RedisHandlerFactory::class;
+        $result = $this->mapper->map('redis');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapMongo()
+    {
+        $expected = MongoDBHandlerFactory::class;
+        $result = $this->mapper->map('mongo');
         $this->assertEquals($expected, $result);
     }
 

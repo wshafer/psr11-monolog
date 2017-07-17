@@ -8,6 +8,10 @@ cache:
   directories:
     - $HOME/.composer/cache
 
+before_install:
+  - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - php -m
+
 before_script:
   - composer self-update
   - composer install --prefer-dist -n
