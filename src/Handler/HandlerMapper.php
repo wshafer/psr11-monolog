@@ -83,6 +83,8 @@ class HandlerMapper implements MapperInterface
                 return RedisHandlerFactory::class;
             case 'mongo':
                 return MongoDBHandlerFactory::class;
+            case 'couchdb':
+                return CouchDBHandlerFactory::class;
         }
 
         return null;

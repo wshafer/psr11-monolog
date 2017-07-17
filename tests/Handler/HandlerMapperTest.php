@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\AmqpHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\BrowserConsoleHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ChromePHPHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\CouchDBHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\CubeHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FirePHPHandlerFactory;
@@ -264,6 +265,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = MongoDBHandlerFactory::class;
         $result = $this->mapper->map('mongo');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testMapCouchDb()
+    {
+        $expected = CouchDBHandlerFactory::class;
+        $result = $this->mapper->map('couchDb');
         $this->assertEquals($expected, $result);
     }
 
