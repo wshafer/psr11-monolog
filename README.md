@@ -46,6 +46,7 @@
         - [Log to databases](#log-to-databases)
             - [RedisHandler](#redishandler)
             - [MongoDBHandler](#mongodbhandler)
+            - [CouchDBHandler](#couchdbhandler)
     - [Formatters](#formatters)
         - [LineFomatter](#linefomatter)
         - [HtmlFormatter](#htmlformatter)
@@ -908,6 +909,42 @@ return [
 ];
 ```
 Monolog Docs: [MongoDBHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/MongoDBHandler.php)
+
+#### CouchDBHandler
+Logs records to a CouchDB server.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'couchDb',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'options' => [
+                    'host'     => 'localhost',  // Optional: Hostname/Ip address,  Default: 'localhost'
+                    'port'     => 5984, // Optional: port,  Default: 5984
+                    'dbname'   => 'db', // Optional: Database Name,  Default: 'logger'
+                    'username' => 'someuser', // Optional: Username,  Default: null
+                    'password' => 'somepass', // Optional: Password,  Default: null
+                    'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [CouchDBHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/CouchDBHandler.php)
+
+
+
+
+
+
+
+
 
 
 
