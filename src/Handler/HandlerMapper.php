@@ -79,6 +79,8 @@ class HandlerMapper implements MapperInterface
                 return BrowserConsoleHandlerFactory::class;
             case 'phpconsole':
                 return PHPConsoleHandlerFactory::class;
+            case 'redis':
+                return RedisHandlerFactory::class;
         }
 
         return null;
