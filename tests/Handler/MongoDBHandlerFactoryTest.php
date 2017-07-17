@@ -13,7 +13,7 @@ use WShafer\PSR11MonoLog\Handler\MongoDBHandlerFactory;
 /**
  * @covers \WShafer\PSR11MonoLog\Handler\MongoDBHandlerFactory
  */
-class RedisHandlerFactoryTest extends TestCase
+class MongoDBHandlerFactoryTest extends TestCase
 {
     /** @var MongoDBHandlerFactory */
     protected $factory;
