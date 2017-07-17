@@ -43,6 +43,8 @@
             - [ChromePHPHandler](#chromephphandler)
             - [BrowserConsoleHandler](#browserconsolehandler)
             - [PHPConsoleHandler](#phpconsolehandler)
+        - [Log to databases](#log-to-databases)
+            - [RedisHandler](#redishandler)
     - [Formatters](#formatters)
         - [LineFomatter](#linefomatter)
         - [HtmlFormatter](#htmlformatter)
@@ -848,6 +850,78 @@ return [
 ];
 ```
 Monolog Docs: [PHPConsoleHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/PHPConsoleHandler.php)
+
+
+###Logging in development
+
+#### RedisHandler
+Logs records to a [Redis](http://redis.io/) server.   Requires the [php-redis](https://pecl.php.net/package/redis) 
+extension or the [Predis](https://github.com/nrk/predis) library.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'redis',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'options' => [
+                    'client'  => 'my-redis-service-name', // The redis instance.  Must be either a [Predis] client OR a Pecl Redis instance
+                    'key'     => 'my-service', // The key name to push records to
+                    'level'   => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'  => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'capSize' => true, // Optional: Number of entries to limit list size to, 0 = unlimited
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [RedisHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RedisHandler.php)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## Formatters
