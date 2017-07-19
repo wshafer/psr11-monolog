@@ -5,8 +5,8 @@ namespace WShafer\PSR11MonoLog\Config;
 
 class HandlerConfig extends AbstractServiceConfig
 {
-    public function getFormatters()
+    public function getFormatter()
     {
-        return $this->config['formatters'] ?? [];
+        return $this->config['formatter'] ?? '';
     }
 }
