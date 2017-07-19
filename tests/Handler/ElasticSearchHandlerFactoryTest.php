@@ -3,19 +3,19 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Handler;
 
-use Doctrine\CouchDB\CouchDBClient;
-use Monolog\Handler\DoctrineCouchDBHandler;
+use Elastica\Client;
+use Monolog\Handler\ElasticSearchHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
-use WShafer\PSR11MonoLog\Handler\DoctrineCouchDBHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\ElasticSearchHandlerFactory;
 
 /**
- * @covers \WShafer\PSR11MonoLog\Handler\DoctrineCouchDBHandlerFactory
+ * @covers \WShafer\PSR11MonoLog\HandlerElasticSearchHandlerFactory
  */
-class DoctrineCouchDBHandlerFactoryTest extends TestCase
+class ElasticSearchHandlerFactoryTest extends TestCase
 {
-    /** @var DoctrineCouchDBHandlerFactory */
+    /** @var ElasticSearchHandlerFactory */
     protected $factory;
 
     /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
@@ -23,7 +23,7 @@ class DoctrineCouchDBHandlerFactoryTest extends TestCase
 
     public function setup()
     {
-        $this->factory = new DoctrineCouchDBHandlerFactory();
+        $this->factory = new ElasticSearchHandlerFactory();
         $this->mockContainer = $this->createMock(ContainerInterface::class);
         $this->factory->setContainer($this->mockContainer);
     }
@@ -31,12 +31,15 @@ class DoctrineCouchDBHandlerFactoryTest extends TestCase
     public function testInvoke()
     {
         $options = [
-            'client'  => 'my-service',
-            'level'   => Logger::INFO,
-            'bubble'  => false
+            'client'      => 'my-service',
+            'index'       => 'monolog',
+            'type'        => 'record',
+            'ignoreError' => false,
+            'level'       => Logger::INFO,
+            'bubble'      => false
         ];
 
-        $mockService = $this->createMock(CouchDBClient::class);
+        $mockService = $this->createMock(Client::class);
 
         $this->mockContainer->expects($this->once())
             ->method('has')
@@ -50,6 +53,6 @@ class DoctrineCouchDBHandlerFactoryTest extends TestCase
 
         $handler = $this->factory->__invoke($options);
 
-        $this->assertInstanceOf(DoctrineCouchDBHandler::class, $handler);
+        $this->assertInstanceOf(ElasticSearchHandler::class, $handler);
     }
 }

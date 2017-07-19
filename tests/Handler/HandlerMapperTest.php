@@ -10,6 +10,7 @@ use WShafer\PSR11MonoLog\Handler\ChromePHPHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\CouchDBHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\CubeHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\DoctrineCouchDBHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\ElasticSearchHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FirePHPHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FleepHookHandlerFactory;
@@ -279,7 +280,14 @@ class HandlerMapperTest extends TestCase
     public function testDoctrineCouchDb()
     {
         $expected = DoctrineCouchDBHandlerFactory::class;
-        $result = $this->mapper->map('doctrinecouchdb');
+        $result = $this->mapper->map('doctrineCouchDb');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testElasticSearch()
+    {
+        $expected = ElasticSearchHandlerFactory::class;
+        $result = $this->mapper->map('elasticSearch');
         $this->assertEquals($expected, $result);
     }
 

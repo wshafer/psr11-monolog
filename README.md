@@ -48,6 +48,7 @@
             - [MongoDBHandler](#mongodbhandler)
             - [CouchDBHandler](#couchdbhandler)
             - [DoctrineCouchDBHandler](#doctrinecouchdbhandler)
+            - [ElasticSearchHandler](#elasticsearchhandler)
     - [Formatters](#formatters)
         - [LineFomatter](#linefomatter)
         - [HtmlFormatter](#htmlformatter)
@@ -963,7 +964,32 @@ return [
 ```
 Monolog Docs: [DoctrineCouchDBHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/DoctrineCouchDBHandler.php)
 
+#### ElasticSearchHandler
+Logs records to an Elastic Search server.
 
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'doctrineCouchDb',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'options' => [
+                    'client'      => 'my-service', //  Elastica Client object.  Must be a valid container service
+                    'index'       => 'monolog', // Optional: Elastic index name
+                    'type'        => 'record', // Optional: Elastic document type
+                    'ignoreError' => false, // Optional: Suppress Elastica exceptions
+                    'level'       => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'      => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [ElasticSearchHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ElasticSearchHandler.php)
 
 
 
