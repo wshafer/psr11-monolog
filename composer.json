@@ -27,7 +27,8 @@
         "raven/raven": "^0.15.0",
         "php-console/php-console": "^3.1",
         "predis/predis": "^1.1",
-        "mongodb/mongodb": "^1.1"
+        "mongodb/mongodb": "^1.1",
+        "doctrine/couchdb": "1.0.0-beta4"
     },
     "autoload": {
         "psr-4": {
