@@ -11,7 +11,7 @@ use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Handler\ElasticSearchHandlerFactory;
 
 /**
- * @covers \WShafer\PSR11MonoLog\HandlerElasticSearchHandlerFactory
+ * @covers \WShafer\PSR11MonoLog\Handler\ElasticSearchHandlerFactory
  */
 class ElasticSearchHandlerFactoryTest extends TestCase
 {
