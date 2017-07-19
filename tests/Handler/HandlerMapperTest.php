@@ -10,6 +10,7 @@ use WShafer\PSR11MonoLog\Handler\ChromePHPHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\CouchDBHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\CubeHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\DoctrineCouchDBHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\DynamoDbHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ElasticSearchHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FirePHPHandlerFactory;
@@ -288,6 +289,13 @@ class HandlerMapperTest extends TestCase
     {
         $expected = ElasticSearchHandlerFactory::class;
         $result = $this->mapper->map('elasticSearch');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testDynamoDb()
+    {
+        $expected = DynamoDbHandlerFactory::class;
+        $result = $this->mapper->map('dynamoDb');
         $this->assertEquals($expected, $result);
     }
 
