@@ -100,7 +100,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'stream',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'stream'         => '/tmp/stream_test.txt', // Required:  File Path | Resource | Service Name
                     'level'          => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -128,7 +128,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'rotating',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'filename'       => '/tmp/stream_test.txt', // Required:  File Path
                     'maxFiles'       => 0, // Optional:  The maximal amount of files to keep (0 means unlimited)
@@ -155,7 +155,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'syslog',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'ident'          => '/tmp/stream_test.txt', // Required:  The string ident is added to each message. 
                     'facility'       => LOG_USER, // Optional:  The facility argument is used to specify what type of program is logging the message.
@@ -182,7 +182,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'errorlog',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'messageType'    => \Monolog\Handler\ErrorLogHandler::OPERATING_SYSTEM, // Optional:  Says where the error should go.
                     'level'          => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -209,7 +209,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'nativeMailer',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'to'             => ['email1@test.com', 'email2@test.com'], // The receiver of the mail. Can be an array or string
                     'subject'        => 'Error Log', // The subject of the mail
@@ -236,7 +236,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'swiftMailer',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'mailer'  => 'my-service', // The mailer to use.  Must be a valid service name in the container
                     'message' => 'my-message', // An example message for real messages, only the body will be replaced.  Must be a valid service name or callable
@@ -261,7 +261,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'pushover',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'token'             => 'sometokenhere', // Pushover api token
                     'users'             => ['email1@test.com', 'email2@test.com'], // Pushover user id or array of ids the message will be sent to
@@ -292,7 +292,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'hipChat',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'token'  => 'sometokenhere', // HipChat API Token
                     'room'   => 'some-room', // The room that should be alerted of the message (Id or Name)
@@ -322,7 +322,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'flowdock',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'apiToken' => 'sometokenhere', // HipChat API Token
                     'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -347,7 +347,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'slackbot',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'slackTeam' => 'Team', // Slackbot token
                     'token'     => 'sometokenhere', // HipChat API Token
@@ -373,7 +373,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'slackWebhook',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'webhookUrl'             => 'webhook.slack.com', // Slack Webhook URL
                     'channel'                => 'channel', // Slack channel (encoded ID or name)
@@ -404,7 +404,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'slack',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'token     '             => 'apiToken', // Slack API token
                     'channel'                => 'channel', // Slack channel (encoded ID or name)
@@ -435,7 +435,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'mandrill',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'apiKey'  => 'my-service', // A valid Mandrill API key
                     'message' => 'my-message', // An example \Swiftmail message for real messages, only the body will be replaced.  Must be a valid service name or callable
@@ -460,7 +460,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'fleepHook',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'token'  => 'sometokenhere', // Webhook token
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -484,7 +484,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'IFTTT',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'apiToken' => 'sometokenhere', // Webhook token
                     'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -510,7 +510,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'socket',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'connectionString' => 'unix:///var/log/httpd_app_log.socket', // Socket connection string.  You can use a unix:// prefix to access unix sockets and udp:// to open UDP sockets instead of the default TCP.
                     'timeout'          => 30, // Optional: The connection timeout, in seconds.
@@ -536,7 +536,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'amqp',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'exchange'     => 'my-service', // AMQPExchange (php AMQP ext) or PHP AMQP lib channel.  Must be a valid service.
                     'exchangeName' => 'log-name', // Optional: Exchange name, for AMQPChannel (PhpAmqpLib) only
@@ -560,7 +560,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'gelf',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'publisher' => 'my-service', // A Gelf\PublisherInterface object.  Must be a valid service.
                     'level'     => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -588,7 +588,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'cube',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'url'    => 'http://test.com:80', // A valid url.  Must consist of three parts : protocol://host:port
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -611,7 +611,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'raven',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'client' => 'my-service', // A \Raven_Client object.  Must be a valid service.
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -634,7 +634,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'zend',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
                     'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
@@ -656,7 +656,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'newRelic',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'level'           => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
                     'bubble'          => true, // Optional: Whether the messages that are handled can bubble up the stack or not
@@ -682,7 +682,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'loggly',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'token'  => 'sometokenhere', // Webhook token
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -714,7 +714,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'syslogUdp',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'host'     => 'somewhere.com', // Host
                     'port'     => 513, //  Optional: Port
@@ -741,7 +741,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'logEntries',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'token'  => 'sometokenhere', // Log token supplied by LogEntries
                     'useSSL' => true, // Optional: Whether or not SSL encryption should be used.
@@ -770,7 +770,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'firePHP',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
                     'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
@@ -793,7 +793,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'chromePHP',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
                     'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
@@ -817,7 +817,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'browserConsole',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
                     'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
@@ -841,7 +841,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'phpConsole',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'options' => [], // Optional: See \Monolog\Handler\PHPConsoleHandler::$options for more details
                     'connector' => 'my-service', // Optional:  Instance of \PhpConsole\Connector class. Must be a valid service.
@@ -870,7 +870,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'redis',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'client'  => 'my-redis-service-name', // The redis instance.  Must be either a [Predis] client OR a Pecl Redis instance
                     'key'     => 'my-service', // The key name to push records to
@@ -896,7 +896,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'mongo',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'client'     => 'my-mongo-service-name', // MongoDB library or driver instance.
                     'database'   => 'my-db', // Database name
@@ -923,7 +923,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'couchDb',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'host'     => 'localhost',  // Optional: Hostname/Ip address,  Default: 'localhost'
                     'port'     => 5984, // Optional: port,  Default: 5984
@@ -951,7 +951,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'doctrineCouchDb',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'client' => 'my-service', //  CouchDBClient service name.  Must be a valid container service
                     'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
@@ -975,7 +975,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'doctrineCouchDb',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'client'      => 'my-service', //  Elastica Client object.  Must be a valid container service
                     'index'       => 'monolog', // Optional: Elastic index name
@@ -1002,7 +1002,7 @@ return [
         'handlers' => [
             'myHandlerName' => [
                 'type' => 'dynamoDb',
-                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'client'      => 'my-service', //  DynamoDbClient object.  Must be a valid container service
                     'table'       => 'monolog', // Table name

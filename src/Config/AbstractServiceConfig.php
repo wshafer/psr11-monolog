@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Config;
 
+use WShafer\PSR11MonoLog\ConfigInterface;
 use WShafer\PSR11MonoLog\Exception\MissingConfigException;
 
-abstract class AbstractServiceConfig
+abstract class AbstractServiceConfig implements ConfigInterface
 {
     protected $config = [];
 
@@ -30,7 +31,7 @@ abstract class AbstractServiceConfig
         }
     }
 
-    public function getType()
+    public function getType() : string
     {
         return $this->config['type'];
     }
