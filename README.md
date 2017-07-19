@@ -991,50 +991,30 @@ return [
 ```
 Monolog Docs: [ElasticSearchHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ElasticSearchHandler.php)
 
+#### DynamoDbHandler
+Logs records to a DynamoDB table with the [AWS SDK](https://github.com/aws/aws-sdk-php).
 
+```php
+<?php
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'dynamoDb',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'options' => [
+                    'client'      => 'my-service', //  DynamoDbClient object.  Must be a valid container service
+                    'table'       => 'monolog', // Table name
+                    'level'       => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'      => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [DynamoDbHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/DynamoDbHandler.php)
 
 ## Formatters
 

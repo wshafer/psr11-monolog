@@ -89,6 +89,8 @@ class HandlerMapper implements MapperInterface
                 return DoctrineCouchDBHandlerFactory::class;
             case 'elasticsearch':
                 return ElasticSearchHandlerFactory::class;
+            case 'dynamodb':
+                return DynamoDbHandlerFactory::class;
         }
 
         return null;
