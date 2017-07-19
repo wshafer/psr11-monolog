@@ -47,6 +47,7 @@
             - [RedisHandler](#redishandler)
             - [MongoDBHandler](#mongodbhandler)
             - [CouchDBHandler](#couchdbhandler)
+            - [DoctrineCouchDBHandler](#doctrinecouchdbhandler)
     - [Formatters](#formatters)
         - [LineFomatter](#linefomatter)
         - [HtmlFormatter](#htmlformatter)
@@ -696,8 +697,8 @@ Monolog Docs: [LogglyHandler](https://github.com/Seldaek/monolog/blob/master/src
 #### RollbarHandler:
 Logs records to a [Rollbar](https://rollbar.com/) account.
 
-_Note: RollerbarHandler is out of date with upstream changes.  We can not support this factory until this handler is fixed.
-Upstream ticket: https://github.com/Seldaek/monolog/issues/1021_
+_Note: RollerbarHandler is out of date with upstream changes. In addition the Rollerbar library suggests using 
+the PsrHandler instead.  See [Rollerbar Docs](https://github.com/rollbar/rollbar-php#using-monolog) for how to set this up.
 
 Monolog Docs: [RollbarHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RollbarHandler.php)
 
@@ -938,7 +939,29 @@ return [
 ```
 Monolog Docs: [CouchDBHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/CouchDBHandler.php)
 
+#### DoctrineCouchDBHandler
+Logs records to a CouchDB server via the Doctrine CouchDB ODM.
 
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'doctrineCouchDb',
+                'formatters' => ['formatterName'], // Optional: Formatters for the handler.  Default for the handler will be used if not supplied
+                'options' => [
+                    'client' => 'my-service', //  CouchDBClient service name.  Must be a valid container service
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [DoctrineCouchDBHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/DoctrineCouchDBHandler.php)
 
 
 

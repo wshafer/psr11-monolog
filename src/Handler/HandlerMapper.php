@@ -85,6 +85,8 @@ class HandlerMapper implements MapperInterface
                 return MongoDBHandlerFactory::class;
             case 'couchdb':
                 return CouchDBHandlerFactory::class;
+            case 'doctrinecouchdb':
+                return DoctrineCouchDBHandlerFactory::class;
         }
 
         return null;
