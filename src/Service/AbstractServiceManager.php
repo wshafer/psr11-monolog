@@ -70,7 +70,7 @@ abstract class AbstractServiceManager implements ContainerInterface
             return true;
         }
 
-        return $this->config->hasHandlerConfig($id);
+        return false;
     }
 
     protected function getInstanceFromFactory($id)
