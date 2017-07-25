@@ -8,15 +8,15 @@
 #### Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
+- [Containers](#containers)
+    - [Pimple](#pimple-example)
+    - [Zend Service Manager](#zend-service-manager)
+- [Frameworks](#frameworks)
+    - [Zend Expressive](#zend-expressive)
+    - [Zend Framework 3](#zend-framework-3)
+    - [Symfony](#symfony)
+    - [Slim](#slim)
 - [Configuration](#configuration)
-    - [Containers](#containers)
-        - [Pimple](#pimple-example)
-        - [Zend Service Manager](#zend-service-manager)
-    - [Frameworks](#frameworks)
-        - [Zend Expressive](#zend-expressive)
-        - [Zend Framework 3](#zend-framework-3)
-        - [Symfony](#symfony)
-        - [Slim](#slim)
     - [Minimal Configuration](#minimal-configuration)
         - [Example](#minimal-example)
     - [Full Configuration](#full-configuration)
@@ -113,38 +113,13 @@ $channel->debug('Hi There');
 
 Additional info can be found in the [documentation](https://github.com/Seldaek/monolog/blob/master/README.md)
 
-# Configuration
-
-Monolog uses four types of services that will each need to be configured for your application.
-
-- [Channels](#channels) : Channels are a great way to identify to which part of the application a record 
-  is related. This is useful in big applications and is leveraged here.
-  
-  Picture two loggers sharing a handler that writes to a single log file. Channels allow you to 
-  identify the logger that issued every record. You can easily grep through the log files filtering 
-  this or that channel.
-
-- [Handlers](#handlers) : These services do all the heavy lifting and log your message to
-  the wired up system.  There are many different handlers available to you, but he one
-  you will most likely want to use for basic file logging is the [StreamHandler](#streamhandler).
-  _Tip: You can use the same handler for multiple channels._
-
-- [Formatters](#formatters) : (Optional) Formatters are in charge of formatting the message
-  for the handler.   Generally you can use the defualt formatter for the handler you are using, in
-  some circumstances you may however want to change the formatting of the message.  Configuring
-  a formatter will let you customize the message being sent to the log.
-
-- [Processors](#processors) :  (Optional) Processors can be used to add data, change the message, filter, 
-  you name it.  Monolog provides some built-in processors that can be used in your project. Look at the 
-  [Processors](#processors) section for the list.
-
-## Containers
-Any PSR-11 container wil work.  In order to do that you will need to add configuration
+# Containers
+Any PSR-11 container wil work.  All you should need to do is add some configuration
 and register the factory \WShafer\PSR11MonoLog\ChannelChangerFactory()
 
 Below are some specific container examples to get you started
 
-### Pimple
+## Pimple
 ```php
 <?php
 /** @var \Psr\Container\ContainerInterface $container */
@@ -186,7 +161,7 @@ $channel = $channelChanger->get('channelOne');
 $channel->debug('Write to log');
 ```
 
-### Zend Service Manager
+## Zend Service Manager
 
 ```php
 <?php
@@ -231,15 +206,15 @@ $channel = $channelChanger->get('channelOne');
 $channel->debug('Write to log');
 ```
 
-## Frameworks
+# Frameworks
 Any framework that use a PSR-11 should work fine.   Below are some specific framework examples to get you started
 
-### Zend Expressive
+## Zend Expressive
 If your using Zend Expressive using the [Config Manager](https://zend-expressive.readthedocs.io/en/latest/cookbook/modular-layout/)
 and [Zend Component Installer](https://github.com/zendframework/zend-component-installer) (Default in Version 2) you should 
 be all set to go.  Simply add your Monolog configuration and you should be in business.
 
-#### Configuration
+### Configuration
 config/autoload/local.php
 ```php
 <?php
@@ -265,7 +240,7 @@ return [
 ];
 ```
 
-#### Container Service Config
+### Container Service Config
 If you're not using the [Zend Component Installer](https://github.com/zendframework/zend-component-installer) you will 
 also need to register the channel changer.
 
@@ -283,12 +258,12 @@ return [
 ];
 ```
 
-### Zend Framework 3
+## Zend Framework 3
 If your using Zend Framework with the [Zend Component Installer](https://github.com/zendframework/zend-component-installer)
 (Default in Version 3) you should be all set to go.  Simply add your Monolog configuration and you should be in 
 business.
 
-#### Configuration
+### Configuration
 config/autoload/local.php
 ```php
 <?php
@@ -314,7 +289,7 @@ return [
 ];
 ```
 
-#### Module Config
+### Module Config
 If you're not using the [Zend Component Installer](https://github.com/zendframework/zend-component-installer) you will 
 also need to register the Module.
 
@@ -341,12 +316,12 @@ return [
 ```
 
 
-### Symfony
+## Symfony
 While Symfony uses Monolog by default, as of Symfony 3.3 the service container is now 
 PSR-11 compatible.  So for fun the following config below will get these factories 
 registered and working in Symfony.
 
-#### Configuration
+### Configuration
 app/config/config.yml (or equivalent)
 ```yaml
 parameters:
@@ -362,7 +337,7 @@ parameters:
         handlers: 'myHandler'
 ```
 
-#### Container Service Config
+### Container Service Config
 app/config/services.yml
 ```yaml
 services:
@@ -378,7 +353,7 @@ services:
 ```
 
 
-#### Example Usage
+### Example Usage
 src/AppBundle/Controller/DefaultController.php
 
 ```php
@@ -408,7 +383,7 @@ class DefaultController extends Controller
 }
 ```
 
-### Slim
+## Slim
 
 public/index.php
 ```php
@@ -467,6 +442,32 @@ $app->get('/example', function (Request $request, Response $response) {
 
 $app->run();
 ```
+
+
+# Configuration
+
+Monolog uses four types of services that will each need to be configured for your application.
+
+- [Channels](#channels) : Channels are a great way to identify to which part of the application a record 
+  is related. This is useful in big applications and is leveraged here.
+  
+  Picture two loggers sharing a handler that writes to a single log file. Channels allow you to 
+  identify the logger that issued every record. You can easily grep through the log files filtering 
+  this or that channel.
+
+- [Handlers](#handlers) : These services do all the heavy lifting and log your message to
+  the wired up system.  There are many different handlers available to you, but he one
+  you will most likely want to use for basic file logging is the [StreamHandler](#streamhandler).
+  _Tip: You can use the same handler for multiple channels._
+
+- [Formatters](#formatters) : (Optional) Formatters are in charge of formatting the message
+  for the handler.   Generally you can use the defualt formatter for the handler you are using, in
+  some circumstances you may however want to change the formatting of the message.  Configuring
+  a formatter will let you customize the message being sent to the log.
+
+- [Processors](#processors) :  (Optional) Processors can be used to add data, change the message, filter, 
+  you name it.  Monolog provides some built-in processors that can be used in your project. Look at the 
+  [Processors](#processors) section for the list.
 
 ## Minimal Configuration
 A minimal configuration would consist of at least one channel entry and one handler.
