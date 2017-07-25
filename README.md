@@ -7,73 +7,87 @@
 
 #### Table of Contents
 - [Installation](#installation)
+- [Usage](#usage)
 - [Configuration](#configuration)
-    - [Handlers](#handlers)
-        - [Log to files and syslog](#log-to-files-and-syslog)
-            - [StreamHandler](#streamhandler)
-            - [RotatingFileHandler](#rotatingfilehandler)
-            - [SyslogHandler](#sysloghandler)
-            - [ErrorLogHandler](#errorloghandler)
-        - [Send alerts and emails](#send-alerts-and-emails)
-            - [NativeMailerHandler](#nativemailerhandler)
-            - [SwiftMailerHandler](#swiftmailerhandler)
-            - [PushoverHandler](#pushoverhandler)
-            - [HipChatHandler](#hipchathandler)
-            - [FlowdockHandler](#flowdockhandler)
-            - [SlackbotHandler](#slackbothandler)
-            - [SlackWebhookHandler](#slackwebhookhandler)
-            - [SlackHandler](#slackhandler)
-            - [MandrillHandler](#mandrillhandler)
-            - [FleepHookHandler](#fleephookhandler)
-            - [IFTTTHandler](#ifttthandler)
-        - [Log specific servers and networked logging](#log-specific-servers-and-networked-logging)
-            - [SocketHandler](#sockethandler)
-            - [AmqpHandler](#amqphandler)
-            - [GelfHandler](#gelfhandler)
-            - [CubeHandler](#cubehandler)
-            - [RavenHandler](#ravenhandler)
-            - [ZendMonitorHandler](#zendmonitorhandler)
-            - [NewRelicHandler](#newrelichandler)
-            - [LogglyHandler](#logglyhandler)
-            - [RollbarHandler](#rollbarhandler)
-            - [SyslogUdpHandler](#syslogudphandler)
-            - [LogEntriesHandler](#logentrieshandler)
-        - [Logging in development](#logging-in-development)
-            - [FirePHPHandler](#firephphandler)
-            - [ChromePHPHandler](#chromephphandler)
-            - [BrowserConsoleHandler](#browserconsolehandler)
-            - [PHPConsoleHandler](#phpconsolehandler)
-        - [Log to databases](#log-to-databases)
-            - [RedisHandler](#redishandler)
-            - [MongoDBHandler](#mongodbhandler)
-            - [CouchDBHandler](#couchdbhandler)
-            - [DoctrineCouchDBHandler](#doctrinecouchdbhandler)
-            - [ElasticSearchHandler](#elasticsearchhandler)
-    - [Formatters](#formatters)
-        - [LineFomatter](#linefomatter)
-        - [HtmlFormatter](#htmlformatter)
-        - [NormalizerFormatter](#normalizerformatter)
-        - [ScalarFormatter](#scalarformatter)
-        - [JsonFormatter](#jsonformatter)
-        - [WildfireFormatter](#wildfireformatter)
-        - [ChromePHPFormatter](#chromephpformatter)
-        - [GelfMessageFormatter](#gelfmessageformatter)
-        - [LogstashFormatter](#logstashformatter)
-        - [ElasticaFormatter](#elasticaformatter)
-        - [LogglyFormatter](#logglyformatter)
-        - [FlowdockFormatter](#flowdockformatter)
-        - [MongoDBFormatter](#mongodbformatter)
-    - [Processors](#processors)
-        - [PsrLogMessageProcessor](#psrlogmessageprocessor)
-        - [IntrospectionProcessor](#introspectionprocessor)
-        - [WebProcessor](#webprocessor)
-        - [MemoryUsageProcessor](#memoryusageprocessor)
-        - [MemoryPeakUsageProcessor](#memorypeakusageprocessor)
-        - [ProcessIdProcessor](#processidprocessor)
-        - [UidProcessor](#uidprocessor)
-        - [GitProcessor](#gitprocessor)
-        - [MercurialProcessor](#mercurialprocessor)
-        - [TagProcessor](#tagprocessor)
+    - [Containers](#containers)
+        - [Pimple](#pimple-example)
+        - [Zend Service Manager](#zend-service-manager)
+    - [Frameworks](#frameworks)
+        - [Zend Expressive](#zend-expressive)
+        - [Zend Framework 3](#zend-framework-3)
+        - [Symfony](#symfony)
+        - [Slim](#slim)
+    - [Minimal Configuration](#minimal-configuration)
+        - [Example](#minimal-example)
+    - [Full Configuration](#full-configuration)
+        - [Full Example](#full-example)
+        - [Channels](#channels)
+        - [Handlers](#handlers)
+            - [Log to files and syslog](#log-to-files-and-syslog)
+                - [StreamHandler](#streamhandler)
+                - [RotatingFileHandler](#rotatingfilehandler)
+                - [SyslogHandler](#sysloghandler)
+                - [ErrorLogHandler](#errorloghandler)
+            - [Send alerts and emails](#send-alerts-and-emails)
+                - [NativeMailerHandler](#nativemailerhandler)
+                - [SwiftMailerHandler](#swiftmailerhandler)
+                - [PushoverHandler](#pushoverhandler)
+                - [HipChatHandler](#hipchathandler)
+                - [FlowdockHandler](#flowdockhandler)
+                - [SlackbotHandler](#slackbothandler)
+                - [SlackWebhookHandler](#slackwebhookhandler)
+                - [SlackHandler](#slackhandler)
+                - [MandrillHandler](#mandrillhandler)
+                - [FleepHookHandler](#fleephookhandler)
+                - [IFTTTHandler](#ifttthandler)
+            - [Log specific servers and networked logging](#log-specific-servers-and-networked-logging)
+                - [SocketHandler](#sockethandler)
+                - [AmqpHandler](#amqphandler)
+                - [GelfHandler](#gelfhandler)
+                - [CubeHandler](#cubehandler)
+                - [RavenHandler](#ravenhandler)
+                - [ZendMonitorHandler](#zendmonitorhandler)
+                - [NewRelicHandler](#newrelichandler)
+                - [LogglyHandler](#logglyhandler)
+                - [RollbarHandler](#rollbarhandler)
+                - [SyslogUdpHandler](#syslogudphandler)
+                - [LogEntriesHandler](#logentrieshandler)
+            - [Logging in development](#logging-in-development)
+                - [FirePHPHandler](#firephphandler)
+                - [ChromePHPHandler](#chromephphandler)
+                - [BrowserConsoleHandler](#browserconsolehandler)
+                - [PHPConsoleHandler](#phpconsolehandler)
+            - [Log to databases](#log-to-databases)
+                - [RedisHandler](#redishandler)
+                - [MongoDBHandler](#mongodbhandler)
+                - [CouchDBHandler](#couchdbhandler)
+                - [DoctrineCouchDBHandler](#doctrinecouchdbhandler)
+                - [ElasticSearchHandler](#elasticsearchhandler)
+        - [Formatters](#formatters)
+            - [LineFomatter](#linefomatter)
+            - [HtmlFormatter](#htmlformatter)
+            - [NormalizerFormatter](#normalizerformatter)
+            - [ScalarFormatter](#scalarformatter)
+            - [JsonFormatter](#jsonformatter)
+            - [WildfireFormatter](#wildfireformatter)
+            - [ChromePHPFormatter](#chromephpformatter)
+            - [GelfMessageFormatter](#gelfmessageformatter)
+            - [LogstashFormatter](#logstashformatter)
+            - [ElasticaFormatter](#elasticaformatter)
+            - [LogglyFormatter](#logglyformatter)
+            - [FlowdockFormatter](#flowdockformatter)
+            - [MongoDBFormatter](#mongodbformatter)
+        - [Processors](#processors)
+            - [PsrLogMessageProcessor](#psrlogmessageprocessor)
+            - [IntrospectionProcessor](#introspectionprocessor)
+            - [WebProcessor](#webprocessor)
+            - [MemoryUsageProcessor](#memoryusageprocessor)
+            - [MemoryPeakUsageProcessor](#memorypeakusageprocessor)
+            - [ProcessIdProcessor](#processidprocessor)
+            - [UidProcessor](#uidprocessor)
+            - [GitProcessor](#gitprocessor)
+            - [MercurialProcessor](#mercurialprocessor)
+            - [TagProcessor](#tagprocessor)
     
 
 # Installation
@@ -82,14 +96,548 @@
 composer require wshafer/psr11-monolog
 ```
 
+# Usage
+
+```php
+<?php
+
+# Get the Channel Changer
+$channelChanger = $container->get(\WShafer\PSR11MonoLog\ChannelChanger::class);
+
+# Get a logging channel
+$channel = $channelChanger->get('my-channel');
+
+# Write to log
+$channel->debug('Hi There');
+```
+
+Additional info can be found in the [documentation](https://github.com/Seldaek/monolog/blob/master/README.md)
+
 # Configuration
 
-## Handlers
+Monolog uses four types of services that will each need to be configured for your application.
 
-### Log to files and syslog
+- [Channels](#channels) : Channels are a great way to identify to which part of the application a record 
+  is related. This is useful in big applications and is leveraged here.
+  
+  Picture two loggers sharing a handler that writes to a single log file. Channels allow you to 
+  identify the logger that issued every record. You can easily grep through the log files filtering 
+  this or that channel.
+
+- [Handlers](#handlers) : These services do all the heavy lifting and log your message to
+  the wired up system.  There are many different handlers available to you, but he one
+  you will most likely want to use for basic file logging is the [StreamHandler](#streamhandler).
+  _Tip: You can use the same handler for multiple channels._
+
+- [Formatters](#formatters) : (Optional) Formatters are in charge of formatting the message
+  for the handler.   Generally you can use the defualt formatter for the handler you are using, in
+  some circumstances you may however want to change the formatting of the message.  Configuring
+  a formatter will let you customize the message being sent to the log.
+
+- [Processors](#processors) :  Processors can be used to add data, change the message, filter, you name it.
+  Monolog provides some built-in processors that can be used in your project. Look at the 
+  [Processors](#processors) section for the list.
+
+## Containers
+Any PSR-11 container wil work.  In order to do that you will need to add configuration
+and register the factory \WShafer\PSR11MonoLog\ChannelChangerFactory()
+
+Below are some specific container examples to get you started
+
+### Pimple
+```php
+<?php
+/** @var \Psr\Container\ContainerInterface $container */
+$container = new \Interop\Container\Pimple\PimpleInterop(
+    null,
+    [
+        \WShafer\PSR11MonoLog\ChannelChanger::class
+            => new \WShafer\PSR11MonoLog\ChannelChangerFactory(),
+
+        'config' => [
+            'monolog' => [
+                'handlers' => [
+                    'myHandler' => [
+                        'type' => 'stream',
+                        'options' => [
+                            'stream' => '/var/log/some-log-file.txt',
+                        ],
+                    ],
+                ],
+                
+                'channels' => [
+                    'channelOne' => [
+                        'handlers' => [
+                            'myHandler',
+                        ],
+                    ],    
+                ],
+            ],
+        ],
+    ]
+);
+
+/** @var \WShafer\PSR11MonoLog\ChannelChanger $channelChanger */
+$channelChanger = $container->get(\WShafer\PSR11MonoLog\ChannelChanger::class);
+
+/** @var \Monolog\Logger $channel */
+$channel = $channelChanger->get('channelOne');
+
+$channel->debug('Write to log');
+```
+
+### Zend Service Manager
+
+```php
+<?php
+/** @var \Psr\Container\ContainerInterface $container */
+$container = new \Zend\ServiceManager\ServiceManager([
+    'factories' => [
+        \WShafer\PSR11MonoLog\ChannelChanger::class
+            => \WShafer\PSR11MonoLog\ChannelChangerFactory::class
+    ]
+]);
+
+$container->setService(
+    'config',
+    [
+        'monolog' => [
+            'handlers' => [
+                'myHandler' => [
+                    'type' => 'stream',
+                    'options' => [
+                        'stream' => '/var/log/some-log-file.txt',
+                    ],
+                ],
+            ],
+            
+            'channels' => [
+                'channelOne' => [
+                    'handlers' => [
+                        'myHandler',
+                    ],
+                ],    
+            ],
+        ],
+    ]
+);
+
+/** @var \WShafer\PSR11MonoLog\ChannelChanger $channelChanger */
+$channelChanger = $container->get(\WShafer\PSR11MonoLog\ChannelChanger::class);
+
+/** @var \Monolog\Logger $channel */
+$channel = $channelChanger->get('channelOne');
+
+$channel->debug('Write to log');
+```
+
+## Frameworks
+Any framework that use a PSR-11 should work fine.   Below are some specific framework examples to get you started
+
+### Zend Expressive
+If your using Zend Expressive using the [Config Manager](https://zend-expressive.readthedocs.io/en/latest/cookbook/modular-layout/)
+and [Zend Component Installer](https://github.com/zendframework/zend-component-installer) (Default in Version 2) you should 
+be all set to go.  Simply add your Monolog configuration and you should be in business.
+
+#### Configuration
+config/autoload/local.php
+```php
+<?php
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandler' => [
+                'type' => 'stream',
+                'options' => [
+                    'stream' => '/var/log/some-log-file.txt',
+                ],
+            ],
+        ],
+        
+        'channels' => [
+            'channelOne' => [
+                'handlers' => [
+                    'myHandler',
+                ],
+            ],    
+        ],
+    ],
+];
+```
+
+#### Container Service Config
+If you're not using the [Zend Component Installer](https://github.com/zendframework/zend-component-installer) you will 
+also need to register the channel changer.
+
+config/autoload/dependencies.global.php
+```php
+<?php
+
+return [
+    'dependencies' => [
+        'factories' => [
+            \WShafer\PSR11MonoLog\ChannelChanger::class
+                => \WShafer\PSR11MonoLog\ChannelChangerFactory::class
+        ]
+    ],
+];
+```
+
+### Zend Framework 3
+If your using Zend Framework with the [Zend Component Installer](https://github.com/zendframework/zend-component-installer)
+(Default in Version 3) you should be all set to go.  Simply add your Monolog configuration and you should be in 
+business.
+
+#### Configuration
+config/autoload/local.php
+```php
+<?php
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandler' => [
+                'type' => 'stream',
+                'options' => [
+                    'stream' => '/var/log/some-log-file.txt',
+                ],
+            ],
+        ],
+        
+        'channels' => [
+            'channelOne' => [
+                'handlers' => [
+                    'myHandler',
+                ],
+            ],    
+        ],
+    ],
+];
+```
+
+#### Module Config
+If you're not using the [Zend Component Installer](https://github.com/zendframework/zend-component-installer) you will 
+also need to register the Module.
+
+config/modules.config.php (ZF 3 skeleton)
+```php
+<?php
+
+return [
+    // ... Previously registered modules here
+    'WShafer\\PSR11MonoLog',
+];
+```
+
+config/application.config.php (ZF 2 skeleton)
+```php
+<?php
+
+return [
+    'modules' => [
+        // ... Previously registered modules here
+        'WShafer\\PSR11MonoLog',
+    ]
+];
+```
 
 
-#### StreamHandler
+### Symfony
+While Symfony uses Monolog by default, as of Symfony 3.3 the service container is now 
+PSR-11 compatible.  So for fun the following config below will get these factories 
+registered and working in Symfony.
+
+#### Configuration
+app/config/config.yml (or equivalent)
+```yaml
+parameters:
+  monolog:
+    handlers:
+      myHandler:
+        type: 'stream'
+        options:
+          stream: '/var/log/some-log-file.txt'
+
+    channels:
+      channelOne:
+        handlers: 'myHandler'
+```
+
+#### Container Service Config
+app/config/services.yml
+```yaml
+services:
+    WShafer\PSR11MonoLog\ChannelChanger:
+        class: 'WShafer\PSR11MonoLog\ChannelChanger'
+        factory: 'WShafer\PSR11MonoLog\ChannelChangerFactory:__invoke'
+        arguments: ['@service_container']
+        public: true
+
+    WShafer\PSR11MonoLog\ChannelChangerFactory:
+        class: 'WShafer\PSR11MonoLog\ChannelChangerFactory'
+        public: true
+```
+
+
+#### Example Usage
+src/AppBundle/Controller/DefaultController.php
+
+```php
+<?php
+
+namespace AppBundle\Controller;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+
+class DefaultController extends Controller
+{
+    /**
+     * @Route("/", name="homepage")
+     */
+    public function indexAction(Request $request)
+    {
+        /** @var \WShafer\PSR11MonoLog\ChannelChanger $channelChanger */
+        $channelChanger = $this->container->get(\WShafer\PSR11MonoLog\ChannelChanger::class);
+        
+        /** @var \Monolog\Logger $channel */
+        $channel = $channelChanger->get('channelOne');
+        
+        $channel->debug('Write to log');
+    }
+}
+```
+
+### Slim
+
+public/index.php
+```php
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+
+require '../vendor/autoload.php';
+
+// Add Configuration
+$config = [
+    'settings' => [
+        'monolog' => [
+            'handlers' => [
+                'myHandler' => [
+                    'type' => 'stream',
+                    'options' => [
+                        'stream' => '/var/log/some-log-file.txt',
+                    ],
+                ],
+            ],
+            
+            'channels' => [
+                'channelOne' => [
+                    'handlers' => [
+                        'myHandler',
+                    ],
+                ],    
+            ],
+        ],
+    ],
+];
+
+$app = new \Slim\App($config);
+
+// Wire up the factory
+$container = $app->getContainer();
+
+// Register the service with the container.
+$container[\WShafer\PSR11MonoLog\ChannelChanger::class] = new \WShafer\PSR11MonoLog\ChannelChangerFactory();
+
+
+// Example usage
+$app->get('/example', function (Request $request, Response $response) {
+    
+    /** @var \WShafer\PSR11MonoLog\ChannelChanger $channelChanger */
+    $channelChanger = $this->get(\WShafer\PSR11MonoLog\ChannelChanger::class);
+    
+    /** @var \Monolog\Logger $channel */
+    $channel = $channelChanger->get('channelOne');
+    
+    $channel->debug('Write to log');
+    
+    return $response;
+});
+
+$app->run();
+```
+
+## Minimal Configuration
+A minimal configuration would consist of at least one channel entry and one handler.
+
+### Minimal Example:
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandler' => [
+                'type' => 'stream',
+                'options' => [
+                    'stream' => '/var/log/some-log-file.txt',
+                ],
+            ],
+        ],
+        
+        'channels' => [
+            'channelOne' => [
+                'handlers' => [
+                    'myHandler',
+                ],
+            ],    
+        ],
+    ],
+];
+```
+
+## Full Configuration
+
+### Full Example
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatters' => [
+            // Array Keys are the names used for the formatters
+            'formatterOne' => [
+                // A formatter type or pre-configured service from the container
+                'type' => 'line',
+                
+                // Formatter specific options.  See formatters below
+                'options' => [
+                    'format'                     => "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n",
+                    'dateFormat'                 => "c",
+                    'allowInlineLineBreaks'      => true,
+                    'ignoreEmptyContextAndExtra' => false,
+                ],
+            ],
+            
+            'formatterTwo' => [
+                // A formatter type or pre-configured service from the container
+                'type' => 'line',
+                
+                // Formatter specific options.  See formatters below
+                'options' => [
+                    'format'                     => "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n",
+                    'dateFormat'                 => "c",
+                    'allowInlineLineBreaks'      => false,
+                    'ignoreEmptyContextAndExtra' => true,
+                ],
+            ],
+        ],
+        
+        'handlers' => [
+            // Array Keys are the names used for the handlers
+            'handlerOne' => [
+                // A Handler type or pre-configured service from the container
+                'type' => 'stream',
+                
+                // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterOne', 
+                
+                // Handler specific options.  See handlers below
+                'options' => [
+                    'stream' => '/tmp/log_one.txt',
+                ], 
+            ],
+            
+            'handlerTwo' => [
+                // A Handler type or pre-configured service from the container
+                'type' => 'stream', 
+                
+                // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
+                'formatter' => 'formatterTwo', 
+                
+                // Adaptor specific options.  See adaptors below
+                'options' => [
+                    'stream' => '/tmp/log_two.txt',
+                ], 
+            ],
+        ],
+        
+        'processors' => [
+            // Array Keys are the names used for the processors
+            'processorOne' => [
+                // A processor type or pre-configured service from the container
+                'type' => 'psrLogMessage',
+                
+                // processor specific options.  See processors below
+                'options' => [], 
+            ],
+            
+            'processorTwo' => [
+                // A processor type or pre-configured service from the container
+                'type' => 'uid',
+                
+                // processor specific options.  See processors below
+                'options' => [
+                    'length'  => 7,
+                ], 
+            ],
+        ],
+        
+        'channels' => [
+            // Array Keys are the names used for the channels
+            'channelOne' => [
+                // array of handlers to attach to the channel.  Can use multiple handlers if needed.
+                'handlers' => ['handlerOne', 'handlerTwo'],
+                
+                // optional array of processors to attach to the channel.  Can use multiple processors if needed.
+                'processors' => ['processorOne', 'processorTwo'],
+            ],
+            
+            'channelTwo' => [
+                // array of handlers to attach to the channel.  Can use multiple handlers if needed.
+                'handlers' => ['handlerTwo'],
+                
+                // optional array of processors to attach to the channel.  Can use multiple processors if needed.
+                'processors' => ['processorTwo'],
+            ],
+        ],
+    ],
+];
+```
+
+### Channels
+```php
+<?php
+
+return [
+    'monolog' => [
+        'channels' => [
+            
+            // Array Keys are the channel identifiers
+            'channelOne' => [
+                // Array of configured handlers.  See handlers for more info
+                'handlers' => [  
+                    'myHandler',  
+                ],
+                
+                // Array of configured processors.  See processors for more info
+                'processors' => [  
+                    'myProcessor',  
+                ],
+            ],
+        ],
+    ],
+];
+```
+
+### Handlers
+
+#### Log to files and syslog
+
+
+##### StreamHandler
 Logs records into any PHP stream, use this for log files.
 
 ```php
@@ -115,7 +663,7 @@ return [
 ```
 Monolog Docs: [StreamHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/StreamHandler.php)
 
-#### RotatingFileHandler
+##### RotatingFileHandler
 Logs records to a file and creates one logfile per day. It will also delete files older than $maxFiles. 
 You should use [logrotate](http://linuxcommand.org/man_pages/logrotate8.html) for high profile setups though, 
 this is just meant as a quick and dirty solution.
@@ -144,7 +692,7 @@ return [
 ```
 Monolog Docs: [RotatingFileHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RotatingFileHandler.php)
 
-#### SyslogHandler
+##### SyslogHandler
 Logs records to the syslog.
 
 ```php
@@ -171,7 +719,7 @@ return [
 Monolog Docs: [SyslogHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SyslogHandler.php)
 PHP openlog(): [openlog](http://php.net/manual/en/function.openlog.php)
 
-#### ErrorLogHandler
+##### ErrorLogHandler
 Logs records to PHP's [error_log()](http://docs.php.net/manual/en/function.error-log.php) function.
 
 ```php
@@ -196,9 +744,9 @@ return [
 ```
 Monolog Docs: [ErrorLogHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ErrorLogHandler.php)
 
-### Send alerts and emails
+#### Send alerts and emails
 
-#### NativeMailerHandler
+##### NativeMailerHandler
 Sends emails using PHP's [mail()](http://php.net/manual/en/function.mail.php) function.
 
 ```php
@@ -225,7 +773,7 @@ return [
 ```
 Monolog Docs: [NativeMailerHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/NativeMailerHandler.php)
 
-#### SwiftMailerHandler
+##### SwiftMailerHandler
 Sends emails using a [Swift_Mailer](http://swiftmailer.org/) instance.
 
 ```php
@@ -250,7 +798,7 @@ return [
 ```
 Monolog Docs: [SwiftMailerHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SwiftMailerHandler.php)
 
-#### PushoverHandler
+##### PushoverHandler
 Sends mobile notifications via the [Pushover](https://www.pushover.net/) API.
 
 ```php
@@ -281,7 +829,7 @@ return [
 ```
 Monolog Docs: [PushoverHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/PushoverHandler.php)
 
-#### HipChatHandler
+##### HipChatHandler
 Sends notifications through the [HipChat](http://hipchat.com/) api to a hipchat room
 
 ```php
@@ -311,7 +859,7 @@ return [
 ```
 Monolog Docs: [HipChatHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/HipChatHandler.php)
 
-#### FlowdockHandler
+##### FlowdockHandler
 Logs records to a [Flowdock](https://www.flowdock.com/) account.
 
 ```php
@@ -336,7 +884,7 @@ return [
 Monolog Docs: [FlowdockHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/FlowdockHandler.php)
 
 
-#### SlackbotHandler
+##### SlackbotHandler
 Logs records to a [Slack](https://www.slack.com/) account using the Slackbot incoming hook.
 
 ```php
@@ -362,7 +910,7 @@ return [
 ```
 Monolog Docs: [SlackbotHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SlackbotHandler.php)
 
-#### SlackWebhookHandler
+##### SlackWebhookHandler
 Logs records to a [Slack](https://www.slack.com/) account using Slack Webhooks.
 
 ```php
@@ -393,7 +941,7 @@ return [
 ```
 Monolog Docs: [SlackWebhookHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SlackWebhookHandler.php)
 
-#### SlackHandler
+##### SlackHandler
 Logs records to a [SlackHandler](https://www.slack.com/) account using the Slack API (complex setup).
 
 ```php
@@ -424,7 +972,7 @@ return [
 ```
 Monolog Docs: [SlackHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SlackHandler.php)
 
-#### MandrillHandler
+##### MandrillHandler
 Sends emails via the [Mandrill](http://www.mandrill.com/) API using a [Swift_Message](http://swiftmailer.org/) instance.
 
 ```php
@@ -449,7 +997,7 @@ return [
 ```
 Monolog Docs: [MandrillHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/MandrillHandler.php)
 
-#### FleepHookHandler
+##### FleepHookHandler
 Logs records to a [Fleep](https://fleep.io/) conversation using Webhooks.
 
 ```php
@@ -473,7 +1021,7 @@ return [
 ```
 Monolog Docs: [FleepHookHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/FleepHookHandler.php)
 
-#### IFTTTHandler
+##### IFTTTHandler
 Notifies an [IFTTT](https://ifttt.com/maker) trigger with the log channel, level name and message.
 
 ```php
@@ -497,9 +1045,9 @@ return [
 ```
 Monolog Docs: [IFTTTHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/IFTTTHandler.php)
 
-### Log specific servers and networked logging
+#### Log specific servers and networked logging
 
-#### SocketHandler
+##### SocketHandler
 Logs records to [sockets](http://php.net/fsockopen), use this for UNIX and TCP sockets. See an [example](https://github.com/Seldaek/monolog/blob/master/doc/sockets.md).
 
 ```php
@@ -525,7 +1073,7 @@ return [
 ```
 Monolog Docs: [SocketHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SocketHandler.php)
 
-#### AmqpHandler
+##### AmqpHandler
 Logs records to an [AMQP](http://www.amqp.org/) compatible server. Requires the [php-amqp](http://pecl.php.net/package/amqp) extension (1.0+) or the [php-amqplib](https://github.com/php-amqplib/php-amqplib) library.
 
 ```php
@@ -550,7 +1098,7 @@ return [
 ```
 Monolog Docs: [AmqpHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/AmqpHandler.php)
 
-#### GelfHandler
+##### GelfHandler
 Logs records to a [Graylog2](http://www.graylog2.org) server. Requires package [graylog2/gelf-php](https://github.com/bzikarsky/gelf-php).
 ```php
 <?php
@@ -573,7 +1121,7 @@ return [
 ```
 Monolog Docs: [GelfHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/GelfHandler.php)
 
-#### CubeHandler
+##### CubeHandler
 Logs records to a [Cube](http://square.github.com/cube/) server.
 
 _Note: Cube is not under active development, maintenance or support by 
@@ -601,7 +1149,7 @@ return [
 ```
 Monolog Docs: [CubeHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/CubeHandler.php)
 
-#### RavenHandler
+##### RavenHandler
 Logs records to a [Sentry](http://getsentry.com/) server using [raven](https://packagist.org/packages/raven/raven).
 ```php
 <?php
@@ -624,7 +1172,7 @@ return [
 ```
 Monolog Docs: [RavenHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RavenHandler.php)
 
-#### ZendMonitorHandler
+##### ZendMonitorHandler
 Logs records to the Zend Monitor present in [Zend Server](http://www.zend.com/en/products/zend_server).
 ```php
 <?php
@@ -646,7 +1194,7 @@ return [
 ```
 Monolog Docs: [ZendMonitorHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ZendMonitorHandler.php)
 
-#### NewRelicHandler
+##### NewRelicHandler
 Logs records to a [NewRelic](http://newrelic.com/) application.
 ```php
 <?php
@@ -671,7 +1219,7 @@ return [
 ```
 Monolog Docs: [NewRelicHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/NewRelicHandler.php)
 
-#### LogglyHandler
+##### LogglyHandler
 Logs records to a [Loggly](http://www.loggly.com/) account.
 
 ```php
@@ -695,7 +1243,7 @@ return [
 ```
 Monolog Docs: [LogglyHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/LogglyHandler.php)
 
-#### RollbarHandler:
+##### RollbarHandler:
 Logs records to a [Rollbar](https://rollbar.com/) account.
 
 _Note: RollerbarHandler is out of date with upstream changes. In addition the Rollerbar library suggests using 
@@ -703,7 +1251,7 @@ the PsrHandler instead.  See [Rollerbar Docs](https://github.com/rollbar/rollbar
 
 Monolog Docs: [RollbarHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RollbarHandler.php)
 
-#### SyslogUdpHandler
+##### SyslogUdpHandler
 Logs records to a remote [Syslogd](http://www.rsyslog.com/) server.
 
 ```php
@@ -730,7 +1278,7 @@ return [
 ```
 Monolog Docs: [SyslogUdpHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SyslogUdpHandler.php)
 
-#### LogEntriesHandler
+##### LogEntriesHandler
 Logs records to a [LogEntries](http://logentries.com/) account.
 
 ```php
@@ -755,9 +1303,9 @@ return [
 ```
 Monolog Docs: [LogEntriesHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/LogEntriesHandler.php)
 
-### Logging in development
+#### Logging in development
 
-#### FirePHPHandler
+##### FirePHPHandler
 Handler for [FirePHP](http://www.firephp.org/), providing inline console messages within [FireBug](http://getfirebug.com/).
 
 _Note: The Firebug extension isn't being developed or maintained any longer._
@@ -782,7 +1330,7 @@ return [
 ```
 Monolog Docs: [FirePHPHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/LogEntriesHandler.php)
 
-#### ChromePHPHandler
+##### ChromePHPHandler
 Handler for [ChromePHP](http://www.chromephp.com/), providing inline console messages within Chrome.
 
 ```php
@@ -805,7 +1353,7 @@ return [
 ```
 Monolog Docs: [ChromePHPHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ChromePHPHandler.php)
 
-#### BrowserConsoleHandler
+##### BrowserConsoleHandler
 Handler to send logs to browser's Javascript console with no browser extension required. Most browsers supporting 
 console API are supported.
 
@@ -829,7 +1377,7 @@ return [
 ```
 Monolog Docs: [BrowserConsoleHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/BrowserConsoleHandler.php)
 
-#### PHPConsoleHandler
+##### PHPConsoleHandler
 Handler for [PHP Console](https://chrome.google.com/webstore/detail/php-console/nfhmhhlpfleoednkpnnnkolmclajemef), 
 providing inline console and notification popup messages within Chrome.
 
@@ -856,9 +1404,9 @@ return [
 Monolog Docs: [PHPConsoleHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/PHPConsoleHandler.php)
 
 
-###Logging in development
+####Logging in development
 
-#### RedisHandler
+##### RedisHandler
 Logs records to a [Redis](http://redis.io/) server.   Requires the [php-redis](https://pecl.php.net/package/redis) 
 extension or the [Predis](https://github.com/nrk/predis) library.
 
@@ -885,7 +1433,7 @@ return [
 ```
 Monolog Docs: [RedisHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RedisHandler.php)
 
-#### MongoDBHandler
+##### MongoDBHandler
 Handler to write records in MongoDB via a [Mongo extension](http://php.net/manual/en/mongodb.tutorial.library.php) connection.
 
 ```php
@@ -912,7 +1460,7 @@ return [
 ```
 Monolog Docs: [MongoDBHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/MongoDBHandler.php)
 
-#### CouchDBHandler
+##### CouchDBHandler
 Logs records to a CouchDB server.
 
 ```php
@@ -940,7 +1488,7 @@ return [
 ```
 Monolog Docs: [CouchDBHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/CouchDBHandler.php)
 
-#### DoctrineCouchDBHandler
+##### DoctrineCouchDBHandler
 Logs records to a CouchDB server via the Doctrine CouchDB ODM.
 
 ```php
@@ -964,7 +1512,7 @@ return [
 ```
 Monolog Docs: [DoctrineCouchDBHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/DoctrineCouchDBHandler.php)
 
-#### ElasticSearchHandler
+##### ElasticSearchHandler
 Logs records to an Elastic Search server.
 
 ```php
@@ -991,7 +1539,7 @@ return [
 ```
 Monolog Docs: [ElasticSearchHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ElasticSearchHandler.php)
 
-#### DynamoDbHandler
+##### DynamoDbHandler
 Logs records to a DynamoDB table with the [AWS SDK](https://github.com/aws/aws-sdk-php).
 
 ```php
@@ -1016,7 +1564,7 @@ return [
 ```
 Monolog Docs: [DynamoDbHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/DynamoDbHandler.php)
 
-## Formatters
+### Formatters
 
 #### LineFomatter
 Formats a log record into a one-line string.

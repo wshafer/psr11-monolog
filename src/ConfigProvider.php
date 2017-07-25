@@ -7,6 +7,12 @@ class ConfigProvider
 {
     public function __invoke()
     {
-        return require __DIR__.'/../config/monolog.config.php';
+        return [
+            'dependencies' => [
+                'factories'  => [
+                    ChannelChanger::class => ChannelChangerFactory::class,
+                ]
+            ]
+        ];
     }
 }

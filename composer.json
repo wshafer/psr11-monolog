@@ -45,7 +45,8 @@
 
     "extra": {
         "zf": {
-            "config-provider": "WShafer\\PSR11MonoLog\\ConfigProvider"
+            "config-provider": "WShafer\\PSR11MonoLog\\ConfigProvider",
+            "module": "WShafer\\PSR11MonoLog"
         }
     }
 }
