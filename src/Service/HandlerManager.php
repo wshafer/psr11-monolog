@@ -41,6 +41,15 @@ class HandlerManager extends AbstractServiceManager
         return $handler;
     }
 
+    public function has($id)
+    {
+        if (parent::has($id)) {
+            return true;
+        }
+
+        return $this->config->hasHandlerConfig($id);
+    }
+
     public function setFormatterManager(FormatterManager $manager)
     {
         $this->formatterManager = $manager;
