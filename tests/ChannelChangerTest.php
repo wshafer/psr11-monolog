@@ -1,0 +1,327 @@
+<?php
+declare(strict_types=1);
+
+namespace WShafer\PSR11MonoLog\Test;
+
+use Monolog\Handler\HandlerInterface;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Monolog\Processor\PsrLogMessageProcessor;
+use PHPUnit\Framework\TestCase;
+use WShafer\PSR11MonoLog\ChannelChanger;
+use WShafer\PSR11MonoLog\Config\ChannelConfig;
+use WShafer\PSR11MonoLog\Config\MainConfig;
+use WShafer\PSR11MonoLog\Service\HandlerManager;
+use WShafer\PSR11MonoLog\Service\ProcessorManager;
+
+/**
+ * @covers \WShafer\PSR11MonoLog\ChannelChanger
+ */
+class ChannelChangerTest extends TestCase
+{
+    use ConfigTrait;
+
+    /** @var ChannelChanger */
+    protected $service;
+
+    /** @var \PHPUnit_Framework_MockObject_MockObject|MainConfig */
+    protected $mockConfig;
+
+    /** @var \PHPUnit_Framework_MockObject_MockObject|HandlerManager */
+    protected $mockHandlerManager;
+
+    /** @var \PHPUnit_Framework_MockObject_MockObject|ProcessorManager */
+    protected $mockProcessorManager;
+
+    /** @var \PHPUnit_Framework_MockObject_MockObject|ChannelConfig */
+    protected $mockChannelConfig;
+
+    /** @var \PHPUnit_Framework_MockObject_MockObject|HandlerInterface */
+    protected $mockHandler;
+
+    /** @var \PHPUnit_Framework_MockObject_MockObject|PsrLogMessageProcessor */
+    protected $mockProcessor;
+
+    public function setup()
+    {
+        $this->mockConfig = $this->getMockBuilder(MainConfig::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mockHandlerManager = $this->getMockBuilder(HandlerManager::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mockProcessorManager = $this->getMockBuilder(ProcessorManager::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mockChannelConfig = $this->getMockBuilder(ChannelConfig::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mockHandler = $this->getMockBuilder(StreamHandler::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mockProcessor = $this->getMockBuilder(PsrLogMessageProcessor::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->service = new ChannelChanger(
+            $this->mockConfig,
+            $this->mockHandlerManager,
+            $this->mockProcessorManager
+        );
+
+        $this->assertInstanceOf(ChannelChanger::class, $this->service);
+    }
+
+    public function testConstructor()
+    {
+    }
+
+    public function testHas()
+    {
+        $this->mockConfig->expects($this->once())
+            ->method('hasChannelConfig')
+            ->with('myChannel')
+            ->willReturn(true);
+
+        $result = $this->service->has('myChannel');
+        $this->assertTrue($result);
+    }
+
+    public function testGet()
+    {
+        $this->mockConfig->expects($this->once())
+            ->method('hasChannelConfig')
+            ->with('myChannel')
+            ->willReturn(true);
+
+        $this->mockConfig->expects($this->once())
+            ->method('getChannelConfig')
+            ->with('myChannel')
+            ->willReturn($this->mockChannelConfig);
+
+        /* Handler */
+        $this->mockChannelConfig->expects($this->once())
+            ->method('getHandlers')
+            ->willReturn(['myHandler']);
+
+        $this->mockHandlerManager->expects($this->once())
+            ->method('has')
+            ->with('myHandler')
+            ->willReturn(true);
+
+        $this->mockHandlerManager->expects($this->once())
+            ->method('get')
+            ->with('myHandler')
+            ->willReturn($this->mockHandler);
+
+        /* Processor */
+        $this->mockChannelConfig->expects($this->once())
+            ->method('getProcessors')
+            ->willReturn(['myProcessor']);
+
+        $this->mockProcessorManager->expects($this->once())
+            ->method('has')
+            ->with('myProcessor')
+            ->willReturn(true);
+
+        $this->mockProcessorManager->expects($this->once())
+            ->method('get')
+            ->with('myProcessor')
+            ->willReturn($this->mockProcessor);
+
+        /** @var Logger $result */
+        $result = $this->service->get('myChannel');
+        $this->assertInstanceOf(Logger::class, $result);
+
+        $handlers = $result->getHandlers();
+        $this->assertEquals($this->mockHandler, $handlers[0]);
+
+        $processors = $result->getProcessors();
+        $this->assertEquals($this->mockProcessor, $processors[0]);
+    }
+
+    public function testGetFromCache()
+    {
+        $this->mockConfig->expects($this->once())
+            ->method('hasChannelConfig')
+            ->with('myChannel')
+            ->willReturn(true);
+
+        $this->mockConfig->expects($this->once())
+            ->method('getChannelConfig')
+            ->with('myChannel')
+            ->willReturn($this->mockChannelConfig);
+
+        /* Handler */
+        $this->mockChannelConfig->expects($this->once())
+            ->method('getHandlers')
+            ->willReturn(['myHandler']);
+
+        $this->mockHandlerManager->expects($this->once())
+            ->method('has')
+            ->with('myHandler')
+            ->willReturn(true);
+
+        $this->mockHandlerManager->expects($this->once())
+            ->method('get')
+            ->with('myHandler')
+            ->willReturn($this->mockHandler);
+
+        /* Processor */
+        $this->mockChannelConfig->expects($this->once())
+            ->method('getProcessors')
+            ->willReturn(['myProcessor']);
+
+        $this->mockProcessorManager->expects($this->once())
+            ->method('has')
+            ->with('myProcessor')
+            ->willReturn(true);
+
+        $this->mockProcessorManager->expects($this->once())
+            ->method('get')
+            ->with('myProcessor')
+            ->willReturn($this->mockProcessor);
+
+        /** @var Logger $result */
+        $result = $this->service->get('myChannel');
+        $this->assertInstanceOf(Logger::class, $result);
+
+        /* Should not call mocks again */
+        $result = $this->service->get('myChannel');
+        $this->assertInstanceOf(Logger::class, $result);
+    }
+
+    /**
+     * @expectedException \WShafer\PSR11MonoLog\Exception\MissingConfigException
+     */
+    public function testGetWithMissingChannelConfig()
+    {
+        $this->mockConfig->expects($this->once())
+            ->method('hasChannelConfig')
+            ->with('myChannel')
+            ->willReturn(false);
+
+        $this->mockConfig->expects($this->never())
+            ->method('getChannelConfig');
+
+        /* Handler */
+        $this->mockChannelConfig->expects($this->never())
+            ->method('getHandlers');
+
+        $this->mockHandlerManager->expects($this->never())
+            ->method('has');
+
+        $this->mockHandlerManager->expects($this->never())
+            ->method('get');
+
+        /* Processor */
+        $this->mockChannelConfig->expects($this->never())
+            ->method('getProcessors');
+
+        $this->mockProcessorManager->expects($this->never())
+            ->method('has');
+
+        $this->mockProcessorManager->expects($this->never())
+            ->method('get');
+
+        /** @var Logger $result */
+        $result = $this->service->get('myChannel');
+        $this->assertInstanceOf(Logger::class, $result);
+    }
+
+    /**
+     * @expectedException \WShafer\PSR11MonoLog\Exception\UnknownServiceException
+     */
+    public function testGetWithMissingHandler()
+    {
+        $this->mockConfig->expects($this->once())
+            ->method('hasChannelConfig')
+            ->with('myChannel')
+            ->willReturn(true);
+
+        $this->mockConfig->expects($this->once())
+            ->method('getChannelConfig')
+            ->with('myChannel')
+            ->willReturn($this->mockChannelConfig);
+
+        /* Handler */
+        $this->mockChannelConfig->expects($this->once())
+            ->method('getHandlers')
+            ->willReturn(['myHandler']);
+
+        $this->mockHandlerManager->expects($this->once())
+            ->method('has')
+            ->with('myHandler')
+            ->willReturn(false);
+
+        $this->mockHandlerManager->expects($this->never())
+            ->method('get');
+
+        /* Processor */
+        $this->mockChannelConfig->expects($this->never())
+            ->method('getProcessors');
+
+        $this->mockProcessorManager->expects($this->never())
+            ->method('has');
+
+        $this->mockProcessorManager->expects($this->never())
+            ->method('get');
+
+        /** @var Logger $result */
+        $result = $this->service->get('myChannel');
+        $this->assertInstanceOf(Logger::class, $result);
+    }
+
+    /**
+     * @expectedException \WShafer\PSR11MonoLog\Exception\UnknownServiceException
+     */
+    public function testGetWithMissingProcessor()
+    {
+        $this->mockConfig->expects($this->once())
+            ->method('hasChannelConfig')
+            ->with('myChannel')
+            ->willReturn(true);
+
+        $this->mockConfig->expects($this->once())
+            ->method('getChannelConfig')
+            ->with('myChannel')
+            ->willReturn($this->mockChannelConfig);
+
+        /* Handler */
+        $this->mockChannelConfig->expects($this->once())
+            ->method('getHandlers')
+            ->willReturn(['myHandler']);
+
+        $this->mockHandlerManager->expects($this->once())
+            ->method('has')
+            ->with('myHandler')
+            ->willReturn(true);
+
+        $this->mockHandlerManager->expects($this->once())
+            ->method('get')
+            ->with('myHandler')
+            ->willReturn($this->mockHandler);
+
+        /* Processor */
+        $this->mockChannelConfig->expects($this->once())
+            ->method('getProcessors')
+            ->willReturn(['myProcessor']);
+
+        $this->mockProcessorManager->expects($this->once())
+            ->method('has')
+            ->with('myProcessor')
+            ->willReturn(false);
+
+        $this->mockProcessorManager->expects($this->never())
+            ->method('get');
+
+        /** @var Logger $result */
+        $result = $this->service->get('myChannel');
+        $this->assertInstanceOf(Logger::class, $result);
+    }
+}

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace WShafer\PSR11MonoLog\Test\Handler;
+namespace WShafer\PSR11MonoLog\Test;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;

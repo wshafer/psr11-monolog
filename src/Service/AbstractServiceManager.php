@@ -5,6 +5,7 @@ namespace WShafer\PSR11MonoLog\Service;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Config\MainConfig;
 use WShafer\PSR11MonoLog\ConfigInterface;
+use WShafer\PSR11MonoLog\Exception\InvalidConfigException;
 use WShafer\PSR11MonoLog\Exception\UnknownServiceException;
 use WShafer\PSR11MonoLog\FactoryInterface;
 use WShafer\PSR11MonoLog\MapperInterface;
@@ -21,9 +22,7 @@ abstract class AbstractServiceManager implements ContainerInterface
     protected $container;
 
     /** @var array */
-    protected $services;
-    
-    const INTERFACE = '';
+    protected $services = [];
 
     public function __construct(
         MainConfig $config,
@@ -39,11 +38,7 @@ abstract class AbstractServiceManager implements ContainerInterface
 
     public function get($id)
     {
-        $interface = self::INTERFACE;
-        
-        if (key_exists($id, $this->services)
-            && $this->services[$id] instanceof $interface
-        ) {
+        if (key_exists($id, $this->services)) {
             return $this->services[$id];
         }
 
@@ -60,35 +55,17 @@ abstract class AbstractServiceManager implements ContainerInterface
             return $this->services[$id];
         }
 
-        // Check for class and class implements of Monolog Interface
-        if (class_exists($id)
-            && in_array($interface, class_implements($id))
-        ) {
-            $this->services[$id] = new $id;
-            return $this->services[$id];
-        }
-
         $this->services[$id] = $this->getInstanceFromFactory($id);
         return $this->services[$id];
     }
 
     public function has($id)
     {
-        $interface = self::INTERFACE;
-
-        if (key_exists($id, $this->services)
-            && $this->services[$id] instanceof $interface
-        ) {
+        if (key_exists($id, $this->services)) {
             return true;
         }
 
         if ($this->container->has($id)) {
-            return true;
-        }
-
-        if (class_exists($id)
-            && in_array($interface, class_implements($id))
-        ) {
             return true;
         }
 
@@ -115,8 +92,8 @@ abstract class AbstractServiceManager implements ContainerInterface
         if (!class_exists($class)
             || !in_array(FactoryInterface::class, class_implements($class))
         ) {
-            throw new UnknownServiceException(
-                'Unable to locate service '.$id.'.  Please check your configuration.'
+            throw new InvalidConfigException(
+                $id.'.  Is not a valid factory.  Please check your configuration.'
             );
         }
 

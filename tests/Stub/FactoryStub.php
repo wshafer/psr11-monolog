@@ -13,7 +13,7 @@ class FactoryStub implements FactoryInterface, ContainerAwareInterface
 
     public function __invoke(array $options)
     {
-        return (object) $options;
+        return new HandlerStub();
     }
 
     public function getContainer(): ContainerInterface

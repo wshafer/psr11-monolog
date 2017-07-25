@@ -1,11 +1,14 @@
 <?php
 
-namespace WShafer\PSR11MonoLog\Service;
+namespace WShafer\PSR11MonoLog;
 
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Config\MainConfigFactory;
 use WShafer\PSR11MonoLog\Formatter\FormatterMapper;
 use WShafer\PSR11MonoLog\Processor\ProcessorMapper;
+use WShafer\PSR11MonoLog\Service\FormatterManager;
+use WShafer\PSR11MonoLog\Service\HandlerManager;
+use WShafer\PSR11MonoLog\Service\ProcessorManager;
 
 class ChannelChangerFactory
 {
@@ -32,20 +35,13 @@ class ChannelChangerFactory
 
     public function getMainConfig(ContainerInterface $container)
     {
-        if (!$this->config) {
-            $factory = new MainConfigFactory();
-            $this->config = $factory($container);
-        }
-
+        $factory = new MainConfigFactory();
+        $this->config = $factory($container);
         return $this->config;
     }
 
     public function getHandlerManager(ContainerInterface $container)
     {
-        if ($this->handlerManager) {
-            return $this->handlerManager;
-        }
-
         $config = $this->getMainConfig($container);
         $this->handlerManager = new HandlerManager(
             $config,
@@ -59,10 +55,6 @@ class ChannelChangerFactory
 
     public function getFormatterManager(ContainerInterface $container)
     {
-        if (!$this->formatterManager) {
-            return $this->formatterManager;
-        }
-
         $config = $this->getMainConfig($container);
         $this->formatterManager = new FormatterManager(
             $config,
@@ -75,10 +67,6 @@ class ChannelChangerFactory
 
     public function getProcessorManager(ContainerInterface $container)
     {
-        if (!$this->processManager) {
-            return $this->processManager;
-        }
-
         $config = $this->getMainConfig($container);
         $this->processManager = new ProcessorManager(
             $config,

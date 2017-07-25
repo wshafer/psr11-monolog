@@ -20,79 +20,7 @@ class MainConfigTest extends TestCase
     /** @var MainConfig */
     protected $config;
 
-    protected function getConfigArray()
-    {
-        return [
-            'monolog' => [
-                'formatters' => [
-                    'formatterOne' => [
-                        'type' => 'LineFormatter',
-                        'options' => [
-                            'format' => "%datetime% > %level_name% > %message% %context% %extra%\n",
-                            'dateFormat' => 'Y n j, g:i a',
-                        ],
-                    ],
-
-                    'formatterTwo' => [
-                        'type' => 'LineFormatter',
-                        'options' => [
-                            'format' => "[%datetime%][%level_name%] %message% %context% %extra%\n",
-                            'dateFormat' => 'Y n j, g:i a',
-                        ],
-                    ],
-                ],
-
-                'handlers' => [
-                    'handlerOne' => [
-                        'type' => 'StreamHandler',
-                        'formatter' => 'formatterOne',
-                        'options' => [
-                            'stream' => '/tmp/logOne.txt',
-                            'level' => Logger::ERROR,
-                            'bubble' =>  true,
-                            'filePermission' => 755,
-                            'useLocking' => true
-                        ],
-                    ],
-
-                    'handlerTwo' => [
-                        'type' => 'StreamHandler',
-                        'formatter' => 'formatterOne',
-                        'options' => [
-                            'stream' => '/tmp/logOne.txt',
-                            'level' => Logger::ERROR,
-                            'bubble' =>  true,
-                            'filePermission' => 755,
-                            'useLocking' => true
-                        ],
-                    ],
-                ],
-
-                'processors' => [
-                    'processorOne' => [
-                        'type' => 'introspection',
-                        'options' => [
-                            'dateFormat' => 'Y n j, g:i a',
-                        ],
-                    ],
-                ],
-
-                'channels' => [
-                    'myChannel' => [
-                        'handlers' => [
-                            'handlerOne',
-                            'handlerTwo'
-                        ],
-
-                        'processors' => [
-                            'serviceOne',
-                            'serviceTwo'
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
+    use ConfigTrait;
 
     public function setup()
     {
@@ -153,6 +81,22 @@ class MainConfigTest extends TestCase
         }
     }
 
+    public function testHasHandlerConfig()
+    {
+        $result = $this->config->hasHandlerConfig('handlerOne');
+        $this->assertTrue($result);
+    }
+
+    public function testGetHandlerConfig()
+    {
+        $config = $this->getConfigArray();
+        $expected = $config['monolog']['handlers']['handlerOne']['type'];
+        $result = $this->config->getHandlerConfig('handlerOne');
+
+        $this->assertInstanceOf(HandlerConfig::class, $result);
+        $this->assertEquals($expected, $result->getType());
+    }
+
     public function testGetFormatters()
     {
         $config = $this->getConfigArray();
@@ -164,6 +108,22 @@ class MainConfigTest extends TestCase
         foreach ($formatterConfigs as $formatterConfig) {
             $this->assertInstanceOf(FormatterConfig::class, $formatterConfig);
         }
+    }
+
+    public function testHasFormatterConfig()
+    {
+        $result = $this->config->hasFormatterConfig('formatterOne');
+        $this->assertTrue($result);
+    }
+
+    public function testGetFormatterConfig()
+    {
+        $config = $this->getConfigArray();
+        $expected = $config['monolog']['formatters']['formatterOne']['type'];
+        $result = $this->config->getFormatterConfig('formatterOne');
+
+        $this->assertInstanceOf(FormatterConfig::class, $result);
+        $this->assertEquals($expected, $result->getType());
     }
 
     public function testGetProcessors()
@@ -189,6 +149,22 @@ class MainConfigTest extends TestCase
         $this->assertEmpty($processorConfigs);
     }
 
+    public function testHasProcessorConfig()
+    {
+        $result = $this->config->hasProcessorConfig('processorOne');
+        $this->assertTrue($result);
+    }
+
+    public function testGetProcessorConfig()
+    {
+        $config = $this->getConfigArray();
+        $expected = $config['monolog']['processors']['processorOne']['type'];
+        $result = $this->config->getProcessorConfig('processorOne');
+
+        $this->assertInstanceOf(ProcessorConfig::class, $result);
+        $this->assertEquals($expected, $result->getType());
+    }
+
     public function testGetChannels()
     {
         $config = $this->getConfigArray();
@@ -200,5 +176,21 @@ class MainConfigTest extends TestCase
         foreach ($channelConfigs as $channelConfig) {
             $this->assertInstanceOf(ChannelConfig::class, $channelConfig);
         }
+    }
+
+    public function testHasChannelConfig()
+    {
+        $result = $this->config->hasChannelConfig('myChannel');
+        $this->assertTrue($result);
+    }
+
+    public function testGetChannelConfig()
+    {
+        $config = $this->getConfigArray();
+        $expected = $config['monolog']['channels']['myChannel']['handlers'];
+        $result = $this->config->getChannelConfig('myChannel');
+
+        $this->assertInstanceOf(ChannelConfig::class, $result);
+        $this->assertEquals($expected, $result->getHandlers());
     }
 }

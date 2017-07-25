@@ -1,11 +1,12 @@
 <?php
 
-namespace WShafer\PSR11MonoLog\Service;
+namespace WShafer\PSR11MonoLog;
 
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use WShafer\PSR11MonoLog\Config\MainConfig;
+use WShafer\PSR11MonoLog\Exception\MissingConfigException;
 use WShafer\PSR11MonoLog\Exception\UnknownServiceException;
 
 class ChannelChanger implements ContainerInterface
@@ -41,7 +42,7 @@ class ChannelChanger implements ContainerInterface
         }
 
         if (!$this->has($id)) {
-            throw new UnknownServiceException(
+            throw new MissingConfigException(
                 'Unable to locate channel '.$id
             );
         }
@@ -64,6 +65,7 @@ class ChannelChanger implements ContainerInterface
             $channel->pushProcessor($processor);
         }
 
+        $this->channels[$id] = $channel;
         return $this->channels[$id];
     }
 
