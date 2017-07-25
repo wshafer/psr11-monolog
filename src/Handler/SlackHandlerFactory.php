@@ -13,9 +13,9 @@ class SlackHandlerFactory implements FactoryInterface
     {
         $token              = (string)  ($options['token']                  ?? '');
         $channel            = (string)  ($options['channel']                ?? '');
-        $userName           = (string)  ($options['userName']               ?? '');
+        $userName           =            $options['userName']               ?? null;
         $useAttachment      = (boolean) ($options['useAttachment']          ?? true);
-        $iconEmoji          = (string)  ($options['iconEmoji']              ?? '');
+        $iconEmoji          =            $options['iconEmoji']              ?? null;
         $level              = (int)     ($options['level']                  ?? Logger::DEBUG);
         $bubble             = (boolean) ($options['bubble']                 ?? true);
         $useShortAttachment = (boolean) ($options['useShortAttachment']     ?? false);

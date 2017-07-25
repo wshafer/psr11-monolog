@@ -36,6 +36,7 @@ abstract class AbstractServiceManager implements ContainerInterface
     }
 
     abstract protected function getServiceConfig($id) : ConfigInterface;
+    abstract protected function hasServiceConfig($id) : bool;
 
     public function get($id)
     {
@@ -70,7 +71,7 @@ abstract class AbstractServiceManager implements ContainerInterface
             return true;
         }
 
-        return false;
+        return $this->hasServiceConfig($id);
     }
 
     protected function getInstanceFromFactory($id)

@@ -67,9 +67,6 @@ class AbstractServiceManagerTest extends TestCase
             ->with('my-service')
             ->willReturn(true);
 
-        $this->mockConfig->expects($this->never())
-            ->method('hasHandlerConfig');
-
         $result = $this->service->has('my-service');
         $this->assertTrue($result);
     }
@@ -81,10 +78,7 @@ class AbstractServiceManagerTest extends TestCase
             ->with('my-service')
             ->willReturn(false);
 
-        $this->mockConfig->expects($this->once())
-            ->method('hasHandlerConfig')
-            ->with('my-service')
-            ->willReturn(true);
+        $this->service->setHasServiceConfig(true);
 
         $result = $this->service->has('my-service');
         $this->assertTrue($result);
@@ -119,9 +113,6 @@ class AbstractServiceManagerTest extends TestCase
         $this->mockMapper->expects($this->never())
             ->method('map');
 
-        $this->mockConfig->expects($this->never())
-            ->method('hasHandlerConfig');
-
         $result = $this->service->get('my-service');
         $this->assertEquals($expected, $result);
     }
@@ -132,11 +123,6 @@ class AbstractServiceManagerTest extends TestCase
             ->method('has')
             ->with(FactoryStub::class)
             ->willReturn(false);
-
-        $this->mockConfig->expects($this->exactly(1))
-            ->method('hasHandlerConfig')
-            ->with(FactoryStub::class)
-            ->willReturn(true);
 
         $this->mockHandlerConfig->expects($this->once())
             ->method('getType')
@@ -150,6 +136,7 @@ class AbstractServiceManagerTest extends TestCase
             ->method('map');
 
         $this->service->setServiceConfig($this->mockHandlerConfig);
+        $this->service->setHasServiceConfig(true);
 
         $result = $this->service->get(FactoryStub::class);
         $this->assertInstanceOf(HandlerStub::class, $result);
@@ -161,11 +148,6 @@ class AbstractServiceManagerTest extends TestCase
             ->method('has')
             ->with('my-service')
             ->willReturn(false);
-
-        $this->mockConfig->expects($this->exactly(1))
-            ->method('hasHandlerConfig')
-            ->with('my-service')
-            ->willReturn(true);
 
         $this->mockHandlerConfig->expects($this->once())
             ->method('getType')
@@ -181,6 +163,7 @@ class AbstractServiceManagerTest extends TestCase
             ->willReturn(FactoryStub::class);
 
         $this->service->setServiceConfig($this->mockHandlerConfig);
+        $this->service->setHasServiceConfig(true);
 
         $result = $this->service->get('my-service');
         $this->assertInstanceOf(HandlerStub::class, $result);
@@ -211,9 +194,6 @@ class AbstractServiceManagerTest extends TestCase
         $this->mockMapper->expects($this->never())
             ->method('map');
 
-        $this->mockConfig->expects($this->never())
-            ->method('hasHandlerConfig');
-
         $result = $this->service->get('my-service');
         $this->assertEquals($expected, $result);
 
@@ -233,11 +213,6 @@ class AbstractServiceManagerTest extends TestCase
             ->with('my-service')
             ->willReturn(false);
 
-        $this->mockConfig->expects($this->exactly(1))
-            ->method('hasHandlerConfig')
-            ->with('my-service')
-            ->willReturn(false);
-
         $this->mockHandlerConfig->expects($this->never())
             ->method('getType');
 
@@ -248,6 +223,7 @@ class AbstractServiceManagerTest extends TestCase
             ->method('map');
 
         $this->service->setServiceConfig($this->mockHandlerConfig);
+        $this->service->setHasServiceConfig(false);
 
         $this->service->get('my-service');
     }
@@ -259,11 +235,6 @@ class AbstractServiceManagerTest extends TestCase
             ->method('has')
             ->with('my-service')
             ->willReturn(false);
-
-        $this->mockConfig->expects($this->exactly(1))
-            ->method('hasHandlerConfig')
-            ->with('my-service')
-            ->willReturn(true);
 
         $this->mockHandlerConfig->expects($this->once())
             ->method('getType')
@@ -279,6 +250,7 @@ class AbstractServiceManagerTest extends TestCase
             ->willReturn(null);
 
         $this->service->setServiceConfig($this->mockHandlerConfig);
+        $this->service->setHasServiceConfig(true);
 
         $this->service->get('my-service');
     }

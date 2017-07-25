@@ -13,9 +13,9 @@ class NewRelicHandlerFactory implements FactoryInterface
     {
         $level           = (int)     ($options['level']           ?? Logger::DEBUG);
         $bubble          = (boolean) ($options['bubble']          ?? true);
-        $appName         = (string)  ($options['appName']         ?? '');
+        $appName         =            $options['appName']         ?? null;
         $explodeArrays   = (boolean) ($options['explodeArrays']   ?? false);
-        $transactionName = (string)  ($options['transactionName'] ?? '');
+        $transactionName =            $options['transactionName'] ?? null;
 
         return new NewRelicHandler(
             $level,
