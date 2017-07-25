@@ -6,6 +6,7 @@ use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Config\MainConfig;
 use WShafer\PSR11MonoLog\Config\MainConfigFactory;
 use WShafer\PSR11MonoLog\Formatter\FormatterMapper;
+use WShafer\PSR11MonoLog\Handler\HandlerMapper;
 use WShafer\PSR11MonoLog\Processor\ProcessorMapper;
 use WShafer\PSR11MonoLog\Service\FormatterManager;
 use WShafer\PSR11MonoLog\Service\HandlerManager;
@@ -68,7 +69,7 @@ class ChannelChangerFactory
         $config = $this->getMainConfig($container);
         $this->handlerManager = new HandlerManager(
             $config,
-            new FormatterMapper(),
+            new HandlerMapper(),
             $container
         );
 
