@@ -9,8 +9,6 @@ use WShafer\PSR11MonoLog\Exception\UnknownServiceException;
 
 class HandlerManager extends AbstractServiceManager
 {
-    const INTERFACE = HandlerInterface::class;
-
     /** @var FormatterManager */
     protected $formatterManager;
 
@@ -21,18 +19,18 @@ class HandlerManager extends AbstractServiceManager
 
     public function get($id)
     {
-        $interface = self::INTERFACE;
-
-        if (key_exists($id, $this->services)
-            && $this->services[$id] instanceof $interface
-        ) {
+        if (key_exists($id, $this->services)) {
             return $this->services[$id];
         }
 
-        $config = $this->config->getHandlerConfig($id);
-
         /** @var HandlerInterface $handler */
         $handler = parent::get($id);
+
+        $config = $this->config->getHandlerConfig($id);
+
+        if (!$config) {
+            return $handler;
+        }
 
         $formatter= $config->getFormatter();
 
@@ -61,12 +59,12 @@ class HandlerManager extends AbstractServiceManager
 
     protected function getFormatter($id)
     {
-        if (!$this->formatterManager->has($id)) {
+        if (!$this->getFormatterManager()->has($id)) {
             throw new UnknownServiceException(
                 'Unable to locate formatter '.$id
             );
         }
 
-        return $this->formatterManager->get($id);
+        return $this->getFormatterManager()->get($id);
     }
 }
