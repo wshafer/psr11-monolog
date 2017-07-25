@@ -3,6 +3,7 @@
 namespace WShafer\PSR11MonoLog;
 
 use Psr\Container\ContainerInterface;
+use WShafer\PSR11MonoLog\Config\MainConfig;
 use WShafer\PSR11MonoLog\Config\MainConfigFactory;
 use WShafer\PSR11MonoLog\Formatter\FormatterMapper;
 use WShafer\PSR11MonoLog\Processor\ProcessorMapper;
@@ -35,9 +36,31 @@ class ChannelChangerFactory
 
     public function getMainConfig(ContainerInterface $container)
     {
-        $factory = new MainConfigFactory();
-        $this->config = $factory($container);
-        return $this->config;
+        $config = $this->getConfigArray($container);
+        return new MainConfig($config);
+    }
+
+    protected function getConfigArray(ContainerInterface $container)
+    {
+        // Symfony config is parameters. //
+        if (method_exists($container, 'getParameter')
+            && method_exists($container, 'hasParameter')
+            && $container->hasParameter('monolog')
+        ) {
+            return ['monolog' => $container->getParameter('monolog')];
+        }
+
+        // Zend uses config key
+        if ($container->has('config')) {
+            return $container->get('config');
+        }
+
+        // Slim Config comes from "settings"
+        if ($container->has('settings')) {
+            return ['monolog' => $container->get('settings')['monolog']];
+        }
+
+        return [];
     }
 
     public function getHandlerManager(ContainerInterface $container)
