@@ -134,8 +134,8 @@ Monolog uses four types of services that will each need to be configured for you
   some circumstances you may however want to change the formatting of the message.  Configuring
   a formatter will let you customize the message being sent to the log.
 
-- [Processors](#processors) :  Processors can be used to add data, change the message, filter, you name it.
-  Monolog provides some built-in processors that can be used in your project. Look at the 
+- [Processors](#processors) :  (Optional) Processors can be used to add data, change the message, filter, 
+  you name it.  Monolog provides some built-in processors that can be used in your project. Look at the 
   [Processors](#processors) section for the list.
 
 ## Containers
