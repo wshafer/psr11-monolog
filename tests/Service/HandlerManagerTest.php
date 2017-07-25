@@ -277,4 +277,15 @@ class HandlerManagerTest extends TestCase
 
         $this->service->get('my-service');
     }
+
+    public function testHasServiceConfig()
+    {
+        $this->mockConfig->expects($this->once())
+            ->method('hasHandlerConfig')
+            ->with('my-config-name')
+            ->willReturn(true);
+
+        $result = $this->service->hasServiceConfig('my-config-name');
+        $this->assertTrue($result);
+    }
 }

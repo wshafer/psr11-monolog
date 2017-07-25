@@ -65,4 +65,15 @@ class FormatterManagerTest extends TestCase
         $result = $this->service->getServiceConfig('my-config-name');
         $this->assertEquals($this->mockServiceConfig, $result);
     }
+
+    public function testHasServiceConfig()
+    {
+        $this->mockConfig->expects($this->once())
+            ->method('hasFormatterConfig')
+            ->with('my-config-name')
+            ->willReturn(true);
+
+        $result = $this->service->hasServiceConfig('my-config-name');
+        $this->assertTrue($result);
+    }
 }
