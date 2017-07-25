@@ -16,7 +16,7 @@ class WebProcessorFactory implements FactoryInterface, ContainerAwareInterface
     public function __invoke(array $options)
     {
         $serverData     = $this->getServerDataService($options);
-        $extraFields    = (array) ($options['extraFields'] ?? null);
+        $extraFields    = $options['extraFields'] ?? null;
 
         return new WebProcessor(
             $serverData,
