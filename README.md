@@ -21,48 +21,48 @@
         - [Example](#minimal-example)
     - [Full Configuration](#full-configuration)
         - [Full Example](#full-example)
-        - [Channels](#channels)
-        - [Handlers](#handlers)
-            - [Log to files and syslog](#log-to-files-and-syslog)
-                - [StreamHandler](#streamhandler)
-                - [RotatingFileHandler](#rotatingfilehandler)
-                - [SyslogHandler](#sysloghandler)
-                - [ErrorLogHandler](#errorloghandler)
-            - [Send alerts and emails](#send-alerts-and-emails)
-                - [NativeMailerHandler](#nativemailerhandler)
-                - [SwiftMailerHandler](#swiftmailerhandler)
-                - [PushoverHandler](#pushoverhandler)
-                - [HipChatHandler](#hipchathandler)
-                - [FlowdockHandler](#flowdockhandler)
-                - [SlackbotHandler](#slackbothandler)
-                - [SlackWebhookHandler](#slackwebhookhandler)
-                - [SlackHandler](#slackhandler)
-                - [MandrillHandler](#mandrillhandler)
-                - [FleepHookHandler](#fleephookhandler)
-                - [IFTTTHandler](#ifttthandler)
-            - [Log specific servers and networked logging](#log-specific-servers-and-networked-logging)
-                - [SocketHandler](#sockethandler)
-                - [AmqpHandler](#amqphandler)
-                - [GelfHandler](#gelfhandler)
-                - [CubeHandler](#cubehandler)
-                - [RavenHandler](#ravenhandler)
-                - [ZendMonitorHandler](#zendmonitorhandler)
-                - [NewRelicHandler](#newrelichandler)
-                - [LogglyHandler](#logglyhandler)
-                - [RollbarHandler](#rollbarhandler)
-                - [SyslogUdpHandler](#syslogudphandler)
-                - [LogEntriesHandler](#logentrieshandler)
-            - [Logging in development](#logging-in-development)
-                - [FirePHPHandler](#firephphandler)
-                - [ChromePHPHandler](#chromephphandler)
-                - [BrowserConsoleHandler](#browserconsolehandler)
-                - [PHPConsoleHandler](#phpconsolehandler)
-            - [Log to databases](#log-to-databases)
-                - [RedisHandler](#redishandler)
-                - [MongoDBHandler](#mongodbhandler)
-                - [CouchDBHandler](#couchdbhandler)
-                - [DoctrineCouchDBHandler](#doctrinecouchdbhandler)
-                - [ElasticSearchHandler](#elasticsearchhandler)
+    - [Channels](#channels)
+    - [Handlers](#handlers)
+        - [Log to files and syslog](#log-to-files-and-syslog)
+            - [StreamHandler](#streamhandler)
+            - [RotatingFileHandler](#rotatingfilehandler)
+            - [SyslogHandler](#sysloghandler)
+            - [ErrorLogHandler](#errorloghandler)
+        - [Send alerts and emails](#send-alerts-and-emails)
+            - [NativeMailerHandler](#nativemailerhandler)
+            - [SwiftMailerHandler](#swiftmailerhandler)
+            - [PushoverHandler](#pushoverhandler)
+            - [HipChatHandler](#hipchathandler)
+            - [FlowdockHandler](#flowdockhandler)
+            - [SlackbotHandler](#slackbothandler)
+            - [SlackWebhookHandler](#slackwebhookhandler)
+            - [SlackHandler](#slackhandler)
+            - [MandrillHandler](#mandrillhandler)
+            - [FleepHookHandler](#fleephookhandler)
+            - [IFTTTHandler](#ifttthandler)
+        - [Log specific servers and networked logging](#log-specific-servers-and-networked-logging)
+            - [SocketHandler](#sockethandler)
+            - [AmqpHandler](#amqphandler)
+            - [GelfHandler](#gelfhandler)
+            - [CubeHandler](#cubehandler)
+            - [RavenHandler](#ravenhandler)
+            - [ZendMonitorHandler](#zendmonitorhandler)
+            - [NewRelicHandler](#newrelichandler)
+            - [LogglyHandler](#logglyhandler)
+            - [RollbarHandler](#rollbarhandler)
+            - [SyslogUdpHandler](#syslogudphandler)
+            - [LogEntriesHandler](#logentrieshandler)
+        - [Logging in development](#logging-in-development)
+            - [FirePHPHandler](#firephphandler)
+            - [ChromePHPHandler](#chromephphandler)
+            - [BrowserConsoleHandler](#browserconsolehandler)
+            - [PHPConsoleHandler](#phpconsolehandler)
+        - [Log to databases](#log-to-databases)
+            - [RedisHandler](#redishandler)
+            - [MongoDBHandler](#mongodbhandler)
+            - [CouchDBHandler](#couchdbhandler)
+            - [DoctrineCouchDBHandler](#doctrinecouchdbhandler)
+            - [ElasticSearchHandler](#elasticsearchhandler)
         - [Formatters](#formatters)
             - [LineFomatter](#linefomatter)
             - [HtmlFormatter](#htmlformatter)
@@ -607,7 +607,7 @@ return [
 ];
 ```
 
-### Channels
+## Channels
 ```php
 <?php
 
@@ -632,12 +632,12 @@ return [
 ];
 ```
 
-### Handlers
+## Handlers
 
-#### Log to files and syslog
+### Log to files and syslog
 
 
-##### StreamHandler
+#### StreamHandler
 Logs records into any PHP stream, use this for log files.
 
 ```php
@@ -663,7 +663,7 @@ return [
 ```
 Monolog Docs: [StreamHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/StreamHandler.php)
 
-##### RotatingFileHandler
+#### RotatingFileHandler
 Logs records to a file and creates one logfile per day. It will also delete files older than $maxFiles. 
 You should use [logrotate](http://linuxcommand.org/man_pages/logrotate8.html) for high profile setups though, 
 this is just meant as a quick and dirty solution.
@@ -692,7 +692,7 @@ return [
 ```
 Monolog Docs: [RotatingFileHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RotatingFileHandler.php)
 
-##### SyslogHandler
+#### SyslogHandler
 Logs records to the syslog.
 
 ```php
@@ -719,7 +719,7 @@ return [
 Monolog Docs: [SyslogHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SyslogHandler.php)
 PHP openlog(): [openlog](http://php.net/manual/en/function.openlog.php)
 
-##### ErrorLogHandler
+#### ErrorLogHandler
 Logs records to PHP's [error_log()](http://docs.php.net/manual/en/function.error-log.php) function.
 
 ```php
@@ -744,9 +744,9 @@ return [
 ```
 Monolog Docs: [ErrorLogHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ErrorLogHandler.php)
 
-#### Send alerts and emails
+### Send alerts and emails
 
-##### NativeMailerHandler
+#### NativeMailerHandler
 Sends emails using PHP's [mail()](http://php.net/manual/en/function.mail.php) function.
 
 ```php
@@ -773,7 +773,7 @@ return [
 ```
 Monolog Docs: [NativeMailerHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/NativeMailerHandler.php)
 
-##### SwiftMailerHandler
+#### SwiftMailerHandler
 Sends emails using a [Swift_Mailer](http://swiftmailer.org/) instance.
 
 ```php
@@ -798,7 +798,7 @@ return [
 ```
 Monolog Docs: [SwiftMailerHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SwiftMailerHandler.php)
 
-##### PushoverHandler
+#### PushoverHandler
 Sends mobile notifications via the [Pushover](https://www.pushover.net/) API.
 
 ```php
@@ -829,7 +829,7 @@ return [
 ```
 Monolog Docs: [PushoverHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/PushoverHandler.php)
 
-##### HipChatHandler
+#### HipChatHandler
 Sends notifications through the [HipChat](http://hipchat.com/) api to a hipchat room
 
 ```php
@@ -859,7 +859,7 @@ return [
 ```
 Monolog Docs: [HipChatHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/HipChatHandler.php)
 
-##### FlowdockHandler
+#### FlowdockHandler
 Logs records to a [Flowdock](https://www.flowdock.com/) account.
 
 ```php
@@ -884,7 +884,7 @@ return [
 Monolog Docs: [FlowdockHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/FlowdockHandler.php)
 
 
-##### SlackbotHandler
+#### SlackbotHandler
 Logs records to a [Slack](https://www.slack.com/) account using the Slackbot incoming hook.
 
 ```php
@@ -910,7 +910,7 @@ return [
 ```
 Monolog Docs: [SlackbotHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SlackbotHandler.php)
 
-##### SlackWebhookHandler
+#### SlackWebhookHandler
 Logs records to a [Slack](https://www.slack.com/) account using Slack Webhooks.
 
 ```php
@@ -941,7 +941,7 @@ return [
 ```
 Monolog Docs: [SlackWebhookHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SlackWebhookHandler.php)
 
-##### SlackHandler
+#### SlackHandler
 Logs records to a [SlackHandler](https://www.slack.com/) account using the Slack API (complex setup).
 
 ```php
@@ -972,7 +972,7 @@ return [
 ```
 Monolog Docs: [SlackHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SlackHandler.php)
 
-##### MandrillHandler
+#### MandrillHandler
 Sends emails via the [Mandrill](http://www.mandrill.com/) API using a [Swift_Message](http://swiftmailer.org/) instance.
 
 ```php
@@ -997,7 +997,7 @@ return [
 ```
 Monolog Docs: [MandrillHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/MandrillHandler.php)
 
-##### FleepHookHandler
+#### FleepHookHandler
 Logs records to a [Fleep](https://fleep.io/) conversation using Webhooks.
 
 ```php
@@ -1021,7 +1021,7 @@ return [
 ```
 Monolog Docs: [FleepHookHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/FleepHookHandler.php)
 
-##### IFTTTHandler
+#### IFTTTHandler
 Notifies an [IFTTT](https://ifttt.com/maker) trigger with the log channel, level name and message.
 
 ```php
@@ -1045,9 +1045,9 @@ return [
 ```
 Monolog Docs: [IFTTTHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/IFTTTHandler.php)
 
-#### Log specific servers and networked logging
+### Log specific servers and networked logging
 
-##### SocketHandler
+#### SocketHandler
 Logs records to [sockets](http://php.net/fsockopen), use this for UNIX and TCP sockets. See an [example](https://github.com/Seldaek/monolog/blob/master/doc/sockets.md).
 
 ```php
@@ -1073,7 +1073,7 @@ return [
 ```
 Monolog Docs: [SocketHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SocketHandler.php)
 
-##### AmqpHandler
+#### AmqpHandler
 Logs records to an [AMQP](http://www.amqp.org/) compatible server. Requires the [php-amqp](http://pecl.php.net/package/amqp) extension (1.0+) or the [php-amqplib](https://github.com/php-amqplib/php-amqplib) library.
 
 ```php
@@ -1098,7 +1098,7 @@ return [
 ```
 Monolog Docs: [AmqpHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/AmqpHandler.php)
 
-##### GelfHandler
+#### GelfHandler
 Logs records to a [Graylog2](http://www.graylog2.org) server. Requires package [graylog2/gelf-php](https://github.com/bzikarsky/gelf-php).
 ```php
 <?php
@@ -1121,7 +1121,7 @@ return [
 ```
 Monolog Docs: [GelfHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/GelfHandler.php)
 
-##### CubeHandler
+#### CubeHandler
 Logs records to a [Cube](http://square.github.com/cube/) server.
 
 _Note: Cube is not under active development, maintenance or support by 
@@ -1149,7 +1149,7 @@ return [
 ```
 Monolog Docs: [CubeHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/CubeHandler.php)
 
-##### RavenHandler
+#### RavenHandler
 Logs records to a [Sentry](http://getsentry.com/) server using [raven](https://packagist.org/packages/raven/raven).
 ```php
 <?php
@@ -1172,7 +1172,7 @@ return [
 ```
 Monolog Docs: [RavenHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RavenHandler.php)
 
-##### ZendMonitorHandler
+#### ZendMonitorHandler
 Logs records to the Zend Monitor present in [Zend Server](http://www.zend.com/en/products/zend_server).
 ```php
 <?php
@@ -1194,7 +1194,7 @@ return [
 ```
 Monolog Docs: [ZendMonitorHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ZendMonitorHandler.php)
 
-##### NewRelicHandler
+#### NewRelicHandler
 Logs records to a [NewRelic](http://newrelic.com/) application.
 ```php
 <?php
@@ -1219,7 +1219,7 @@ return [
 ```
 Monolog Docs: [NewRelicHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/NewRelicHandler.php)
 
-##### LogglyHandler
+#### LogglyHandler
 Logs records to a [Loggly](http://www.loggly.com/) account.
 
 ```php
@@ -1243,7 +1243,7 @@ return [
 ```
 Monolog Docs: [LogglyHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/LogglyHandler.php)
 
-##### RollbarHandler:
+#### RollbarHandler:
 Logs records to a [Rollbar](https://rollbar.com/) account.
 
 _Note: RollerbarHandler is out of date with upstream changes. In addition the Rollerbar library suggests using 
@@ -1251,7 +1251,7 @@ the PsrHandler instead.  See [Rollerbar Docs](https://github.com/rollbar/rollbar
 
 Monolog Docs: [RollbarHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RollbarHandler.php)
 
-##### SyslogUdpHandler
+#### SyslogUdpHandler
 Logs records to a remote [Syslogd](http://www.rsyslog.com/) server.
 
 ```php
@@ -1278,7 +1278,7 @@ return [
 ```
 Monolog Docs: [SyslogUdpHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SyslogUdpHandler.php)
 
-##### LogEntriesHandler
+#### LogEntriesHandler
 Logs records to a [LogEntries](http://logentries.com/) account.
 
 ```php
@@ -1303,7 +1303,7 @@ return [
 ```
 Monolog Docs: [LogEntriesHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/LogEntriesHandler.php)
 
-#### Logging in development
+### Logging in development
 
 ##### FirePHPHandler
 Handler for [FirePHP](http://www.firephp.org/), providing inline console messages within [FireBug](http://getfirebug.com/).
@@ -1330,7 +1330,7 @@ return [
 ```
 Monolog Docs: [FirePHPHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/LogEntriesHandler.php)
 
-##### ChromePHPHandler
+#### ChromePHPHandler
 Handler for [ChromePHP](http://www.chromephp.com/), providing inline console messages within Chrome.
 
 ```php
@@ -1353,7 +1353,7 @@ return [
 ```
 Monolog Docs: [ChromePHPHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ChromePHPHandler.php)
 
-##### BrowserConsoleHandler
+#### BrowserConsoleHandler
 Handler to send logs to browser's Javascript console with no browser extension required. Most browsers supporting 
 console API are supported.
 
@@ -1377,7 +1377,7 @@ return [
 ```
 Monolog Docs: [BrowserConsoleHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/BrowserConsoleHandler.php)
 
-##### PHPConsoleHandler
+#### PHPConsoleHandler
 Handler for [PHP Console](https://chrome.google.com/webstore/detail/php-console/nfhmhhlpfleoednkpnnnkolmclajemef), 
 providing inline console and notification popup messages within Chrome.
 
@@ -1404,9 +1404,9 @@ return [
 Monolog Docs: [PHPConsoleHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/PHPConsoleHandler.php)
 
 
-####Logging in development
+###Logging in development
 
-##### RedisHandler
+#### RedisHandler
 Logs records to a [Redis](http://redis.io/) server.   Requires the [php-redis](https://pecl.php.net/package/redis) 
 extension or the [Predis](https://github.com/nrk/predis) library.
 
@@ -1433,7 +1433,7 @@ return [
 ```
 Monolog Docs: [RedisHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RedisHandler.php)
 
-##### MongoDBHandler
+#### MongoDBHandler
 Handler to write records in MongoDB via a [Mongo extension](http://php.net/manual/en/mongodb.tutorial.library.php) connection.
 
 ```php
@@ -1460,7 +1460,7 @@ return [
 ```
 Monolog Docs: [MongoDBHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/MongoDBHandler.php)
 
-##### CouchDBHandler
+#### CouchDBHandler
 Logs records to a CouchDB server.
 
 ```php
@@ -1488,7 +1488,7 @@ return [
 ```
 Monolog Docs: [CouchDBHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/CouchDBHandler.php)
 
-##### DoctrineCouchDBHandler
+#### DoctrineCouchDBHandler
 Logs records to a CouchDB server via the Doctrine CouchDB ODM.
 
 ```php
@@ -1512,7 +1512,7 @@ return [
 ```
 Monolog Docs: [DoctrineCouchDBHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/DoctrineCouchDBHandler.php)
 
-##### ElasticSearchHandler
+#### ElasticSearchHandler
 Logs records to an Elastic Search server.
 
 ```php
@@ -1539,7 +1539,7 @@ return [
 ```
 Monolog Docs: [ElasticSearchHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ElasticSearchHandler.php)
 
-##### DynamoDbHandler
+#### DynamoDbHandler
 Logs records to a DynamoDB table with the [AWS SDK](https://github.com/aws/aws-sdk-php).
 
 ```php
@@ -1564,9 +1564,9 @@ return [
 ```
 Monolog Docs: [DynamoDbHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/DynamoDbHandler.php)
 
-### Formatters
+## Formatters
 
-#### LineFomatter
+### LineFomatter
 Formats a log record into a one-line string.
 
 ```php
@@ -1590,8 +1590,7 @@ return [
 ```
 Monolog Docs: [LineFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/LineFormatter.php)
 
-
-#### HtmlFormatter
+### HtmlFormatter
 Used to format log records into a human readable html table, mainly suitable for emails.
 
 ```php
@@ -1612,7 +1611,7 @@ return [
 ```
 Monolog Docs: [HtmlFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/HtmlFormatter.php)
 
-#### NormalizerFormatter
+### NormalizerFormatter
 Normalizes objects/resources down to strings so a record can easily be serialized/encoded.
 
 ```php
@@ -1633,7 +1632,7 @@ return [
 ```
 Monolog Docs: [NormalizerFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/NormalizerFormatter.php)
 
-#### ScalarFormatter
+### ScalarFormatter
 Used to format log records into an associative array of scalar values.
 
 ```php
@@ -1652,7 +1651,7 @@ return [
 ```
 Monolog Docs: [ScalarFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/ScalarFormatter.php)
 
-#### JsonFormatter
+### JsonFormatter
 Encodes a log record into json.
 
 ```php
@@ -1674,7 +1673,7 @@ return [
 ```
 Monolog Docs: [JsonFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/JsonFormatter.php)
 
-#### WildfireFormatter
+### WildfireFormatter
 Used to format log records into the Wildfire/FirePHP protocol, only useful for the FirePHPHandler.
 
 ```php
@@ -1695,7 +1694,7 @@ return [
 ```
 Monolog Docs: [WildfireFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/WildfireFormatter.php)
 
-#### ChromePHPFormatter
+### ChromePHPFormatter
 Used to format log records into the ChromePHP format, only useful for the ChromePHPHandler.
 
 ```php
@@ -1714,7 +1713,7 @@ return [
 ```
 Monolog Docs: [ChromePHPFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/ScalarFormatter.php)
 
-#### GelfMessageFormatter
+### GelfMessageFormatter
 Used to format log records into Gelf message instances, only useful for the GelfHandler.
 
 ```php
@@ -1737,7 +1736,7 @@ return [
 ```
 Monolog Docs: [GelfMessageFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/GelfMessageFormatter.php)
 
-#### LogstashFormatter
+### LogstashFormatter
 Used to format log records into logstash event json, useful for any handler listed under inputs here.
 
 ```php
@@ -1762,7 +1761,7 @@ return [
 Monolog Docs: [LogstashFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/LogstashFormatter.php)
 
 
-#### ElasticaFormatter
+### ElasticaFormatter
 Used to format log records into [logstash](http://logstash.net/) event json, useful for any handler listed 
 under inputs [here](http://logstash.net/docs/latest).
 
@@ -1785,7 +1784,7 @@ return [
 ```
 Monolog Docs: [ElasticaFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/ElasticaFormatter.php)
 
-#### LogglyFormatter
+### LogglyFormatter
 Used to format log records into Loggly messages, only useful for the LogglyHandler.
 
 ```php
@@ -1807,7 +1806,7 @@ return [
 ```
 Monolog Docs: [LogglyFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/LogglyFormatter.php)
 
-#### FlowdockFormatter
+### FlowdockFormatter
 Used to format log records into Flowdock messages, only useful for the FlowdockHandler.
 
 ```php
@@ -1829,7 +1828,7 @@ return [
 ```
 Monolog Docs: [FlowdockFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/FlowdockFormatter.php)
 
-#### MongoDBFormatter
+### MongoDBFormatter
 Converts \DateTime instances to \MongoDate and objects recursively to arrays, only useful with the MongoDBHandler.
 
 ```php
