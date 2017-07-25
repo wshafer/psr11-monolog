@@ -10,10 +10,11 @@ class GelfMessageFormatterFactory implements FactoryInterface
 {
     public function __invoke(array $options)
     {
-        $systemName     = (string) ($options['systemName']    ?? null);
-        $extraPrefix    = (string) ($options['extraPrefix']   ?? null);
-        $contextPrefix  = (string) ($options['contextPrefix'] ?? 'ctxt_');
+        $systemName     = $options['systemName']    ?? null;
+        $extraPrefix    = $options['extraPrefix']   ?? null;
+        $contextPrefix  = $options['contextPrefix'] ?? 'ctxt_';
+        $maxLength      = $options['maxLength']     ?? null;
 
-        return new GelfMessageFormatter($systemName, $extraPrefix, $contextPrefix);
+        return new GelfMessageFormatter($systemName, $extraPrefix, $contextPrefix, $maxLength);
     }
 }

@@ -1729,6 +1729,7 @@ return [
                     'systemName'    => "my-system",  // Optional : the name of the system for the Gelf log message, defaults to the hostname of the machine
                     'extraPrefix'   => "extra_", // Optional : a prefix for 'extra' fields from the Monolog record
                     'contextPrefix' => 'ctxt_', // Optional : a prefix for 'context' fields from the Monolog record
+                    'maxLength'     => 32766, // Optional : Length per field
                 ],
             ],
         ],

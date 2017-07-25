@@ -11,12 +11,8 @@ class FormatterManager extends AbstractServiceManager
         return $this->config->getFormatterConfig($id);
     }
 
-    public function has($id)
+    public function hasServiceConfig($id): bool
     {
-        if (parent::has($id)) {
-            return true;
-        }
-
         return $this->config->hasFormatterConfig($id);
     }
 }

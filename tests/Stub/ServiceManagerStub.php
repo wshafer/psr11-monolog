@@ -14,6 +14,8 @@ class ServiceManagerStub extends AbstractServiceManager
 {
     protected $configuration;
 
+    protected $hasValue = true;
+
     const INTERFACE = HandlerInterface::class;
 
     public function __construct(MainConfig $config, MapperInterface $mapper, ContainerInterface $container)
@@ -26,8 +28,18 @@ class ServiceManagerStub extends AbstractServiceManager
         return $this->configuration;
     }
 
+    protected function hasServiceConfig($id): bool
+    {
+        return $this->hasValue;
+    }
+
     public function setServiceConfig(ConfigInterface $config)
     {
         $this->configuration = $config;
+    }
+
+    public function setHasServiceConfig($value)
+    {
+        $this->hasValue = $value;
     }
 }

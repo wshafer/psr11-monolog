@@ -10,7 +10,7 @@ class WildfireFormatterFactory implements FactoryInterface
 {
     public function __invoke(array $options)
     {
-        $dateFormat = (string) ($options['dateFormat'] ?? null);
+        $dateFormat = $options['dateFormat'] ?? null;
         return new WildfireFormatter($dateFormat);
     }
 }

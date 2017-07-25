@@ -13,7 +13,7 @@ class PushoverHandlerFactory implements FactoryInterface
     {
         $token             = (string)  ($options['token']             ?? '');
         $users             = (array)   ($options['users']             ?? []);
-        $title             = (string)  ($options['title']             ?? '');
+        $title             =            $options['title']             ?? null;
         $level             = (int)     ($options['level']             ?? Logger::DEBUG);
         $bubble            = (boolean) ($options['bubble']            ?? true);
         $useSSL            = (boolean) ($options['useSSL']            ?? true);

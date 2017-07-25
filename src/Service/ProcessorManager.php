@@ -11,12 +11,8 @@ class ProcessorManager extends AbstractServiceManager
         return $this->config->getProcessorConfig($id);
     }
 
-    public function has($id)
+    public function hasServiceConfig($id): bool
     {
-        if (parent::has($id)) {
-            return true;
-        }
-
         return $this->config->hasProcessorConfig($id);
     }
 }

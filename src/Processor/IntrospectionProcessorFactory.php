@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Processor;
 
+use Monolog\Logger;
 use Monolog\Processor\IntrospectionProcessor;
 use WShafer\PSR11MonoLog\FactoryInterface;
 

@@ -12,10 +12,10 @@ class SlackWebhookHandlerFactory implements FactoryInterface
     public function __invoke(array $options)
     {
         $webhookUrl         = (string)  ($options['webhookUrl']             ?? '');
-        $channel            = (string)  ($options['channel']                ?? '');
-        $userName           = (string)  ($options['userName']               ?? '');
+        $channel            =            $options['channel']                ?? null;
+        $userName           =            $options['userName']               ?? null;
         $useAttachment      = (boolean) ($options['useAttachment']          ?? true);
-        $iconEmoji          = (string)  ($options['iconEmoji']              ?? '');
+        $iconEmoji          =            $options['iconEmoji']              ?? null;
         $useShortAttachment = (boolean) ($options['useShortAttachment']     ?? false);
         $includeContext     = (boolean) ($options['includeContextAndExtra'] ?? false);
         $level              = (int)     ($options['level']                  ?? Logger::DEBUG);

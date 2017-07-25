@@ -17,6 +17,11 @@ class HandlerManager extends AbstractServiceManager
         return $this->config->getHandlerConfig($id);
     }
 
+    public function hasServiceConfig($id): bool
+    {
+        return $this->config->hasHandlerConfig($id);
+    }
+
     public function get($id)
     {
         if (key_exists($id, $this->services)) {
@@ -39,15 +44,6 @@ class HandlerManager extends AbstractServiceManager
         }
 
         return $handler;
-    }
-
-    public function has($id)
-    {
-        if (parent::has($id)) {
-            return true;
-        }
-
-        return $this->config->hasHandlerConfig($id);
     }
 
     public function setFormatterManager(FormatterManager $manager)

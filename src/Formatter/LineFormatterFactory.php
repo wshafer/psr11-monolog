@@ -13,10 +13,10 @@ class LineFormatterFactory implements FactoryInterface
 {
     public function __invoke(array $options)
     {
-        $format                     = (string) ($options['format']                     ?? null);
-        $dateFormat                 = (string) ($options['dateFormat']                 ?? null);
-        $allowInlineLineBreaks      = (bool)   ($options['allowInlineLineBreaks']      ?? false);
-        $ignoreEmptyContextAndExtra = (bool)   ($options['ignoreEmptyContextAndExtra'] ?? false);
+        $format                     =         $options['format']                     ?? null;
+        $dateFormat                 =         $options['dateFormat']                 ?? null;
+        $allowInlineLineBreaks      = (bool) ($options['allowInlineLineBreaks']      ?? false);
+        $ignoreEmptyContextAndExtra = (bool) ($options['ignoreEmptyContextAndExtra'] ?? false);
 
         return new LineFormatter($format, $dateFormat, $allowInlineLineBreaks, $ignoreEmptyContextAndExtra);
     }
