@@ -5,6 +5,7 @@ namespace WShafer\PSR11MonoLog\Service;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Config\MainConfig;
 use WShafer\PSR11MonoLog\ConfigInterface;
+use WShafer\PSR11MonoLog\ContainerAwareInterface;
 use WShafer\PSR11MonoLog\Exception\InvalidConfigException;
 use WShafer\PSR11MonoLog\Exception\UnknownServiceException;
 use WShafer\PSR11MonoLog\FactoryInterface;
@@ -99,6 +100,11 @@ abstract class AbstractServiceManager implements ContainerInterface
 
         /** @var FactoryInterface $factory */
         $factory = new $class;
+
+        if ($factory instanceof ContainerAwareInterface) {
+            $factory->setContainer($this->container);
+        }
+
         return $factory($options);
     }
 }
