@@ -3,7 +3,6 @@
 namespace WShafer\PSR11MonoLog\Service;
 
 use Psr\Container\ContainerInterface;
-use WShafer\PSR11MonoLog\ChannelChanger;
 use WShafer\PSR11MonoLog\Config\MainConfig;
 use WShafer\PSR11MonoLog\ConfigInterface;
 use WShafer\PSR11MonoLog\ContainerAwareInterface;
@@ -23,9 +22,6 @@ abstract class AbstractServiceManager implements ContainerInterface
 
     /** @var ContainerInterface */
     protected $container;
-
-    /** @var ChannelChanger */
-    protected $channelChanger;
 
     /** @var array */
     protected $services = [];

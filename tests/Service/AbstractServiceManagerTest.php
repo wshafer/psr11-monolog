@@ -85,10 +85,6 @@ class AbstractServiceManagerTest extends TestCase
         $this->assertTrue($result);
     }
 
-
-
-
-
     public function testGetServiceFromContainer()
     {
         $expected = $this->getMockBuilder(HandlerStub::class)
