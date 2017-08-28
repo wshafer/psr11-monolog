@@ -63,7 +63,7 @@
             - [CouchDBHandler](#couchdbhandler)
             - [DoctrineCouchDBHandler](#doctrinecouchdbhandler)
             - [ElasticSearchHandler](#elasticsearchhandler)
-         - [Wrappers / Special Handlers](#wrappers-/-special-handlers)
+         - [Wrappers / Special Handlers](#wrappers--special-handlers)
             - [FingersCrossedHandler](#fingers-crossed-handler)
             - [DeduplicationHandler](#deduplication-handler)
             - [WhatFailureGroupHandler](#what-failure-group-handler)
