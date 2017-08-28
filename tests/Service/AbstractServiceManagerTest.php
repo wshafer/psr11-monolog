@@ -5,6 +5,7 @@ namespace WShafer\PSR11MonoLog\Test\Service;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use WShafer\PSR11MonoLog\ChannelChanger;
 use WShafer\PSR11MonoLog\Config\HandlerConfig;
 use WShafer\PSR11MonoLog\Config\MainConfig;
 use WShafer\PSR11MonoLog\MapperInterface;
@@ -83,10 +84,6 @@ class AbstractServiceManagerTest extends TestCase
         $result = $this->service->has('my-service');
         $this->assertTrue($result);
     }
-
-
-
-
 
     public function testGetServiceFromContainer()
     {

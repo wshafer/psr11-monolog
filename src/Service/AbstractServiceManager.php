@@ -9,6 +9,7 @@ use WShafer\PSR11MonoLog\ContainerAwareInterface;
 use WShafer\PSR11MonoLog\Exception\InvalidConfigException;
 use WShafer\PSR11MonoLog\Exception\UnknownServiceException;
 use WShafer\PSR11MonoLog\FactoryInterface;
+use WShafer\PSR11MonoLog\HandlerManagerAwareInterface;
 use WShafer\PSR11MonoLog\MapperInterface;
 
 abstract class AbstractServiceManager implements ContainerInterface
@@ -104,6 +105,12 @@ abstract class AbstractServiceManager implements ContainerInterface
 
         if ($factory instanceof ContainerAwareInterface) {
             $factory->setContainer($this->container);
+        }
+
+        if ($factory instanceof HandlerManagerAwareInterface
+            && $this instanceof HandlerManager
+        ) {
+            $factory->setHandlerManager($this);
         }
 
         return $factory($options);
