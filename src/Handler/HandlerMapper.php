@@ -91,6 +91,18 @@ class HandlerMapper implements MapperInterface
                 return ElasticSearchHandlerFactory::class;
             case 'dynamodb':
                 return DynamoDbHandlerFactory::class;
+            case 'fingerscrossed':
+                return FingersCrossedHandlerFactory::class;
+            case 'deduplication':
+                return DeduplicationHandlerFactory::class;
+            case 'whatfailuregrouphandler':
+                return WhatFailureGroupHandlerFactory::class;
+            case 'buffer':
+                return BufferHandlerFactory::class;
+            case 'group':
+                return GroupHandlerFactory::class;
+            case 'filter':
+                return FilterHandlerFactory::class;
         }
 
         return null;

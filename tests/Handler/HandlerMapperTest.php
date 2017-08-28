@@ -6,17 +6,22 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\AmqpHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\BrowserConsoleHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\BufferHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ChromePHPHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\CouchDBHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\CubeHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\DeduplicationHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\DoctrineCouchDBHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\DynamoDbHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ElasticSearchHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\FilterHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\FingersCrossedHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FirePHPHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FleepHookHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FlowdockHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\GelfHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\GroupHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\HandlerMapper;
 use WShafer\PSR11MonoLog\Handler\HipChatHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\IFTTTHandlerFactory;
@@ -39,6 +44,7 @@ use WShafer\PSR11MonoLog\Handler\StreamHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SwiftMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SyslogHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SyslogUdpHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\WhatFailureGroupHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ZendMonitorHandlerFactory;
 
 /**
@@ -296,6 +302,48 @@ class HandlerMapperTest extends TestCase
     {
         $expected = DynamoDbHandlerFactory::class;
         $result = $this->mapper->map('dynamoDb');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testFingersCrossed()
+    {
+        $expected = FingersCrossedHandlerFactory::class;
+        $result = $this->mapper->map('fingersCrossed');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testDeduplication()
+    {
+        $expected = DeduplicationHandlerFactory::class;
+        $result = $this->mapper->map('deduplication');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testWhatFailureGroup()
+    {
+        $expected = WhatFailureGroupHandlerFactory::class;
+        $result = $this->mapper->map('whatFailureGroupHandler');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testBuffer()
+    {
+        $expected = BufferHandlerFactory::class;
+        $result = $this->mapper->map('buffer');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGroup()
+    {
+        $expected = GroupHandlerFactory::class;
+        $result = $this->mapper->map('group');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testFilter()
+    {
+        $expected = FilterHandlerFactory::class;
+        $result = $this->mapper->map('filter');
         $this->assertEquals($expected, $result);
     }
 

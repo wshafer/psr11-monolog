@@ -63,6 +63,13 @@
             - [CouchDBHandler](#couchdbhandler)
             - [DoctrineCouchDBHandler](#doctrinecouchdbhandler)
             - [ElasticSearchHandler](#elasticsearchhandler)
+         - [Wrappers / Special Handlers](#wrappers-/-special-handlers)
+            - [FingersCrossedHandler](#fingers-crossed-handler)
+            - [DeduplicationHandler](#deduplication-handler)
+            - [WhatFailureGroupHandler](#what-failure-group-handler)
+            - [BufferHandler](#buffer-handler)
+            - [GroupHandler](#group-handler)
+            - [FilterHandler](#filter-handler)
     - [Formatters](#formatters)
         - [LineFomatter](#linefomatter)
         - [HtmlFormatter](#htmlformatter)
@@ -636,7 +643,6 @@ return [
 ## Handlers
 
 ### Log to files and syslog
-
 
 #### StreamHandler
 Logs records into any PHP stream, use this for log files.
@@ -1564,6 +1570,176 @@ return [
 ];
 ```
 Monolog Docs: [DynamoDbHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/DynamoDbHandler.php)
+
+### Wrappers / Special Handlers
+
+#### FingersCrossedHandler
+A very interesting wrapper. It takes a logger as parameter and will accumulate log 
+records of all levels until a record exceeds the defined severity level. At which 
+point it delivers all records, including those of lower severity, to the handler it 
+wraps. This means that until an error actually happens you will not see anything in 
+your logs, but when it happens you will have the full information, including debug and 
+info records. This provides you with all the information you need, but only when you 
+need it.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'fingersCrossed',
+                'options' => [
+                    'handler'            => 'my-handler', // Required: Registered Handler to wrap
+                    'activationStrategy' => 'my-service', // Optional: Strategy which determines when this handler takes action.  Must be either the error level or configured ActivationStrategyInterface service
+                    'bufferSize'         => 0,            // Optional: How many entries should be buffered at most, beyond that the oldest items are removed from the buffer.
+                    'bubble'             => true,         // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'stopBuffering'      => true,         // Optional: Whether the handler should stop buffering after being triggered (default true)
+                    'passthruLevel'      => null,         // Optional: Minimum level to always flush to handler on close, even if strategy not triggered
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [FingersCrossedHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/FingersCrossedHandler.php)
+
+
+#### DeduplicationHandler
+Useful if you are sending notifications or emails when critical errors occur. It takes 
+a logger as parameter and will accumulate log records of all levels until the end 
+of the request (or flush() is called). At that point it delivers all records to 
+the handler it wraps, but only if the records are unique over a given time 
+period (60 seconds by default). If the records are duplicates they are simply 
+discarded. The main use of this is in case of critical failure like if your database 
+is unreachable for example all your requests will fail and that can result in a lot 
+of notifications being sent. Adding this handler reduces the amount of notifications 
+to a manageable level.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'deduplication',
+                'options' => [
+                    'handler'            => 'my-handler',           // Required: Registered Handler to wrap
+                    'deduplicationStore' => '/tmp/somestore',       // Optional: The file/path where the deduplication log should be kept
+                    'deduplicationLevel' => \Monolog\Logger::ERROR, // Optional:The minimum logging level for log records to be looked at for deduplication purposes
+                    'time'               => 60,                     // Optional: The period (in seconds) during which duplicate entries should be suppressed after a given log is sent through
+                    'bubble'             => true,                   // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [DeduplicationHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/DeduplicationHandler.php)
+
+#### WhatFailureGroupHandler
+This handler extends the GroupHandler ignoring exceptions raised by each child handler. 
+This allows you to ignore issues where a remote tcp connection may have died but you 
+do not want your entire application to crash and may wish to continue to log to other handlers.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'whatFailureGroup',
+                'options' => [
+                    'handlers' => ['my-handler-one'. 'my-handler-two'], // Required: Array of Registered Handlers to wrap
+                    'bubble'   => true,                                 // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [DeduplicationHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/WhatFailureGroupHandler.php)
+
+
+#### BufferHandler
+This handler will buffer all the log records it receives until close() is called at which point it 
+will call handleBatch() on the handler it wraps with all the log messages at once. This is very 
+useful to send an email with all records at once for example instead of having one mail for 
+every log record.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'buffer',
+                'options' => [
+                    'handler'         => 'my-handler',           // Required: Registered Handler to wrap
+                    'bufferLimit'     => 0,                      // Optional: How many entries should be buffered at most, beyond that the oldest items are removed from the buffer.
+                    'level'           => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'          => true,                   // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'flushOnOverflow' => false,                  // Optional: If true, the buffer is flushed when the max size has been reached, by default oldest entries are discarded
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [BufferHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/BufferHandler.php)
+
+
+#### GroupHandler
+This handler groups other handlers. Every record received is sent to all the handlers it is configured with.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'group',
+                'options' => [
+                    'handlers' => ['my-handler-one'. 'my-handler-two'], // Required: Array of Registered Handlers to wrap
+                    'bubble'   => true,                                 // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [DeduplicationHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/GroupHandler.php)
+
+
+#### FilterHandler
+Simple handler wrapper that filters records based on a list of levels
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'filter',
+                'options' => [
+                    'handler'         => 'my-handler',               // Required: Registered Handler to wrap
+                    'minLevelOrList'  => \Monolog\Logger::DEBUG,     // Optional: An array of levels to accept or a minimum level if maxLevel is provided
+                    'maxLevel'        => \Monolog\Logger::EMERGENCY, // Optional: Maximum level to accept, only used if $minLevelOrList is not an array
+                    'bubble'          => true,                       // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [FilterHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/FilterHandler.php)
+
 
 ## Formatters
 
