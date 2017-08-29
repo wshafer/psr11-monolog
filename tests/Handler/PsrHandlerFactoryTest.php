@@ -3,19 +3,19 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Handler;
 
-use Gelf\PublisherInterface;
-use Monolog\Handler\GelfHandler;
+use Monolog\Handler\PsrHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
-use WShafer\PSR11MonoLog\Handler\GelfHandlerFactory;
+use Psr\Log\LoggerInterface;
+use WShafer\PSR11MonoLog\Handler\PsrHandlerFactory;
 
 /**
- * @covers \WShafer\PSR11MonoLog\Handler\GelfHandlerFactory
+ * @covers \WShafer\PSR11MonoLog\Handler\PsrHandlerFactory
  */
-class GelfHandlerFactoryTest extends TestCase
+class PsrHandlerFactoryTest extends TestCase
 {
-    /** @var GelfHandlerFactory */
+    /** @var PsrHandlerFactory */
     protected $factory;
 
     /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
@@ -23,7 +23,7 @@ class GelfHandlerFactoryTest extends TestCase
 
     public function setup()
     {
-        $this->factory = new GelfHandlerFactory();
+        $this->factory = new PsrHandlerFactory();
         $this->mockContainer = $this->createMock(ContainerInterface::class);
         $this->factory->setContainer($this->mockContainer);
     }
@@ -31,12 +31,12 @@ class GelfHandlerFactoryTest extends TestCase
     public function testInvoke()
     {
         $options = [
-            'publisher' => 'my-service',
-            'level'     => Logger::INFO,
-            'bubble'    => false
+            'logger' => 'my-service',
+            'level'  => Logger::INFO,
+            'bubble' => false
         ];
 
-        $mockService = $this->createMock(PublisherInterface::class);
+        $mockService = $this->createMock(LoggerInterface::class);
 
         $this->mockContainer->expects($this->once())
             ->method('has')
@@ -50,6 +50,6 @@ class GelfHandlerFactoryTest extends TestCase
 
         $handler = $this->factory->__invoke($options);
 
-        $this->assertInstanceOf(GelfHandler::class, $handler);
+        $this->assertInstanceOf(PsrHandler::class, $handler);
     }
 }

@@ -103,6 +103,14 @@ class HandlerMapper implements MapperInterface
                 return GroupHandlerFactory::class;
             case 'filter':
                 return FilterHandlerFactory::class;
+            case 'sampling':
+                return SamplingHandlerFactory::class;
+            case 'null':
+                return NullHandlerFactory::class;
+            case 'psr':
+                return PsrHandlerFactory::class;
+            case 'test':
+                return TestHandlerFactory::class;
         }
 
         return null;
