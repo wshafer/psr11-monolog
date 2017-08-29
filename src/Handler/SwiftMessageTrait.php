@@ -2,13 +2,13 @@
 
 namespace WShafer\PSR11MonoLog\Handler;
 
-use WShafer\PSR11MonoLog\ContainerTrait;
 use WShafer\PSR11MonoLog\Exception\MissingConfigException;
 use WShafer\PSR11MonoLog\Exception\MissingServiceException;
+use WShafer\PSR11MonoLog\ServiceTrait;
 
 trait SwiftMessageTrait
 {
-    use ContainerTrait;
+    use ServiceTrait;
 
     /**
      * @param $options

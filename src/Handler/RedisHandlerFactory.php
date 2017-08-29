@@ -5,17 +5,17 @@ namespace WShafer\PSR11MonoLog\Handler;
 
 use Monolog\Handler\RedisHandler;
 use Monolog\Logger;
-use WShafer\PSR11MonoLog\ClientTrait;
 use WShafer\PSR11MonoLog\ContainerAwareInterface;
 use WShafer\PSR11MonoLog\FactoryInterface;
+use WShafer\PSR11MonoLog\ServiceTrait;
 
 class RedisHandlerFactory implements FactoryInterface, ContainerAwareInterface
 {
-    use ClientTrait;
+    use ServiceTrait;
 
     public function __invoke(array $options)
     {
-        $client  = $this->getClient($options);
+        $client  = $this->getService($options['client'] ?? []);
         $key     = (string)  ($options['key']     ?? '');
         $level   = (int)     ($options['level']   ?? Logger::DEBUG);
         $bubble  = (boolean) ($options['bubble']  ?? true);

@@ -107,11 +107,13 @@ abstract class AbstractServiceManager implements ContainerInterface
             $factory->setContainer($this->container);
         }
 
+        // @codeCoverageIgnoreStart
         if ($factory instanceof HandlerManagerAwareInterface
             && $this instanceof HandlerManager
         ) {
             $factory->setHandlerManager($this);
         }
+        // @codeCoverageIgnoreEnd
 
         return $factory($options);
     }
