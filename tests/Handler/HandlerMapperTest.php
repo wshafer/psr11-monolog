@@ -31,11 +31,14 @@ use WShafer\PSR11MonoLog\Handler\MandrillHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\MongoDBHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NewRelicHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\NullHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\PHPConsoleHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\PsrHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\PushoverHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\RavenHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\RedisHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\RotatingFileHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\SamplingHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SlackbotHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SlackHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SlackWebhookHandlerFactory;
@@ -44,6 +47,7 @@ use WShafer\PSR11MonoLog\Handler\StreamHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SwiftMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SyslogHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SyslogUdpHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\TestHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\WhatFailureGroupHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ZendMonitorHandlerFactory;
 
@@ -344,6 +348,34 @@ class HandlerMapperTest extends TestCase
     {
         $expected = FilterHandlerFactory::class;
         $result = $this->mapper->map('filter');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testSampling()
+    {
+        $expected = SamplingHandlerFactory::class;
+        $result = $this->mapper->map('sampling');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testNull()
+    {
+        $expected = NullHandlerFactory::class;
+        $result = $this->mapper->map('null');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testPsr()
+    {
+        $expected = PsrHandlerFactory::class;
+        $result = $this->mapper->map('psr');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testTest()
+    {
+        $expected = TestHandlerFactory::class;
+        $result = $this->mapper->map('test');
         $this->assertEquals($expected, $result);
     }
 

@@ -70,6 +70,10 @@
             - [BufferHandler](#bufferhandler)
             - [GroupHandler](#grouphandler)
             - [FilterHandler](#filterhandler)
+            - [SamplingHandler](#samplinghandler)
+            - [NullHandler](#nullhandler)
+            - [PsrHandler](#psrhandler)
+            - [TestHandler](#testhandler)
     - [Formatters](#formatters)
         - [LineFomatter](#linefomatter)
         - [HtmlFormatter](#htmlformatter)
@@ -1661,7 +1665,7 @@ return [
     ],
 ];
 ```
-Monolog Docs: [DeduplicationHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/WhatFailureGroupHandler.php)
+Monolog Docs: [WhatFailureGroupHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/WhatFailureGroupHandler.php)
 
 
 #### BufferHandler
@@ -1713,7 +1717,7 @@ return [
     ],
 ];
 ```
-Monolog Docs: [DeduplicationHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/GroupHandler.php)
+Monolog Docs: [GroupHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/GroupHandler.php)
 
 
 #### FilterHandler
@@ -1739,6 +1743,105 @@ return [
 ];
 ```
 Monolog Docs: [FilterHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/FilterHandler.php)
+
+
+#### SamplingHandler
+A sampled event stream can be useful for logging high frequency events in
+a production environment where you only need an idea of what is happening
+and are not concerned with capturing every occurrence. Since the decision to
+handle or not handle a particular event is determined randomly, the
+resulting sampled log is not guaranteed to contain 1/N of the events that
+occurred in the application, but based on the Law of large numbers, it will
+tend to be close to this ratio with a large number of attempts.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'sampling',
+                'options' => [
+                    'handler' => 'my-handler', // Required: Registered Handler to wrap
+                    'factor'  => 5,            // Required: Sample factor
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [SamplingHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SamplingHandler.php)
+
+
+#### NullHandler
+Any record it can handle will be thrown away. This can be used
+to put on top of an existing stack to override it temporarily.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type'    => 'noop',
+                'options' => [
+                    'level' => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [NullHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/NullHandler.php)
+
+
+#### PsrHandler
+Can be used to forward log records to an existing PSR-3 logger
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type'    => 'psr',
+                'options' => [
+                    'logger' => 'loggerService',        // Required: Logger Service to wrap from the container
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true,                   // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [PsrHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/PsrHandler.php)
+
+
+#### TestHandler
+Used for testing, it records everything that is sent to it and has accessors to read out the information.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type'    => 'test',
+                'options' => [
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true,                   // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [TestHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/TestHandler.php)
 
 
 ## Formatters
