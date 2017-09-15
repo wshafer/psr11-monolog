@@ -39,4 +39,9 @@ class ChannelConfig
     {
         return $this->config['processors'] ?? [];
     }
+
+    public function getName()
+    {
+        return $this->config['name'] ?? null;
+    }
 }

@@ -134,6 +134,11 @@ class ChannelChangerTest extends TestCase
             ->with('myProcessor')
             ->willReturn($this->mockProcessor);
 
+        /* Name */
+        $this->mockChannelConfig->expects($this->once())
+            ->method('getName')
+            ->willReturn(null);
+
         /** @var Logger $result */
         $result = $this->service->get('myChannel');
         $this->assertInstanceOf(Logger::class, $result);
@@ -143,6 +148,9 @@ class ChannelChangerTest extends TestCase
 
         $processors = $result->getProcessors();
         $this->assertEquals($this->mockProcessor, $processors[0]);
+
+        $name = $result->getName();
+        $this->assertEquals('myChannel', $name);
     }
 
     public function testGetFromCache()
@@ -187,6 +195,11 @@ class ChannelChangerTest extends TestCase
             ->with('myProcessor')
             ->willReturn($this->mockProcessor);
 
+        /* Name */
+        $this->mockChannelConfig->expects($this->once())
+            ->method('getName')
+            ->willReturn(null);
+
         /** @var Logger $result */
         $result = $this->service->get('myChannel');
         $this->assertInstanceOf(Logger::class, $result);
@@ -228,6 +241,10 @@ class ChannelChangerTest extends TestCase
 
         $this->mockProcessorManager->expects($this->never())
             ->method('get');
+
+        /* Name */
+        $this->mockChannelConfig->expects($this->never())
+            ->method('getName');
 
         /** @var Logger $result */
         $result = $this->service->get('myChannel');
@@ -271,6 +288,11 @@ class ChannelChangerTest extends TestCase
 
         $this->mockProcessorManager->expects($this->never())
             ->method('get');
+
+        /* Name */
+        $this->mockChannelConfig->expects($this->once())
+            ->method('getName')
+            ->willReturn(null);
 
         /** @var Logger $result */
         $result = $this->service->get('myChannel');
@@ -320,8 +342,69 @@ class ChannelChangerTest extends TestCase
         $this->mockProcessorManager->expects($this->never())
             ->method('get');
 
+        /* Name */
+        $this->mockChannelConfig->expects($this->once())
+            ->method('getName')
+            ->willReturn(null);
+
         /** @var Logger $result */
         $result = $this->service->get('myChannel');
         $this->assertInstanceOf(Logger::class, $result);
+    }
+
+    public function testGetWithCustomName()
+    {
+        $this->mockConfig->expects($this->once())
+            ->method('hasChannelConfig')
+            ->with('myChannel')
+            ->willReturn(true);
+
+        $this->mockConfig->expects($this->once())
+            ->method('getChannelConfig')
+            ->with('myChannel')
+            ->willReturn($this->mockChannelConfig);
+
+        /* Handler */
+        $this->mockChannelConfig->expects($this->once())
+            ->method('getHandlers')
+            ->willReturn(['myHandler']);
+
+        $this->mockHandlerManager->expects($this->once())
+            ->method('has')
+            ->with('myHandler')
+            ->willReturn(true);
+
+        $this->mockHandlerManager->expects($this->once())
+            ->method('get')
+            ->with('myHandler')
+            ->willReturn($this->mockHandler);
+
+        /* Processor */
+        $this->mockChannelConfig->expects($this->once())
+            ->method('getProcessors')
+            ->willReturn(['myProcessor']);
+
+        $this->mockProcessorManager->expects($this->once())
+            ->method('has')
+            ->with('myProcessor')
+            ->willReturn(true);
+
+        $this->mockProcessorManager->expects($this->once())
+            ->method('get')
+            ->with('myProcessor')
+            ->willReturn($this->mockProcessor);
+
+        /* Name */
+        $this->mockChannelConfig->expects($this->once())
+            ->method('getName')
+            ->willReturn('customName');
+
+        /** @var Logger $result */
+        $result = $this->service->get('myChannel');
+        $this->assertInstanceOf(Logger::class, $result);
+
+        $name = $result->getName();
+
+        $this->assertEquals('customName', $name);
     }
 }
