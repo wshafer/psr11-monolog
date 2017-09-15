@@ -49,7 +49,9 @@ class ChannelChanger implements ContainerInterface
 
         $config = $this->config->getChannelConfig($id);
 
-        $channel = new Logger($id);
+        $name = $config->getName() ?? $id;
+
+        $channel = new Logger($name);
 
         $handlersToUse = $config->getHandlers();
 

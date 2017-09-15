@@ -162,6 +162,7 @@ $container = new \Xtreamwayz\Pimple\Container([
             'channels' => [
                 // Configure a second channel
                 'channelTwo' => [
+                    'name' => 'MyOtherChannel',
                     'handlers' => [
                         'myOtherHandler',
                     ],
@@ -231,6 +232,7 @@ $container->setService(
             'channels' => [
                 // Configure a second channel
                 'channelTwo' => [
+                    'name' => 'MyOtherChannel',
                     'handlers' => [
                         'myOtherHandler',
                     ],
@@ -303,6 +305,7 @@ return [
         'channels' => [
             // Configure a second channel
             'channelTwo' => [
+                'name' => 'MyOtherChannel',
                 'handlers' => [
                     'myOtherHandler',
                 ],
@@ -354,6 +357,7 @@ return [
         'channels' => [
             // Configure a second channel
             'channelTwo' => [
+                'name' => 'MyOtherChannel',
                 'handlers' => [
                     'myOtherHandler',
                 ],
@@ -556,6 +560,9 @@ return [
             // default channel.  If no handler is defined for default then the default 
             // handler will be used.
             'default' => [
+                // Optional: Name of channel to show in logs.  Defaults to the array key
+                'name' => 'MyAppChannel',
+                
                 // array of handlers to attach to the channel.  Can use multiple handlers if needed.
                 'handlers' => ['handlerOne', 'handlerTwo'],
                 
@@ -564,6 +571,9 @@ return [
             ],
             
             'channelTwo' => [
+                // Optional: Name of channel to show in logs.  Defaults to the array key
+                'name' => 'MyOtherChannel',
+                
                 // array of handlers to attach to the channel.  Can use multiple handlers if needed.
                 'handlers' => ['handlerTwo'],
                 
@@ -585,6 +595,9 @@ return [
             
             // Array Keys are the channel identifiers
             'myChannelName' => [
+                // Optional: Name of channel to show in logs.  Defaults to the array key
+                'name' => 'MyChannelLogName',
+                                
                 // Array of configured handlers.  See handlers for more info
                 'handlers' => [  
                     'myHandler',  
