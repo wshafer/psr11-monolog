@@ -14,7 +14,6 @@
 - [Frameworks](#frameworks)
     - [Zend Expressive](#zend-expressive)
     - [Zend Framework 3](#zend-framework-3)
-    - [Slim](#slim)
 - [Configuration](#configuration)
     - [Minimal Configuration](#minimal-configuration)
         - [Example](#minimal-example)
@@ -184,7 +183,7 @@ $defaultChannel->debug('Write to log');
 // Get the second channel
 
 /** @var \Monolog\Logger $channelTwo */
-$channelTwo = $container->get('logger');
+$channelTwo = $container->get('channelTwo');
 
 // Write to the second channel
 $channelTwo->debug('Write to log');
@@ -253,7 +252,7 @@ $defaultChannel->debug('Write to log');
 // Get the second channel
 
 /** @var \Monolog\Logger $channelTwo */
-$channelTwo = $container->get('logger');
+$channelTwo = $container->get('channelTwo');
 
 // Write to the second channel
 $channelTwo->debug('Write to log');
@@ -388,85 +387,6 @@ return [
         'WShafer\\PSR11MonoLog',
     ]
 ];
-```
-
-## Slim
-
-public/index.php
-```php
-<?php
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
-
-require '../vendor/autoload.php';
-
-// Add Configuration
-$config = [
-    'settings' => [
-        'monolog' => [
-            'handlers' => [
-                // At the bare minimum you must include a default handler config.
-                // Otherwise log entries will be sent to the void.
-                'default' => [
-                    'type' => 'stream',
-                    'options' => [
-                        'stream' => '/var/log/some-log-file.txt',
-                    ],
-                ],
-                
-                // Another Handler
-                'myOtherHandler' => [
-                    'type' => 'stream',
-                    'options' => [
-                        'stream' => '/var/log/someother-log-file.txt',
-                    ],
-                ],
-            ],
-            
-            'channels' => [
-                // Configure a second channel
-                'channelTwo' => [
-                    'handlers' => [
-                        'myOtherHandler',
-                    ],
-                ],    
-            ],
-        ],
-    ],
-];
-
-$app = new \Slim\App($config);
-
-// Logger using the default keys.
-$container['logger'] = new \WShafer\PSR11MonoLog\MonologFactory();
-
-// Another logger using a different channel configuration
-$container['channelTwo'] = function($c) {
-    return \WShafer\PSR11MonoLog\MonologFactory::channelTwo($c);
-};
-
-// Example usage
-$app->get('/example', function (Request $request, Response $response) {
-    
-    // Get the default channel
-    
-    /** @var \Monolog\Logger $defaultChannel */
-    $defaultChannel = $this->get('logger');
-    
-    // Write to the default channel
-    $defaultChannel->debug('Write to log');
-    
-    
-    // Get the second channel
-    
-    /** @var \Monolog\Logger $channelTwo */
-    $channelTwo = $this->get('logger');
-    
-    // Write to the second channel
-    $channelTwo->debug('Write to log');
-});
-
-$app->run();
 ```
 
 
