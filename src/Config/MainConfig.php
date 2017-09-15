@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Config;
 
-use WShafer\PSR11MonoLog\Exception\MissingConfigException;
+use Monolog\Logger;
 
 class MainConfig
 {
@@ -21,7 +21,7 @@ class MainConfig
 
     public function __construct(array $config)
     {
-        $this->validateConfig($config);
+        $this->setDefaults($config);
         $this->buildFormatters($config);
         $this->buildHandlers($config);
         $this->buildChannels($config);
@@ -116,26 +116,19 @@ class MainConfig
         return $this->channels[$channel] ?? null;
     }
 
-    protected function validateConfig($config)
+    protected function setDefaults(array &$config)
     {
-        if (empty($config)
-            || empty($config['monolog'])
-        ) {
-            throw new MissingConfigException(
-                'No config key of "monolog" found in config array.'
-            );
+        if (empty($config['monolog']['handlers']['default'])) {
+            $config['monolog']['handlers']['default'] = [
+                'type' => 'noop',
+                'options' => [
+                    'level' => Logger::DEBUG
+                ]
+            ];
         }
 
-        if (empty($config['monolog']['handlers'])) {
-            throw new MissingConfigException(
-                'No config key of "handlers" found in monolog config array.'
-            );
-        }
-
-        if (empty($config['monolog']['channels'])) {
-            throw new MissingConfigException(
-                'No config key of "handlers" found in monolog config array.'
-            );
+        if (empty($config['monolog']['channels']['default'])) {
+            $config['monolog']['channels']['default']['handlers'][] = 'default';
         }
     }
 

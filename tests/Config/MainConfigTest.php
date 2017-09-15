@@ -33,32 +33,6 @@ class MainConfigTest extends TestCase
     {
     }
 
-    public function testConstructorMissingConfig()
-    {
-        $this->expectException(MissingConfigException::class);
-        new MainConfig([]);
-    }
-
-    public function testConstructorMissingHandlerConfig()
-    {
-        $this->expectException(MissingConfigException::class);
-
-        $config = $this->getConfigArray();
-        unset($config['monolog']['handlers']);
-
-        new MainConfig($config);
-    }
-
-    public function testConstructorMissingChannelConfig()
-    {
-        $this->expectException(MissingConfigException::class);
-
-        $config = $this->getConfigArray();
-        unset($config['monolog']['channels']);
-
-        new MainConfig($config);
-    }
-
     public function testConstructorMissingFormatterConfig()
     {
         $config = $this->getConfigArray();
@@ -83,15 +57,15 @@ class MainConfigTest extends TestCase
 
     public function testHasHandlerConfig()
     {
-        $result = $this->config->hasHandlerConfig('handlerOne');
+        $result = $this->config->hasHandlerConfig('default');
         $this->assertTrue($result);
     }
 
     public function testGetHandlerConfig()
     {
         $config = $this->getConfigArray();
-        $expected = $config['monolog']['handlers']['handlerOne']['type'];
-        $result = $this->config->getHandlerConfig('handlerOne');
+        $expected = $config['monolog']['handlers']['default']['type'];
+        $result = $this->config->getHandlerConfig('default');
 
         $this->assertInstanceOf(HandlerConfig::class, $result);
         $this->assertEquals($expected, $result->getType());
@@ -180,17 +154,48 @@ class MainConfigTest extends TestCase
 
     public function testHasChannelConfig()
     {
-        $result = $this->config->hasChannelConfig('myChannel');
+        $result = $this->config->hasChannelConfig('default');
         $this->assertTrue($result);
     }
 
     public function testGetChannelConfig()
     {
         $config = $this->getConfigArray();
-        $expected = $config['monolog']['channels']['myChannel']['handlers'];
-        $result = $this->config->getChannelConfig('myChannel');
+        $expected = $config['monolog']['channels']['default']['handlers'];
+        $result = $this->config->getChannelConfig('default');
 
         $this->assertInstanceOf(ChannelConfig::class, $result);
         $this->assertEquals($expected, $result->getHandlers());
+    }
+
+    public function testSetChannelConfigDefaults()
+    {
+        $config = $this->getConfigArray();
+        unset($config['monolog']['channels']);
+
+        $this->config = new MainConfig($config);
+        $result = $this->config->getChannelConfig('default');
+
+        $this->assertInstanceOf(ChannelConfig::class, $result);
+
+        $expectedHandlers = ['default'];
+
+        $handlers = $result->getHandlers();
+
+        $this->assertEquals($expectedHandlers, $handlers);
+    }
+
+    public function testSetHandlerConfigDefaults()
+    {
+        $config = $this->getConfigArray();
+        unset($config['monolog']['handlers']);
+
+        $this->config = new MainConfig($config);
+        $result = $this->config->getHandlerConfig('default');
+
+        $this->assertInstanceOf(HandlerConfig::class, $result);
+
+        $this->assertEquals('noop', $result->getType());
+        $this->assertEquals(['level' => Logger::DEBUG], $result->getOptions());
     }
 }
