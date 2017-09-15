@@ -14,8 +14,6 @@
 - [Frameworks](#frameworks)
     - [Zend Expressive](#zend-expressive)
     - [Zend Framework 3](#zend-framework-3)
-    - [Symfony](#symfony)
-    - [Slim](#slim)
 - [Configuration](#configuration)
     - [Minimal Configuration](#minimal-configuration)
         - [Example](#minimal-example)
@@ -99,7 +97,8 @@
         - [GitProcessor](#gitprocessor)
         - [MercurialProcessor](#mercurialprocessor)
         - [TagProcessor](#tagprocessor)
-    
+- [Upgrades](#upgrades)    
+    - [Version 1 to version 2](#version-1-to-version-2)
 
 # Installation
 
@@ -113,10 +112,7 @@ composer require wshafer/psr11-monolog
 <?php
 
 # Get the Channel Changer
-$channelChanger = $container->get(\WShafer\PSR11MonoLog\ChannelChanger::class);
-
-# Get a logging channel
-$channel = $channelChanger->get('my-channel');
+$channel = $container->get('my-channel');
 
 # Write to log
 $channel->debug('Hi There');
@@ -125,62 +121,87 @@ $channel->debug('Hi There');
 Additional info can be found in the [documentation](https://github.com/Seldaek/monolog/blob/master/README.md)
 
 # Containers
-Any PSR-11 container wil work.  All you should need to do is add some configuration
-and register the factory \WShafer\PSR11MonoLog\ChannelChangerFactory()
+Any PSR-11 container wil work.  In order to do that you will need to add configuration
+and register a new service that points to `WShafer\PSR11MonoLog\MonologFactory` 
 
 Below are some specific container examples to get you started
 
 ## Pimple
 ```php
-<?php
-/** @var \Psr\Container\ContainerInterface $container */
-$container = new \Interop\Container\Pimple\PimpleInterop(
-    null,
-    [
-        \WShafer\PSR11MonoLog\ChannelChanger::class
-            => new \WShafer\PSR11MonoLog\ChannelChangerFactory(),
+// Create Container
+$container = new \Xtreamwayz\Pimple\Container([
+    // Logger using the default keys.
+    'logger' => new \WShafer\PSR11MonoLog\MonologFactory(),
+    
+    // Another logger using a different channel configuration
+    'other' => function($c) {
+        return \WShafer\PSR11MonoLog\MonologFactory::channelTwo($c);
+    },
 
-        'config' => [
-            'monolog' => [
-                'handlers' => [
-                    'myHandler' => [
-                        'type' => 'stream',
-                        'options' => [
-                            'stream' => '/var/log/some-log-file.txt',
-                        ],
+    'config' => [
+        'monolog' => [
+            'handlers' => [
+                // At the bare minimum you must include a default handler config.
+                // Otherwise log entries will be sent to the void.
+                'default' => [
+                    'type' => 'stream',
+                    'options' => [
+                        'stream' => '/var/log/some-log-file.txt',
                     ],
                 ],
                 
-                'channels' => [
-                    'channelOne' => [
-                        'handlers' => [
-                            'myHandler',
-                        ],
-                    ],    
+                // Another Handler
+                'myOtherHandler' => [
+                    'type' => 'stream',
+                    'options' => [
+                        'stream' => '/var/log/someother-log-file.txt',
+                    ],
                 ],
             ],
+            
+            'channels' => [
+                // Configure a second channel
+                'channelTwo' => [
+                    'handlers' => [
+                        'myOtherHandler',
+                    ],
+                ],    
+            ],
         ],
-    ]
-);
+    ],
+]);
 
-/** @var \WShafer\PSR11MonoLog\ChannelChanger $channelChanger */
-$channelChanger = $container->get(\WShafer\PSR11MonoLog\ChannelChanger::class);
+// Get the default channel
 
-/** @var \Monolog\Logger $channel */
-$channel = $channelChanger->get('channelOne');
+/** @var \Monolog\Logger $defaultChannel */
+$defaultChannel = $container->get('logger');
 
-$channel->debug('Write to log');
+// Write to the default channel
+$defaultChannel->debug('Write to log');
+
+
+// Get the second channel
+
+/** @var \Monolog\Logger $channelTwo */
+$channelTwo = $container->get('channelTwo');
+
+// Write to the second channel
+$channelTwo->debug('Write to log');
+
 ```
 
 ## Zend Service Manager
 
 ```php
 <?php
-/** @var \Psr\Container\ContainerInterface $container */
+// Create the container and define the services you'd like to use
 $container = new \Zend\ServiceManager\ServiceManager([
     'factories' => [
-        \WShafer\PSR11MonoLog\ChannelChanger::class
-            => \WShafer\PSR11MonoLog\ChannelChangerFactory::class
+        // Logger using the default keys.
+        'logger' => \WShafer\PSR11MonoLog\MonologFactory::class,
+        
+        // Another logger using a different channel configuration
+        'channelTwo' => [\WShafer\PSR11MonoLog\MonologFactory::class, 'channelTwo']
     ]
 ]);
 
@@ -189,18 +210,29 @@ $container->setService(
     [
         'monolog' => [
             'handlers' => [
-                'myHandler' => [
+                // At the bare minimum you must include a default handler config.
+                // Otherwise log entries will be sent to the void.
+                'default' => [
                     'type' => 'stream',
                     'options' => [
                         'stream' => '/var/log/some-log-file.txt',
                     ],
                 ],
+                
+                // Another Handler
+                'myOtherHandler' => [
+                    'type' => 'stream',
+                    'options' => [
+                        'stream' => '/var/log/someother-log-file.txt',
+                    ],
+                ],
             ],
             
             'channels' => [
-                'channelOne' => [
+                // Configure a second channel
+                'channelTwo' => [
                     'handlers' => [
-                        'myHandler',
+                        'myOtherHandler',
                     ],
                 ],    
             ],
@@ -208,42 +240,71 @@ $container->setService(
     ]
 );
 
-/** @var \WShafer\PSR11MonoLog\ChannelChanger $channelChanger */
-$channelChanger = $container->get(\WShafer\PSR11MonoLog\ChannelChanger::class);
+// Get the default channel
 
-/** @var \Monolog\Logger $channel */
-$channel = $channelChanger->get('channelOne');
+/** @var \Monolog\Logger $defaultChannel */
+$defaultChannel = $container->get('logger');
 
-$channel->debug('Write to log');
+// Write to the default channel
+$defaultChannel->debug('Write to log');
+
+
+// Get the second channel
+
+/** @var \Monolog\Logger $channelTwo */
+$channelTwo = $container->get('channelTwo');
+
+// Write to the second channel
+$channelTwo->debug('Write to log');
 ```
 
 # Frameworks
 Any framework that use a PSR-11 should work fine.   Below are some specific framework examples to get you started
 
 ## Zend Expressive
-If your using Zend Expressive using the [Config Manager](https://zend-expressive.readthedocs.io/en/latest/cookbook/modular-layout/)
-and [Zend Component Installer](https://github.com/zendframework/zend-component-installer) (Default in Version 2) you should 
-be all set to go.  Simply add your Monolog configuration and you should be in business.
+You'll need to add configuration and register the services you'd like to use.  There are number of ways to do that
+but the recommended way is to create a new config file `config/autoload/monolog.global.php`
 
 ### Configuration
-config/autoload/local.php
+config/autoload/monolog.global.php
 ```php
 <?php
 return [
+    'dependencies' => [
+        'factories' => [
+            // Logger using the default keys.
+            'logger' => \WShafer\PSR11MonoLog\MonologFactory::class,
+            
+            // Another logger using a different channel configuration
+            'channelTwo' => [\WShafer\PSR11MonoLog\MonologFactory::class, 'channelTwo']
+        ]
+    ],
+    
     'monolog' => [
         'handlers' => [
-            'myHandler' => [
+            // At the bare minimum you must include a default handler config.
+            // Otherwise log entries will be sent to the void.
+            'default' => [
                 'type' => 'stream',
                 'options' => [
                     'stream' => '/var/log/some-log-file.txt',
                 ],
             ],
+            
+            // Another Handler
+            'myOtherHandler' => [
+                'type' => 'stream',
+                'options' => [
+                    'stream' => '/var/log/someother-log-file.txt',
+                ],
+            ],
         ],
         
         'channels' => [
-            'channelOne' => [
+            // Configure a second channel
+            'channelTwo' => [
                 'handlers' => [
-                    'myHandler',
+                    'myOtherHandler',
                 ],
             ],    
         ],
@@ -251,48 +312,50 @@ return [
 ];
 ```
 
-### Container Service Config
-If you're not using the [Zend Component Installer](https://github.com/zendframework/zend-component-installer) you will 
-also need to register the channel changer.
-
-config/autoload/dependencies.global.php
-```php
-<?php
-
-return [
-    'dependencies' => [
-        'factories' => [
-            \WShafer\PSR11MonoLog\ChannelChanger::class
-                => \WShafer\PSR11MonoLog\ChannelChangerFactory::class
-        ]
-    ],
-];
-```
-
 ## Zend Framework 3
-If your using Zend Framework with the [Zend Component Installer](https://github.com/zendframework/zend-component-installer)
-(Default in Version 3) you should be all set to go.  Simply add your Monolog configuration and you should be in 
-business.
+You'll need to add configuration and register the services you'd like to use.  There are number of ways to do that
+but the recommended way is to create a new config file `config/autoload/monolog.global.php`
 
 ### Configuration
-config/autoload/local.php
+config/autoload/monolog.global.php
 ```php
 <?php
 return [
+    'service_manager' => [
+        'factories' => [
+            // Logger using the default keys.
+            'logger' => \WShafer\PSR11MonoLog\MonologFactory::class,
+            
+            // Another logger using a different channel configuration
+            'channelTwo' => [\WShafer\PSR11MonoLog\MonologFactory::class, 'channelTwo']
+        ]
+    ],
+    
     'monolog' => [
         'handlers' => [
-            'myHandler' => [
+            // At the bare minimum you must include a default handler config.
+            // Otherwise log entries will be sent to the void.
+            'default' => [
                 'type' => 'stream',
                 'options' => [
                     'stream' => '/var/log/some-log-file.txt',
                 ],
             ],
+            
+            // Another Handler
+            'myOtherHandler' => [
+                'type' => 'stream',
+                'options' => [
+                    'stream' => '/var/log/someother-log-file.txt',
+                ],
+            ],
         ],
         
         'channels' => [
-            'channelOne' => [
+            // Configure a second channel
+            'channelTwo' => [
                 'handlers' => [
-                    'myHandler',
+                    'myOtherHandler',
                 ],
             ],    
         ],
@@ -327,137 +390,14 @@ return [
 ```
 
 
-## Symfony
-While Symfony uses Monolog by default, as of Symfony 3.3 the service container is now 
-PSR-11 compatible.  So for fun the following config below will get these factories 
-registered and working in Symfony.
-
-### Configuration
-app/config/config.yml (or equivalent)
-```yaml
-parameters:
-  monolog:
-    handlers:
-      myHandler:
-        type: 'stream'
-        options:
-          stream: '/var/log/some-log-file.txt'
-
-    channels:
-      channelOne:
-        handlers: 'myHandler'
-```
-
-### Container Service Config
-app/config/services.yml
-```yaml
-services:
-    WShafer\PSR11MonoLog\ChannelChanger:
-        class: 'WShafer\PSR11MonoLog\ChannelChanger'
-        factory: 'WShafer\PSR11MonoLog\ChannelChangerFactory:__invoke'
-        arguments: ['@service_container']
-        public: true
-
-    WShafer\PSR11MonoLog\ChannelChangerFactory:
-        class: 'WShafer\PSR11MonoLog\ChannelChangerFactory'
-        public: true
-```
-
-
-### Example Usage
-src/AppBundle/Controller/DefaultController.php
-
-```php
-<?php
-
-namespace AppBundle\Controller;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-
-class DefaultController extends Controller
-{
-    /**
-     * @Route("/", name="homepage")
-     */
-    public function indexAction(Request $request)
-    {
-        /** @var \WShafer\PSR11MonoLog\ChannelChanger $channelChanger */
-        $channelChanger = $this->container->get(\WShafer\PSR11MonoLog\ChannelChanger::class);
-        
-        /** @var \Monolog\Logger $channel */
-        $channel = $channelChanger->get('channelOne');
-        
-        $channel->debug('Write to log');
-    }
-}
-```
-
-## Slim
-
-public/index.php
-```php
-<?php
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
-
-require '../vendor/autoload.php';
-
-// Add Configuration
-$config = [
-    'settings' => [
-        'monolog' => [
-            'handlers' => [
-                'myHandler' => [
-                    'type' => 'stream',
-                    'options' => [
-                        'stream' => '/var/log/some-log-file.txt',
-                    ],
-                ],
-            ],
-            
-            'channels' => [
-                'channelOne' => [
-                    'handlers' => [
-                        'myHandler',
-                    ],
-                ],    
-            ],
-        ],
-    ],
-];
-
-$app = new \Slim\App($config);
-
-// Wire up the factory
-$container = $app->getContainer();
-
-// Register the service with the container.
-$container[\WShafer\PSR11MonoLog\ChannelChanger::class] = new \WShafer\PSR11MonoLog\ChannelChangerFactory();
-
-
-// Example usage
-$app->get('/example', function (Request $request, Response $response) {
-    
-    /** @var \WShafer\PSR11MonoLog\ChannelChanger $channelChanger */
-    $channelChanger = $this->get(\WShafer\PSR11MonoLog\ChannelChanger::class);
-    
-    /** @var \Monolog\Logger $channel */
-    $channel = $channelChanger->get('channelOne');
-    
-    $channel->debug('Write to log');
-    
-    return $response;
-});
-
-$app->run();
-```
-
-
 # Configuration
 
 Monolog uses four types of services that will each need to be configured for your application.
+In addition you will need to create a named service that maps to the `\WShafer\PSR11MonoLog\MonologFactory`
+based on the container you are using.
+
+- Named Services : These are services names wired up to a factory.  The configuration will differ
+  based on the type of container / framework in use.
 
 - [Channels](#channels) : Channels are a great way to identify to which part of the application a record 
   is related. This is useful in big applications and is leveraged here.
@@ -481,30 +421,31 @@ Monolog uses four types of services that will each need to be configured for you
   [Processors](#processors) section for the list.
 
 ## Minimal Configuration
-A minimal configuration would consist of at least one channel entry and one handler.
+A minimal configuration would consist of at least one default handler and one named service.
+Please note that if you don't specify a default handler a [NullHandler](#nullhandler) will be used
+when you wire up the default logger.
 
-### Minimal Example:
+### Minimal Example (using Zend Expressive for the example):
 
 ```php
 <?php
 
 return [
+    'dependencies' => [
+        'factories' => [
+            // Logger using the default keys.
+            'logger' => \WShafer\PSR11MonoLog\MonologFactory::class,
+        ]
+    ],
+    
     'monolog' => [
         'handlers' => [
-            'myHandler' => [
+            'default' => [
                 'type' => 'stream',
                 'options' => [
                     'stream' => '/var/log/some-log-file.txt',
                 ],
             ],
-        ],
-        
-        'channels' => [
-            'channelOne' => [
-                'handlers' => [
-                    'myHandler',
-                ],
-            ],    
         ],
     ],
 ];
@@ -517,6 +458,17 @@ return [
 <?php
 
 return [
+    
+    'dependencies' => [
+        'factories' => [
+            // Logger using the default keys.
+            'logger' => \WShafer\PSR11MonoLog\MonologFactory::class,
+            
+            // Another logger using a different channel configuration
+            'channelTwo' => [\WShafer\PSR11MonoLog\MonologFactory::class, 'channelTwo']
+        ]
+    ],
+        
     'monolog' => [
         'formatters' => [
             // Array Keys are the names used for the formatters
@@ -549,7 +501,7 @@ return [
         
         'handlers' => [
             // Array Keys are the names used for the handlers
-            'handlerOne' => [
+            'default' => [
                 // A Handler type or pre-configured service from the container
                 'type' => 'stream',
                 
@@ -599,7 +551,11 @@ return [
         
         'channels' => [
             // Array Keys are the names used for the channels
-            'channelOne' => [
+            //
+            // Note: You can specify "default" here to overwrite the default settings for the
+            // default channel.  If no handler is defined for default then the default 
+            // handler will be used.
+            'default' => [
                 // array of handlers to attach to the channel.  Can use multiple handlers if needed.
                 'handlers' => ['handlerOne', 'handlerTwo'],
                 
@@ -628,7 +584,7 @@ return [
         'channels' => [
             
             // Array Keys are the channel identifiers
-            'channelOne' => [
+            'myChannelName' => [
                 // Array of configured handlers.  See handlers for more info
                 'handlers' => [  
                     'myHandler',  
@@ -2341,3 +2297,18 @@ return [
 ];
 ```
 Monolog Docs: [TagProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/TagProcessor.php)
+
+
+### Upgrades
+
+#### Version 1 to Version 2
+When upgrading from version 1 to version 2, there shouldn't be any changes needed.   Please note
+that using the ChannelChanger directly is no longer recommended.  Named services
+should be used instead.  See above for more info.
+
+##### Changes
+* A "default" channel entry and handler is added automatically to the config.  This default
+channel requires you to either specify a configured handler for the channel
+OR there must be a 'default' channel configured in order to use it.  Most Version 1
+users should not have an issue with this change and the factories should still function
+normally.

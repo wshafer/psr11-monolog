@@ -29,7 +29,7 @@ trait ConfigTrait
                 ],
 
                 'handlers' => [
-                    'handlerOne' => [
+                    'default' => [
                         'type' => 'StreamHandler',
                         'formatter' => 'formatterOne',
                         'options' => [
@@ -64,9 +64,9 @@ trait ConfigTrait
                 ],
 
                 'channels' => [
-                    'myChannel' => [
+                    'default' => [
                         'handlers' => [
-                            'handlerOne',
+                            'default',
                             'handlerTwo'
                         ],
 

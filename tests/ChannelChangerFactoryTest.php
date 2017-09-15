@@ -98,25 +98,6 @@ class ChannelChangerFactoryTest extends TestCase
         $this->assertInstanceOf(MainConfig::class, $config);
     }
 
-    /** @expectedException \WShafer\PSR11MonoLog\Exception\MissingConfigException */
-    public function testGetMainConfigMissingConfig()
-    {
-        $map = [
-            ['config', false],
-            ['settings', false],
-        ];
-
-        $this->mockContainer->expects($this->exactly(2))
-            ->method('has')
-            ->will($this->returnValueMap($map));
-
-
-        $this->mockContainer->expects($this->never())
-            ->method('get');
-
-        $this->factory->getMainConfig($this->mockContainer);
-    }
-
     public function testGetFormatterManager()
     {
         $configArray = $this->getConfigArray();
