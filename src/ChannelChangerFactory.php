@@ -4,7 +4,6 @@ namespace WShafer\PSR11MonoLog;
 
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Config\MainConfig;
-use WShafer\PSR11MonoLog\Config\MainConfigFactory;
 use WShafer\PSR11MonoLog\Formatter\FormatterMapper;
 use WShafer\PSR11MonoLog\Handler\HandlerMapper;
 use WShafer\PSR11MonoLog\Processor\ProcessorMapper;
