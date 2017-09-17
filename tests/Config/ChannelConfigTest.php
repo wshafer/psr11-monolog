@@ -27,6 +27,8 @@ class ChannelConfigTest extends TestCase
                 'serviceOne',
                 'serviceTwo'
             ],
+
+            'name' => 'testChannel'
         ];
     }
 
@@ -75,5 +77,21 @@ class ChannelConfigTest extends TestCase
         $config = $this->getConfigArray();
         $results = $this->config->getProcessors();
         $this->assertEquals($config['processors'], $results);
+    }
+
+    public function testGetName()
+    {
+        $config = $this->getConfigArray();
+        $result = $this->config->getName();
+        $this->assertEquals($config['name'], $result);
+    }
+
+    public function testGetNameReturnsNull()
+    {
+        $config = $this->getConfigArray();
+        unset($config['name']);
+        $this->config = new ChannelConfig($config);
+        $result = $this->config->getName();
+        $this->assertNull($result);
     }
 }
