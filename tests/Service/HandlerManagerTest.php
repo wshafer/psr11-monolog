@@ -356,4 +356,44 @@ class HandlerManagerTest extends TestCase
         $result = $this->service->get('my-service');
         $this->assertEquals($expected, $result);
     }
+
+    /** @expectedException \WShafer\PSR11MonoLog\Exception\MissingServiceException */
+    public function testGetMissingProcessorManager()
+    {
+        $expected = $this->getMockBuilder(HandlerStub::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mockContainer->expects($this->exactly(2))
+            ->method('has')
+            ->with('my-service')
+            ->willReturn(true);
+
+        $this->mockContainer->expects($this->exactly(1))
+            ->method('get')
+            ->with('my-service')
+            ->willReturn($expected);
+
+        $this->mockConfig->expects($this->once())
+            ->method('getHandlerConfig')
+            ->with('my-service')
+            ->willReturn($this->mockServiceConfig);
+
+        $this->mockServiceConfig->expects($this->once())
+            ->method('getFormatter')
+            ->willReturn(null);
+
+        $expected->expects($this->never())
+            ->method('setFormatter');
+
+        $this->mockServiceConfig->expects($this->once())
+            ->method('getProcessors')
+            ->willReturn(['my-processor']);
+
+        $expected->expects($this->never())
+            ->method('pushProcessor');
+
+        $result = $this->service->get('my-service');
+        $this->assertEquals($expected, $result);
+    }
 }

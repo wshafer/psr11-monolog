@@ -50,7 +50,7 @@ class HandlerManager extends AbstractServiceManager
 
         $processors = $config->getProcessors();
         foreach ($processors as $processorName) {
-            $handler->pushProcessor($this->processorManager->get($processorName));
+            $handler->pushProcessor($this->getProcessorManager()->get($processorName));
         }
 
         return $handler;
