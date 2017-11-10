@@ -29,6 +29,10 @@ class HandlerConfigTest extends TestCase
                 'filePermission' => 755,
                 'useLocking' => true
             ],
+            'processors' => [
+                'processorOne',
+                'processorTwo',
+            ]
         ];
     }
 
@@ -95,5 +99,12 @@ class HandlerConfigTest extends TestCase
         $configService = new HandlerConfig($config);
         $formatter = $configService->getFormatter();
         $this->assertEmpty($formatter);
+    }
+
+    public function testGetProcessors()
+    {
+        $config = $this->getConfigArray();
+        $processors = $this->config->getProcessors();
+        $this->assertEquals($config['processors'], $processors);
     }
 }

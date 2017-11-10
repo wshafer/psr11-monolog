@@ -12,6 +12,11 @@ class HandlerManager extends AbstractServiceManager
     /** @var FormatterManager */
     protected $formatterManager;
 
+    /**
+     * @var ProcessorManager
+     */
+    protected $processorManager;
+
     public function getServiceConfig($id): ConfigInterface
     {
         return $this->config->getHandlerConfig($id);
@@ -24,7 +29,7 @@ class HandlerManager extends AbstractServiceManager
 
     public function get($id)
     {
-        if (key_exists($id, $this->services)) {
+        if (array_key_exists($id, $this->services)) {
             return $this->services[$id];
         }
 
@@ -41,6 +46,11 @@ class HandlerManager extends AbstractServiceManager
 
         if ($formatter) {
             $handler->setFormatter($this->getFormatter($formatter));
+        }
+
+        $processors = $config->getProcessors();
+        foreach ($processors as $processorName) {
+            $handler->pushProcessor($this->processorManager->get($processorName));
         }
 
         return $handler;
@@ -71,5 +81,21 @@ class HandlerManager extends AbstractServiceManager
         }
 
         return $this->getFormatterManager()->get($id);
+    }
+
+    public function setProcessorManager($processorManager)
+    {
+        $this->processorManager = $processorManager;
+    }
+
+    public function getProcessorManager()
+    {
+        if (!$this->processorManager) {
+            throw new MissingServiceException(
+                'Unable to get ProcessorManager.'
+            );
+        }
+
+        return $this->processorManager;
     }
 }
