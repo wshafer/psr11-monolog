@@ -73,6 +73,7 @@ class ChannelChangerFactory
         );
 
         $this->handlerManager->setFormatterManager($this->getFormatterManager($container));
+        $this->handlerManager->setProcessorManager($this->getProcessorManager($container));
         return $this->handlerManager;
     }
 

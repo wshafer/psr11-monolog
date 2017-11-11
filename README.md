@@ -516,6 +516,9 @@ return [
                 'options' => [
                     'stream' => '/tmp/log_one.txt',
                 ], 
+                'processors' => [
+                    'my-handler-processor',
+                ],
             ],
             
             'handlerTwo' => [
@@ -551,6 +554,13 @@ return [
                     'length'  => 7,
                 ], 
             ],
+            'my-handler-processor' => [
+                // A processor type or pre-configured service from the container
+                'type' => 'psrLogMessage',
+                
+                // processor specific options.  See processors below
+                'options' => [], 
+            ],            
         ],
         
         'channels' => [

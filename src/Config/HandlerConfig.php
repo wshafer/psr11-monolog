@@ -9,4 +9,12 @@ class HandlerConfig extends AbstractServiceConfig
     {
         return $this->config['formatter'] ?? '';
     }
+
+    /**
+     * @return array
+     */
+    public function getProcessors()
+    {
+        return $this->config['processors'] ?? [];
+    }
 }
