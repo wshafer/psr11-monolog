@@ -2,6 +2,7 @@
 
 namespace WShafer\PSR11MonoLog;
 
+use ArrayObject;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Config\MainConfig;
 use WShafer\PSR11MonoLog\Formatter\FormatterMapper;
@@ -36,8 +37,7 @@ class ChannelChangerFactory
 
     public function getMainConfig(ContainerInterface $container)
     {
-        $config = $this->getConfigArray($container);
-        return new MainConfig($config);
+        return new MainConfig($this->getConfigArray($container));
     }
 
     protected function getConfigArray(ContainerInterface $container)
@@ -52,7 +52,7 @@ class ChannelChangerFactory
 
         // Zend uses config key
         if ($container->has('config')) {
-            return $container->get('config');
+            return $this->getZendConfigArray($container);
         }
 
         // Slim Config comes from "settings"
@@ -61,6 +61,16 @@ class ChannelChangerFactory
         }
 
         return [];
+    }
+
+    protected function getZendConfigArray(ContainerInterface $container)
+    {
+        $config = $container->get('config');
+        if ($config instanceof ArrayObject) {
+            $config = $config->getArrayCopy();
+        }
+
+        return $config;
     }
 
     public function getHandlerManager(ContainerInterface $container)

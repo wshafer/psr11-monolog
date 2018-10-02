@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test;
 
+use ArrayObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -35,6 +36,27 @@ class ChannelChangerFactoryTest extends TestCase
     public function testGetMainConfig()
     {
         $configArray = $this->getConfigArray();
+
+        $this->mockContainer->expects($this->once())
+            ->method('has')
+            ->with('config')
+            ->willReturn(true);
+
+        $this->mockContainer->expects($this->once())
+            ->method('get')
+            ->with('config')
+            ->willReturn($configArray);
+
+        $config = $this->factory->getMainConfig($this->mockContainer);
+        $this->assertInstanceOf(MainConfig::class, $config);
+    }
+
+    public function testGetMainConfigInZendExpressive()
+    {
+        $configArray = $this->createMock(ArrayObject::class);
+        $configArray->expects($this->once())
+            ->method('getArrayCopy')
+            ->willReturn($this->getConfigArray());
 
         $this->mockContainer->expects($this->once())
             ->method('has')
