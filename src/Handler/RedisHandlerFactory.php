@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -18,7 +19,7 @@ class RedisHandlerFactory implements FactoryInterface, ContainerAwareInterface
         $client  = $this->getService($options['client'] ?? []);
         $key     = (string)  ($options['key']     ?? '');
         $level   = (int)     ($options['level']   ?? Logger::DEBUG);
-        $bubble  = (boolean) ($options['bubble']  ?? true);
+        $bubble  = (bool) ($options['bubble']  ?? true);
         $capSize = (int)     ($options['capSize'] ?? 0);
 
         return new RedisHandler(

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Config;
@@ -36,7 +37,7 @@ class MainConfig
         return $this->handlers;
     }
 
-    public function hasHandlerConfig($handler) : bool
+    public function hasHandlerConfig($handler): bool
     {
         return key_exists($handler, $this->handlers);
     }
@@ -53,12 +54,12 @@ class MainConfig
     /**
      * @return FormatterConfig[]
      */
-    public function getFormatters() : array
+    public function getFormatters(): array
     {
         return $this->formatters;
     }
 
-    public function hasFormatterConfig($formatter) : bool
+    public function hasFormatterConfig($formatter): bool
     {
         return key_exists($formatter, $this->formatters);
     }
@@ -75,12 +76,12 @@ class MainConfig
     /**
      * @return FormatterConfig[]
      */
-    public function getProcessors() : array
+    public function getProcessors(): array
     {
         return $this->processors;
     }
 
-    public function hasProcessorConfig($processor) : bool
+    public function hasProcessorConfig($processor): bool
     {
         return key_exists($processor, $this->processors);
     }
@@ -97,7 +98,7 @@ class MainConfig
     /**
      * @return ChannelConfig[]
      */
-    public function getChannels() : array
+    public function getChannels(): array
     {
         return $this->channels;
     }
@@ -106,7 +107,7 @@ class MainConfig
      * @param $channel
      * @return bool
      */
-    public function hasChannelConfig($channel) : bool
+    public function hasChannelConfig($channel): bool
     {
         return key_exists($channel, $this->channels);
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -18,7 +19,7 @@ class DynamoDbHandlerFactory implements FactoryInterface, ContainerAwareInterfac
         $client  = $this->getService($options['client'] ?? null);
         $table   = (string)  ($options['table']  ?? null);
         $level   = (int)     ($options['level']  ?? Logger::DEBUG);
-        $bubble  = (boolean) ($options['bubble'] ?? true);
+        $bubble  = (bool) ($options['bubble'] ?? true);
 
         return new DynamoDbHandler(
             $client,

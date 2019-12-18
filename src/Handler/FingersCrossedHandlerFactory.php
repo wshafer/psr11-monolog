@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -20,8 +21,8 @@ class FingersCrossedHandlerFactory implements FactoryInterface, HandlerManagerAw
         $handler            = $this->getHandlerManager()->get($options['handler']);
         $activationStrategy = $this->getActivationStrategy($options);
         $bufferSize         = (int)     ($options['bufferSize']    ?? 0);
-        $bubble             = (boolean) ($options['bubble']        ?? true);
-        $stopBuffering      = (boolean) ($options['stopBuffering'] ?? true);
+        $bubble             = (bool) ($options['bubble']        ?? true);
+        $stopBuffering      = (bool) ($options['stopBuffering'] ?? true);
         $passthruLevel      =            $options['passthruLevel'] ?? null;
 
         return new FingersCrossedHandler(

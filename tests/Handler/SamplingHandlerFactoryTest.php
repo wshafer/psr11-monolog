@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Handler;
@@ -36,7 +37,7 @@ class SamplingHandlerFactoryTest extends TestCase
     public function testInvoke()
     {
         $options = [
-            'handler'=> 'my-handler',
+            'handler' => 'my-handler',
             'factor' => 5,
         ];
 
@@ -57,7 +58,7 @@ class SamplingHandlerFactoryTest extends TestCase
         $this->expectException(InvalidConfigException::class);
 
         $options = [
-            'handler'=> 'my-handler',
+            'handler' => 'my-handler',
         ];
 
         $mockHandler = $this->createMock(HandlerInterface::class);

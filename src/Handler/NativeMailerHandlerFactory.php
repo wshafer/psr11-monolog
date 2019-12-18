@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -15,7 +16,7 @@ class NativeMailerHandlerFactory implements FactoryInterface
         $subject        = (string)  ($options['subject']        ?? true);
         $fromEmail      = (string)  ($options['from']           ?? '');
         $level          = (int)     ($options['level']          ?? Logger::DEBUG);
-        $bubble         = (boolean) ($options['bubble']         ?? true);
+        $bubble         = (bool) ($options['bubble']         ?? true);
         $maxColumnWidth = (int)     ($options['maxColumnWidth'] ?? 70);
 
         return new NativeMailerHandler($toEmail, $subject, $fromEmail, $level, $bubble, $maxColumnWidth);

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -18,7 +19,7 @@ class AmqpHandlerFactory implements FactoryInterface, ContainerAwareInterface
         $exchange     = $this->getService($options['exchange'] ?? null);
         $exchangeName = (string)  ($options['exchangeName'] ?? 'log');
         $level        = (int)     ($options['level']     ?? Logger::DEBUG);
-        $bubble       = (boolean) ($options['bubble']    ?? true);
+        $bubble       = (bool) ($options['bubble']    ?? true);
 
         return new AmqpHandler(
             $exchange,

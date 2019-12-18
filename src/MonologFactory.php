@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog;
@@ -21,7 +22,8 @@ class MonologFactory
 
     public static function __callStatic($name, $arguments)
     {
-        if (empty($arguments[0])
+        if (
+            empty($arguments[0])
             || !$arguments[0] instanceof ContainerInterface
         ) {
             throw new InvalidContainerException(
@@ -55,7 +57,7 @@ class MonologFactory
      *
      * @return mixed
      */
-    public static function getChannelChanger(ContainerInterface $container) : ChannelChanger
+    public static function getChannelChanger(ContainerInterface $container): ChannelChanger
     {
         // @codeCoverageIgnoreStart
         if (!static::$channelChanger) {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -15,7 +16,7 @@ class SyslogUdpHandlerFactory implements FactoryInterface
         $port     = (int)     ($options['host']     ?? 514);
         $facility = (int)     ($options['facility'] ?? LOG_USER);
         $level    = (int)     ($options['level']    ?? Logger::DEBUG);
-        $bubble   = (boolean) ($options['bubble']   ?? true);
+        $bubble   = (bool) ($options['bubble']   ?? true);
         $ident    = (string)  ($options['ident']    ?? 'php');
 
         return new SyslogUdpHandler(

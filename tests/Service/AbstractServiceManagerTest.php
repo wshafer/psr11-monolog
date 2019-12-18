@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Service;
@@ -6,7 +7,6 @@ namespace WShafer\PSR11MonoLog\Test\Service;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
-use WShafer\PSR11MonoLog\ChannelChanger;
 use WShafer\PSR11MonoLog\Config\HandlerConfig;
 use WShafer\PSR11MonoLog\Config\MainConfig;
 use WShafer\PSR11MonoLog\Exception\InvalidConfigException;

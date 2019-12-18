@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -14,12 +15,12 @@ class SlackWebhookHandlerFactory implements FactoryInterface
         $webhookUrl         = (string)  ($options['webhookUrl']             ?? '');
         $channel            =            $options['channel']                ?? null;
         $userName           =            $options['userName']               ?? null;
-        $useAttachment      = (boolean) ($options['useAttachment']          ?? true);
+        $useAttachment      = (bool) ($options['useAttachment']          ?? true);
         $iconEmoji          =            $options['iconEmoji']              ?? null;
-        $useShortAttachment = (boolean) ($options['useShortAttachment']     ?? false);
-        $includeContext     = (boolean) ($options['includeContextAndExtra'] ?? false);
+        $useShortAttachment = (bool) ($options['useShortAttachment']     ?? false);
+        $includeContext     = (bool) ($options['includeContextAndExtra'] ?? false);
         $level              = (int)     ($options['level']                  ?? Logger::DEBUG);
-        $bubble             = (boolean) ($options['bubble']                 ?? true);
+        $bubble             = (bool) ($options['bubble']                 ?? true);
         $excludeFields      = (array)   ($options['excludeFields']          ?? []);
 
         return new SlackWebhookHandler(

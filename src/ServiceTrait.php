@@ -19,7 +19,7 @@ trait ServiceTrait
 
         if (!$this->getContainer()->has($name)) {
             throw new MissingServiceException(
-                'No service found for :'.$name
+                'No service found for :' . $name
             );
         }
 

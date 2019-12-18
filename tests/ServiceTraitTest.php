@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test;
@@ -9,6 +10,7 @@ use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Exception\MissingConfigException;
 use WShafer\PSR11MonoLog\Exception\MissingServiceException;
 use WShafer\PSR11MonoLog\ServiceTrait;
+use stdClass;
 
 /**
  * @covers \WShafer\PSR11MonoLog\ServiceTrait
@@ -32,7 +34,7 @@ class ServiceTraitTest extends TestCase
     {
         $service = 'my-service';
 
-        $mockService = new \stdClass();
+        $mockService = new stdClass();
 
         $this->mockContainer->expects($this->once())
             ->method('has')

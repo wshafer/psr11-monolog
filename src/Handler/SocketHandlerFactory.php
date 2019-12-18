@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -15,7 +16,7 @@ class SocketHandlerFactory implements FactoryInterface
         $timeout           = (float)   ($options['timeout']          ?? ini_get('default_socket_timeout'));
         $writeTimeout      = (int)     ($options['writeTimeout']     ?? ini_get('default_socket_timeout'));
         $level             = (int)     ($options['level']            ?? Logger::DEBUG);
-        $bubble            = (boolean) ($options['bubble']           ?? true);
+        $bubble            = (bool) ($options['bubble']           ?? true);
 
         $handler = new SocketHandler(
             $connectionString,

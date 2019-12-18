@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -17,7 +18,7 @@ class FilterHandlerFactory implements FactoryInterface, HandlerManagerAwareInter
         $handler        = $this->getHandlerManager()->get($options['handler']);
         $minLevelOrList =            $options['minLevelOrList'] ?? null;
         $maxLevel       =            $options['maxLevel']       ?? null;
-        $bubble         = (boolean) ($options['bubble']         ?? true);
+        $bubble         = (bool) ($options['bubble']         ?? true);
 
         return new FilterHandler(
             $handler,

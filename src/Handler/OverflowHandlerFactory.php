@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -28,7 +29,7 @@ class OverflowHandlerFactory implements FactoryInterface, HandlerManagerAwareInt
         ];
 
         $level  = (int)     ($options['level']  ?? Logger::DEBUG);
-        $bubble = (boolean) ($options['bubble'] ?? true);
+        $bubble = (bool) ($options['bubble'] ?? true);
 
         return new OverflowHandler(
             $handler,

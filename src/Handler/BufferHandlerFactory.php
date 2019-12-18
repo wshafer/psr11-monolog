@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -18,8 +19,8 @@ class BufferHandlerFactory implements FactoryInterface, HandlerManagerAwareInter
         $handler          = $this->getHandlerManager()->get($options['handler']);
         $bufferLimit      = (int)     ($options['bufferLimit']     ?? 0);
         $level            = (int)     ($options['level']           ?? Logger::DEBUG);
-        $bubble           = (boolean) ($options['bubble']          ?? true);
-        $flushOnOverflow  = (boolean) ($options['flushOnOverflow'] ?? true);
+        $bubble           = (bool) ($options['bubble']          ?? true);
+        $flushOnOverflow  = (bool) ($options['flushOnOverflow'] ?? true);
 
         return new BufferHandler(
             $handler,

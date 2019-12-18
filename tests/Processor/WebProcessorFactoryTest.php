@@ -1,8 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Handler;
 
+use ArrayAccess;
 use Monolog\Processor\WebProcessor;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -45,7 +47,7 @@ class WebProcessorFactoryTest extends TestCase
             'serverData' => 'my-service',
         ];
 
-        $mockService = $this->createMock(\ArrayAccess::class);
+        $mockService = $this->createMock(ArrayAccess::class);
 
         $this->mockContainer->expects($this->once())
             ->method('has')
@@ -79,7 +81,7 @@ class WebProcessorFactoryTest extends TestCase
 
     public function testGetServerDataWithArrayObject()
     {
-        $mockService = $this->createMock(\ArrayAccess::class);
+        $mockService = $this->createMock(ArrayAccess::class);
 
         $options = [
             'serverData' => $mockService,

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Stub;
@@ -16,7 +17,7 @@ class ServiceManagerStub extends AbstractServiceManager
 
     protected $hasValue = true;
 
-    const INTERFACE = HandlerInterface::class;
+    public const INTERFACE = HandlerInterface::class;
 
     public function __construct(MainConfig $config, MapperInterface $mapper, ContainerInterface $container)
     {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -12,9 +13,9 @@ class NewRelicHandlerFactory implements FactoryInterface
     public function __invoke(array $options)
     {
         $level           = (int)     ($options['level']           ?? Logger::DEBUG);
-        $bubble          = (boolean) ($options['bubble']          ?? true);
+        $bubble          = (bool) ($options['bubble']          ?? true);
         $appName         =            $options['appName']         ?? null;
-        $explodeArrays   = (boolean) ($options['explodeArrays']   ?? false);
+        $explodeArrays   = (bool) ($options['explodeArrays']   ?? false);
         $transactionName =            $options['transactionName'] ?? null;
 
         return new NewRelicHandler(

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -17,7 +18,7 @@ class DoctrineCouchDBHandlerFactory implements FactoryInterface, ContainerAwareI
     {
         $client  = $this->getService($options['client'] ?? null);
         $level   = (int)     ($options['level']   ?? Logger::DEBUG);
-        $bubble  = (boolean) ($options['bubble']  ?? true);
+        $bubble  = (bool) ($options['bubble']  ?? true);
 
         return new DoctrineCouchDBHandler(
             $client,

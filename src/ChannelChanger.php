@@ -35,7 +35,8 @@ class ChannelChanger implements ContainerInterface
 
     public function get($id)
     {
-        if (!empty($this->channels[$id])
+        if (
+            !empty($this->channels[$id])
             && $this->channels[$id] instanceof LoggerInterface
         ) {
             return $this->channels[$id];
@@ -43,7 +44,7 @@ class ChannelChanger implements ContainerInterface
 
         if (!$this->has($id)) {
             throw new MissingConfigException(
-                'Unable to locate channel '.$id
+                'Unable to locate channel ' . $id
             );
         }
 
@@ -80,7 +81,7 @@ class ChannelChanger implements ContainerInterface
     {
         if (!$this->handlerManager->has($id)) {
             throw new UnknownServiceException(
-                'Unable to locate processor '.$id
+                'Unable to locate processor ' . $id
             );
         }
 
@@ -91,7 +92,7 @@ class ChannelChanger implements ContainerInterface
     {
         if (!$this->processorManager->has($id)) {
             throw new UnknownServiceException(
-                'Unable to locate processor '.$id
+                'Unable to locate processor ' . $id
             );
         }
 

@@ -36,8 +36,8 @@ abstract class AbstractServiceManager implements ContainerInterface
         $this->container = $container;
     }
 
-    abstract protected function getServiceConfig($id) : ConfigInterface;
-    abstract protected function hasServiceConfig($id) : bool;
+    abstract protected function getServiceConfig($id): ConfigInterface;
+    abstract protected function hasServiceConfig($id): bool;
 
     public function get($id)
     {
@@ -48,7 +48,7 @@ abstract class AbstractServiceManager implements ContainerInterface
         // Make sure we have one of these
         if (!$this->has($id)) {
             throw new UnknownServiceException(
-                'Unable to locate service '.$id.'.  Please check your configuration.'
+                'Unable to locate service ' . $id . '.  Please check your configuration.'
             );
         }
 
@@ -86,29 +86,32 @@ abstract class AbstractServiceManager implements ContainerInterface
         $class = $type;
 
         // Check for class and class implements of Monolog Formatter Interface
-        if (!class_exists($class)
+        if (
+            !class_exists($class)
             || !in_array(FactoryInterface::class, class_implements($class))
         ) {
             $class = $this->mapper->map($type);
         }
 
-        if (!class_exists($class)
+        if (
+            !class_exists($class)
             || !in_array(FactoryInterface::class, class_implements($class))
         ) {
             throw new InvalidConfigException(
-                $id.'.  Is not a valid factory.  Please check your configuration.'
+                $id . '.  Is not a valid factory.  Please check your configuration.'
             );
         }
 
         /** @var FactoryInterface $factory */
-        $factory = new $class;
+        $factory = new $class();
 
         if ($factory instanceof ContainerAwareInterface) {
             $factory->setContainer($this->container);
         }
 
         // @codeCoverageIgnoreStart
-        if ($factory instanceof HandlerManagerAwareInterface
+        if (
+            $factory instanceof HandlerManagerAwareInterface
             && $this instanceof HandlerManager
         ) {
             $factory->setHandlerManager($this);

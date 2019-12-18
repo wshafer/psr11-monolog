@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test;
@@ -10,17 +11,16 @@ use WShafer\PSR11MonoLog\Config\FormatterConfig;
 use WShafer\PSR11MonoLog\Config\HandlerConfig;
 use WShafer\PSR11MonoLog\Config\MainConfig;
 use WShafer\PSR11MonoLog\Config\ProcessorConfig;
-use WShafer\PSR11MonoLog\Exception\MissingConfigException;
 
 /**
  * @covers \WShafer\PSR11MonoLog\Config\MainConfig
  */
 class MainConfigTest extends TestCase
 {
+    use ConfigTrait;
+
     /** @var MainConfig */
     protected $config;
-
-    use ConfigTrait;
 
     protected function setup(): void
     {

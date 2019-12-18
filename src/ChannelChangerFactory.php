@@ -43,7 +43,8 @@ class ChannelChangerFactory
     protected function getConfigArray(ContainerInterface $container)
     {
         // Symfony config is parameters. //
-        if (method_exists($container, 'getParameter')
+        if (
+            method_exists($container, 'getParameter')
             && method_exists($container, 'hasParameter')
             && $container->hasParameter('monolog')
         ) {

@@ -1,8 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Stub;
 
+use Monolog\Formatter\ChromePHPFormatter;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\FormattableHandlerInterface;
 use Monolog\Handler\HandlerInterface;
@@ -13,22 +15,22 @@ class HandlerStub implements HandlerInterface, FormattableHandlerInterface, Proc
 
     public function isHandling(array $record): bool
     {
-        // TODO: Implement isHandling() method.
+        return true;
     }
 
     public function handle(array $record): bool
     {
-        // TODO: Implement handle() method.
+        return true;
     }
 
     public function handleBatch(array $records): void
     {
-        // TODO: Implement handleBatch() method.
+        return;
     }
 
     public function close(): void
     {
-        // TODO: Implement close() method.
+        return;
     }
 
     public function setFormatter(FormatterInterface $formatter): HandlerInterface
@@ -38,7 +40,7 @@ class HandlerStub implements HandlerInterface, FormattableHandlerInterface, Proc
 
     public function getFormatter(): FormatterInterface
     {
-        // TODO: Implement getFormatter() method.
+        return new ChromePHPFormatter();
     }
 
     public function pushProcessor(callable $callback): HandlerInterface
@@ -48,6 +50,7 @@ class HandlerStub implements HandlerInterface, FormattableHandlerInterface, Proc
 
     public function popProcessor(): callable
     {
-        // TODO: Implement popProcessor() method.
+        return function () {
+        };
     }
 }

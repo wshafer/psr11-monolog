@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -14,9 +15,9 @@ class RotatingFileHandlerFactory implements FactoryInterface
         $filename       = (string)  ($options['filename']       ?? '');
         $maxFiles       = (int)     ($options['maxFiles']       ?? 0);
         $level          = (int)     ($options['level']          ?? Logger::DEBUG);
-        $bubble         = (boolean) ($options['bubble']         ?? true);
+        $bubble         = (bool) ($options['bubble']         ?? true);
         $filePermission = (int)     ($options['filePermission'] ?? null);
-        $useLocking     = (boolean) ($options['useLocking']     ?? false);
+        $useLocking     = (bool) ($options['useLocking']     ?? false);
 
         return new RotatingFileHandler($filename, $maxFiles, $level, $bubble, $filePermission, $useLocking);
     }

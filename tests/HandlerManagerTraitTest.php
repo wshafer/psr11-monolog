@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test;
@@ -15,6 +16,7 @@ class HandlerManagerTraitTest extends TestCase
 {
     public function testGetSetHandlerManager()
     {
+        /** @var HandlerManager $mockManager */
         $mockManager = $this->getMockBuilder(HandlerManager::class)
             ->disableOriginalConstructor()
             ->getMock();

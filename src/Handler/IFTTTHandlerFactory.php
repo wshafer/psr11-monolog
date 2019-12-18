@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -14,7 +15,7 @@ class IFTTTHandlerFactory implements FactoryInterface
         $eventName = (string)  ($options['eventName'] ?? '');
         $secretKey = (string)  ($options['secretKey'] ?? '');
         $level     = (int)     ($options['level']     ?? Logger::DEBUG);
-        $bubble    = (boolean) ($options['bubble']    ?? true);
+        $bubble    = (bool) ($options['bubble']    ?? true);
 
         return new IFTTTHandler(
             $eventName,

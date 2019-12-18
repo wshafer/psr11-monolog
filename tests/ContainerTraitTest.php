@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test;
@@ -16,6 +17,7 @@ class ContainerTraitTest extends TestCase
     {
         $mockContainer = $this->createMock(ContainerInterface::class);
 
+        /** @var ContainerTrait $trait */
         $trait = $this->getMockForTrait(ContainerTrait::class);
         $trait->setContainer($mockContainer);
         $container = $trait->getContainer();

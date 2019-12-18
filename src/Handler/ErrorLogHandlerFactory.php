@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -13,8 +14,8 @@ class ErrorLogHandlerFactory implements FactoryInterface
     {
         $messageType    = (int)     ($options['messageType']    ?? ErrorLogHandler::OPERATING_SYSTEM);
         $level          = (int)     ($options['level']          ?? Logger::DEBUG);
-        $bubble         = (boolean) ($options['bubble']         ?? true);
-        $expandNewlines = (boolean) ($options['expandNewlines'] ?? false);
+        $bubble         = (bool) ($options['bubble']         ?? true);
+        $expandNewlines = (bool) ($options['expandNewlines'] ?? false);
 
         return new ErrorLogHandler($messageType, $level, $bubble, $expandNewlines);
     }

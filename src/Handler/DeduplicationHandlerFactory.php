@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -19,7 +20,7 @@ class DeduplicationHandlerFactory implements FactoryInterface, HandlerManagerAwa
         $deduplicationStore =            $options['deduplicationStore'] ?? null;
         $deduplicationLevel = (int)     ($options['deduplicationLevel'] ?? Logger::ERROR);
         $time               = (int)     ($options['time']               ?? 60);
-        $bubble             = (boolean) ($options['bubble']             ?? true);
+        $bubble             = (bool) ($options['bubble']             ?? true);
 
         return new DeduplicationHandler(
             $handler,

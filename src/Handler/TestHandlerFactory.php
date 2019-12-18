@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -12,7 +13,7 @@ class TestHandlerFactory implements FactoryInterface
     public function __invoke(array $options)
     {
         $level      = (int)     ($options['level']  ?? Logger::DEBUG);
-        $bubble     = (boolean) ($options['bubble'] ?? true);
+        $bubble     = (bool) ($options['bubble'] ?? true);
 
         return new TestHandler(
             $level,

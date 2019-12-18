@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -19,7 +20,7 @@ class SqsHandlerFactory implements FactoryInterface, ContainerAwareInterface
 
         $queueUrl  = (string)  ($options['queueUrl']  ?? Logger::DEBUG);
         $level     = (int)     ($options['level']  ?? Logger::DEBUG);
-        $bubble    = (boolean) ($options['bubble'] ?? true);
+        $bubble    = (bool) ($options['bubble'] ?? true);
 
         return new SqsHandler($sqsClient, $queueUrl, $level, $bubble);
     }

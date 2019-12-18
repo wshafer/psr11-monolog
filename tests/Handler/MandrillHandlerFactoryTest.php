@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Handler;
@@ -7,6 +8,7 @@ use Monolog\Handler\MandrillHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use Swift_Message;
 use WShafer\PSR11MonoLog\Handler\MandrillHandlerFactory;
 
 class MandrillHandlerFactoryTest extends TestCase
@@ -22,7 +24,7 @@ class MandrillHandlerFactoryTest extends TestCase
 
         $mockContainer = $this->createMock(ContainerInterface::class);
 
-        $mockMessage = $this->getMockBuilder(\Swift_Message::class)
+        $mockMessage = $this->getMockBuilder(Swift_Message::class)
             ->disableOriginalConstructor()
             ->getMock();
 

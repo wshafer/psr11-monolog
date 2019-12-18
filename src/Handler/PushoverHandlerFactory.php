@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -15,8 +16,8 @@ class PushoverHandlerFactory implements FactoryInterface
         $users             = (array)   ($options['users']             ?? []);
         $title             =            $options['title']             ?? null;
         $level             = (int)     ($options['level']             ?? Logger::DEBUG);
-        $bubble            = (boolean) ($options['bubble']            ?? true);
-        $useSSL            = (boolean) ($options['useSSL']            ?? true);
+        $bubble            = (bool) ($options['bubble']            ?? true);
+        $useSSL            = (bool) ($options['useSSL']            ?? true);
         $highPriorityLevel = (int)     ($options['highPriorityLevel'] ?? Logger::CRITICAL);
         $emergencyLevel    = (int)     ($options['emergencyLevel']    ?? Logger::EMERGENCY);
         $retry             = (int)     ($options['retry']             ?? 30);

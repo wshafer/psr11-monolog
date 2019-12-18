@@ -1,8 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
 
+use Exception;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
@@ -17,14 +19,19 @@ class StreamHandlerFactory implements FactoryInterface, ContainerAwareInterface
     /** @var ContainerInterface */
     protected $container;
 
+    /**
+     * @param array $options
+     * @return StreamHandler
+     * @throws Exception
+     */
     public function __invoke(array $options)
     {
         $stream         = $this->getStream($options['stream'] ?? null);
 
         $level          = (int)     ($options['level']          ?? Logger::DEBUG);
-        $bubble         = (boolean) ($options['bubble']         ?? true);
+        $bubble         = (bool) ($options['bubble']         ?? true);
         $filePermission = (int)     ($options['filePermission'] ?? 0644);
-        $useLocking     = (boolean) ($options['useLocking']     ?? true);
+        $useLocking     = (bool) ($options['useLocking']     ?? true);
 
         return new StreamHandler($stream, $level, $bubble, $filePermission, $useLocking);
     }

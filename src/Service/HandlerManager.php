@@ -42,7 +42,7 @@ class HandlerManager extends AbstractServiceManager
             return $handler;
         }
 
-        $formatter= $config->getFormatter();
+        $formatter = $config->getFormatter();
 
         if ($formatter) {
             $handler->setFormatter($this->getFormatter($formatter));
@@ -61,7 +61,7 @@ class HandlerManager extends AbstractServiceManager
         $this->formatterManager = $manager;
     }
 
-    public function getFormatterManager() : FormatterManager
+    public function getFormatterManager(): FormatterManager
     {
         if (!$this->formatterManager) {
             throw new MissingServiceException(
@@ -76,7 +76,7 @@ class HandlerManager extends AbstractServiceManager
     {
         if (!$this->getFormatterManager()->has($id)) {
             throw new UnknownServiceException(
-                'Unable to locate formatter '.$id
+                'Unable to locate formatter ' . $id
             );
         }
 

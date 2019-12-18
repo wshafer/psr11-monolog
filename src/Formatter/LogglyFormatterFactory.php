@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Formatter;
@@ -11,7 +12,7 @@ class LogglyFormatterFactory implements FactoryInterface
     public function __invoke(array $options)
     {
         $batchMode     =            $options['batchMode']     ?? LogglyFormatter::BATCH_MODE_NEWLINES;
-        $appendNewline = (boolean) ($options['appendNewline'] ?? true);
+        $appendNewline = (bool) ($options['appendNewline'] ?? true);
         return new LogglyFormatter($batchMode, $appendNewline);
     }
 }

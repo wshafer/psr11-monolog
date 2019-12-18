@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -18,7 +19,7 @@ class PHPConsoleHandlerFactory implements FactoryInterface, ContainerAwareInterf
         $consoleOptions = (array)   ($options['options'] ?? []);
         $connector      = $this->getService($options['connector'] ?? null);
         $level          = (int)     ($options['level']   ?? Logger::DEBUG);
-        $bubble         = (boolean) ($options['bubble']  ?? true);
+        $bubble         = (bool) ($options['bubble']  ?? true);
 
         return new PHPConsoleHandler(
             $consoleOptions,

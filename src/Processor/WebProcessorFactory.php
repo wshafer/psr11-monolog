@@ -1,8 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Processor;
 
+use ArrayAccess;
 use Monolog\Processor\WebProcessor;
 use WShafer\PSR11MonoLog\ContainerAwareInterface;
 use WShafer\PSR11MonoLog\ContainerTrait;
@@ -30,8 +32,9 @@ class WebProcessorFactory implements FactoryInterface, ContainerAwareInterface
             return null;
         }
 
-        if (is_array($options['serverData'])
-            || $options['serverData'] instanceof \ArrayAccess
+        if (
+            is_array($options['serverData'])
+            || $options['serverData'] instanceof ArrayAccess
         ) {
             return $options['serverData'];
         }

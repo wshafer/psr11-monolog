@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -14,7 +15,7 @@ class TelegramBotHandlerFactory implements FactoryInterface
         $apiKey     = (string)  ($options['apiKey']  ?? '');
         $channel    = (string)  ($options['channel'] ?? '');
         $level      = (int)     ($options['level']   ?? Logger::DEBUG);
-        $bubble     = (boolean) ($options['bubble']  ?? true);
+        $bubble     = (bool) ($options['bubble']  ?? true);
 
         return new TelegramBotHandler(
             $apiKey,

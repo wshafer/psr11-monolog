@@ -1,16 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Handler;
 
-use Monolog\Handler\SwiftMailerHandler;
-use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Exception\MissingConfigException;
 use WShafer\PSR11MonoLog\Exception\MissingServiceException;
-use WShafer\PSR11MonoLog\Handler\SwiftMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SwiftMessageTrait;
+use Swift_Message;
 
 /**
  * @covers \WShafer\PSR11MonoLog\Handler\SwiftMessageTrait
@@ -55,7 +54,7 @@ class SwiftMessageTraitTest extends TestCase
 
         $mockContainer = $this->createMock(ContainerInterface::class);
 
-        $mockMessage = $this->createMock(\Swift_Message::class);
+        $mockMessage = $this->createMock(Swift_Message::class);
 
         $mockContainer->expects($this->once())
             ->method('has')

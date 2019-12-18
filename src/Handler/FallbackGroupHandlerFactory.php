@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -10,7 +11,7 @@ class FallbackGroupHandlerFactory extends GroupHandlerFactory
     public function __invoke(array $options)
     {
         $handlers = $this->getHandlers($options);
-        $bubble   = (boolean) ($options['bubble'] ?? true);
+        $bubble   = (bool) ($options['bubble'] ?? true);
 
         return new FallbackGroupHandler(
             $handlers,

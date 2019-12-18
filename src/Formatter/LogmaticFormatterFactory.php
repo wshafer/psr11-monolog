@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Formatter;
@@ -12,7 +13,7 @@ class LogmaticFormatterFactory implements FactoryInterface
     public function __invoke(array $options)
     {
         $batchMode     = (int)     ($options['batchMode']     ?? JsonFormatter::BATCH_MODE_JSON);
-        $appendNewline = (boolean) ($options['appendNewline'] ?? true);
+        $appendNewline = (bool) ($options['appendNewline'] ?? true);
         $hostmane      = (string)  ($options['hostname'] ?? '');
         $appName       = (string)  ($options['appName'] ?? '');
 

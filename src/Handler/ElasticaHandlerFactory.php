@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
@@ -18,9 +19,9 @@ class ElasticaHandlerFactory implements FactoryInterface, ContainerAwareInterfac
         $client      = $this->getService($options['client'] ?? null);
         $index       = (string)  ($options['index']       ?? 'monolog');
         $type        = (string)  ($options['type']        ?? 'record');
-        $ignoreError = (boolean) ($options['ignoreError'] ?? false);
+        $ignoreError = (bool) ($options['ignoreError'] ?? false);
         $level       = (int)     ($options['level']       ?? Logger::DEBUG);
-        $bubble      = (boolean) ($options['bubble']      ?? true);
+        $bubble      = (bool) ($options['bubble']      ?? true);
 
         return new ElasticaHandler(
             $client,

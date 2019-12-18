@@ -1,10 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Handler;
 
 use PHPUnit\Framework\TestCase;
-
 use WShafer\PSR11MonoLog\Processor\GitProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\HostnameProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\IntrospectionProcessorFactory;
