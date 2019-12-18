@@ -13,6 +13,7 @@ use WShafer\PSR11MonoLog\Formatter\HtmlFormatterFactory;
 use WShafer\PSR11MonoLog\Formatter\JsonFormatterFactory;
 use WShafer\PSR11MonoLog\Formatter\LineFormatterFactory;
 use WShafer\PSR11MonoLog\Formatter\LogglyFormatterFactory;
+use WShafer\PSR11MonoLog\Formatter\LogmaticFormatterFactory;
 use WShafer\PSR11MonoLog\Formatter\LogstashFormatterFactory;
 use WShafer\PSR11MonoLog\Formatter\MongoDBFormatterFactory;
 use WShafer\PSR11MonoLog\Formatter\NormalizerFormatterFactory;
@@ -120,6 +121,13 @@ class FormatterMapperTest extends TestCase
     {
         $expected = MongoDBFormatterFactory::class;
         $result = $this->mapper->map('mongodb');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testLogmatic()
+    {
+        $expected = LogmaticFormatterFactory::class;
+        $result = $this->mapper->map('logmatic');
         $this->assertEquals($expected, $result);
     }
 

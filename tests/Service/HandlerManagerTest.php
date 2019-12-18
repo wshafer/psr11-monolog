@@ -168,7 +168,7 @@ class HandlerManagerTest extends TestCase
         $expected->expects($this->once())
             ->method('setFormatter')
             ->with($mockFormatter)
-            ->willReturn(true);
+            ->willReturn($expected);
 
         $this->mockFormatterManager->expects($this->once())
             ->method('has')
@@ -349,7 +349,7 @@ class HandlerManagerTest extends TestCase
         $expected->expects($this->once())
             ->method('pushProcessor')
             ->with($mockProcessor)
-            ->willReturn(true);
+            ->willReturn($expected);
 
 
         // No additional dependency calls should happen here

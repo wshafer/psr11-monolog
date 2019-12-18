@@ -3,18 +3,19 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Handler;
 
-use Monolog\Handler\RavenHandler;
+use Aws\Sqs\SqsClient;
+use Monolog\Handler\SqsHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
-use WShafer\PSR11MonoLog\Handler\RavenHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\SqsHandlerFactory;
 
 /**
- * @covers \WShafer\PSR11MonoLog\Handler\RavenHandlerFactory
+ * @covers \WShafer\PSR11MonoLog\Handler\SqsHandlerFactory
  */
-class RavenHandlerFactoryTest extends TestCase
+class SqsHandlerFactoryTest extends TestCase
 {
-    /** @var RavenHandlerFactory */
+    /** @var SqsHandlerFactory */
     protected $factory;
 
     /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
@@ -22,7 +23,7 @@ class RavenHandlerFactoryTest extends TestCase
 
     public function setup()
     {
-        $this->factory = new RavenHandlerFactory();
+        $this->factory = new SqsHandlerFactory();
         $this->mockContainer = $this->createMock(ContainerInterface::class);
         $this->factory->setContainer($this->mockContainer);
     }
@@ -30,13 +31,13 @@ class RavenHandlerFactoryTest extends TestCase
     public function testInvoke()
     {
         $options = [
-            'client'       => 'my-service',
-            'exchangeName' => 'logger',
-            'level'        => Logger::INFO,
-            'bubble'       => false
+            'sqsClient' => 'my-service',
+            'queueUrl'  => 'logger',
+            'level'     => Logger::INFO,
+            'bubble'    => false,
         ];
 
-        $mockService = $this->createMock(\Raven_Client::class);
+        $mockService = $this->createMock(SqsClient::class);
 
         $this->mockContainer->expects($this->once())
             ->method('has')
@@ -50,6 +51,6 @@ class RavenHandlerFactoryTest extends TestCase
 
         $handler = $this->factory->__invoke($options);
 
-        $this->assertInstanceOf(RavenHandler::class, $handler);
+        $this->assertInstanceOf(SqsHandler::class, $handler);
     }
 }

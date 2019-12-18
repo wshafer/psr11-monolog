@@ -13,8 +13,9 @@ use WShafer\PSR11MonoLog\Handler\CubeHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\DeduplicationHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\DoctrineCouchDBHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\DynamoDbHandlerFactory;
-use WShafer\PSR11MonoLog\Handler\ElasticSearchHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\ElasticaHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ErrorLogHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\FallbackGroupHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FilterHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FingersCrossedHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\FirePHPHandlerFactory;
@@ -23,30 +24,35 @@ use WShafer\PSR11MonoLog\Handler\FlowdockHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\GelfHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\GroupHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\HandlerMapper;
-use WShafer\PSR11MonoLog\Handler\HipChatHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\IFTTTHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\InsightOpsHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\LogEntriesHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\LogglyHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\LogmaticHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\MandrillHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\MongoDBHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NativeMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NewRelicHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\NoopHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\NullHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\OverflowHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\PHPConsoleHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\ProcessHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\PsrHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\PushoverHandlerFactory;
-use WShafer\PSR11MonoLog\Handler\RavenHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\RedisHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\RotatingFileHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SamplingHandlerFactory;
-use WShafer\PSR11MonoLog\Handler\SlackbotHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\SendGridHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SlackHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SlackWebhookHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SocketHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\SqsHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\StreamHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SwiftMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SyslogHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SyslogUdpHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\TelegramBotHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\TestHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\WhatFailureGroupHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\ZendMonitorHandlerFactory;
@@ -113,24 +119,10 @@ class HandlerMapperTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testMapHipChat()
-    {
-        $expected = HipChatHandlerFactory::class;
-        $result = $this->mapper->map('hipChat');
-        $this->assertEquals($expected, $result);
-    }
-
     public function testMapFlowdock()
     {
         $expected = FlowdockHandlerFactory::class;
         $result = $this->mapper->map('flowdock');
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testMapSlackBot()
-    {
-        $expected = SlackbotHandlerFactory::class;
-        $result = $this->mapper->map('slackbot');
         $this->assertEquals($expected, $result);
     }
 
@@ -194,13 +186,6 @@ class HandlerMapperTest extends TestCase
     {
         $expected = CubeHandlerFactory::class;
         $result = $this->mapper->map('cube');
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testMapRaven()
-    {
-        $expected = RavenHandlerFactory::class;
-        $result = $this->mapper->map('raven');
         $this->assertEquals($expected, $result);
     }
 
@@ -295,10 +280,10 @@ class HandlerMapperTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testElasticSearch()
+    public function testElastica()
     {
-        $expected = ElasticSearchHandlerFactory::class;
-        $result = $this->mapper->map('elasticSearch');
+        $expected = ElasticaHandlerFactory::class;
+        $result = $this->mapper->map('elastica');
         $this->assertEquals($expected, $result);
     }
 
@@ -369,6 +354,69 @@ class HandlerMapperTest extends TestCase
     {
         $expected = PsrHandlerFactory::class;
         $result = $this->mapper->map('psr');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testProcess()
+    {
+        $expected = ProcessHandlerFactory::class;
+        $result = $this->mapper->map('process');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testSendGrid()
+    {
+        $expected = SendGridHandlerFactory::class;
+        $result = $this->mapper->map('sendgrid');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testTelegramBot()
+    {
+        $expected = TelegramBotHandlerFactory::class;
+        $result = $this->mapper->map('telegrambot');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testInsightOps()
+    {
+        $expected = InsightOpsHandlerFactory::class;
+        $result = $this->mapper->map('insightops');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testLogmatic()
+    {
+        $expected = LogmaticHandlerFactory::class;
+        $result = $this->mapper->map('logmatic');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testSQS()
+    {
+        $expected = SqsHandlerFactory::class;
+        $result = $this->mapper->map('sqs');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testFallbackGroup()
+    {
+        $expected = FallbackGroupHandlerFactory::class;
+        $result = $this->mapper->map('fallbackgroup');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testNoop()
+    {
+        $expected = NoopHandlerFactory::class;
+        $result = $this->mapper->map('noop');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testOverflow()
+    {
+        $expected = OverflowHandlerFactory::class;
+        $result = $this->mapper->map('overflow');
         $this->assertEquals($expected, $result);
     }
 

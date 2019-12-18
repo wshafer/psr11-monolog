@@ -26,30 +26,33 @@
             - [RotatingFileHandler](#rotatingfilehandler)
             - [SyslogHandler](#sysloghandler)
             - [ErrorLogHandler](#errorloghandler)
+            - [ProcessHandler](#processhandler)
         - [Send alerts and emails](#send-alerts-and-emails)
             - [NativeMailerHandler](#nativemailerhandler)
             - [SwiftMailerHandler](#swiftmailerhandler)
             - [PushoverHandler](#pushoverhandler)
-            - [HipChatHandler](#hipchathandler)
             - [FlowdockHandler](#flowdockhandler)
-            - [SlackbotHandler](#slackbothandler)
             - [SlackWebhookHandler](#slackwebhookhandler)
             - [SlackHandler](#slackhandler)
+            - [SendGridHandler](#sendgridhandler)
             - [MandrillHandler](#mandrillhandler)
             - [FleepHookHandler](#fleephookhandler)
             - [IFTTTHandler](#ifttthandler)
+            - [TelegramBotHandler](#telegrambothandler)
         - [Log specific servers and networked logging](#log-specific-servers-and-networked-logging)
             - [SocketHandler](#sockethandler)
             - [AmqpHandler](#amqphandler)
             - [GelfHandler](#gelfhandler)
             - [CubeHandler](#cubehandler)
-            - [RavenHandler](#ravenhandler)
             - [ZendMonitorHandler](#zendmonitorhandler)
             - [NewRelicHandler](#newrelichandler)
             - [LogglyHandler](#logglyhandler)
             - [RollbarHandler](#rollbarhandler)
             - [SyslogUdpHandler](#syslogudphandler)
             - [LogEntriesHandler](#logentrieshandler)
+            - [InsightOpsHandler](#insightopshandler)
+            - [LogmaticHandler](#logmatichandler)
+            - [SqsHandler](#sqshandler)
         - [Logging in development](#logging-in-development)
             - [FirePHPHandler](#firephphandler)
             - [ChromePHPHandler](#chromephphandler)
@@ -61,17 +64,21 @@
             - [CouchDBHandler](#couchdbhandler)
             - [DoctrineCouchDBHandler](#doctrinecouchdbhandler)
             - [ElasticSearchHandler](#elasticsearchhandler)
+            - [DynamoDbHandler](#dynamodbhandler)
          - [Wrappers / Special Handlers](#wrappers--special-handlers)
             - [FingersCrossedHandler](#fingerscrossedhandler)
             - [DeduplicationHandler](#deduplicationhandler)
             - [WhatFailureGroupHandler](#whatfailuregrouphandler)
+            - [FallbackGroupHandler](#fallbackgrouphandler)
             - [BufferHandler](#bufferhandler)
             - [GroupHandler](#grouphandler)
             - [FilterHandler](#filterhandler)
             - [SamplingHandler](#samplinghandler)
+            - [NoopHandler](#noophandler)
             - [NullHandler](#nullhandler)
             - [PsrHandler](#psrhandler)
             - [TestHandler](#testhandler)
+            - [OverflowHandler](#overflowhandler)
     - [Formatters](#formatters)
         - [LineFomatter](#linefomatter)
         - [HtmlFormatter](#htmlformatter)
@@ -83,9 +90,10 @@
         - [GelfMessageFormatter](#gelfmessageformatter)
         - [LogstashFormatter](#logstashformatter)
         - [ElasticaFormatter](#elasticaformatter)
-        - [LogglyFormatter](#logglyformatter)
+        - [LogglyFormatter:](#logglyformatter:)
         - [FlowdockFormatter](#flowdockformatter)
         - [MongoDBFormatter](#mongodbformatter)
+        - [LogmaticFormatter](#logmaticFormatter)
     - [Processors](#processors)
         - [PsrLogMessageProcessor](#psrlogmessageprocessor)
         - [IntrospectionProcessor](#introspectionprocessor)
@@ -97,7 +105,9 @@
         - [GitProcessor](#gitprocessor)
         - [MercurialProcessor](#mercurialprocessor)
         - [TagProcessor](#tagprocessor)
-- [Upgrades](#upgrades)    
+        - [HostnameProcessor](#hostname)
+- [Upgrades](#upgrades)
+    - [Version 2 to version 3](#version-2-to-version-3)
     - [Version 1 to version 2](#version-1-to-version-2)
 
 # Installation
@@ -734,6 +744,31 @@ return [
 ```
 Monolog Docs: [ErrorLogHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ErrorLogHandler.php)
 
+#### ProcessHandler
+Logs records to the [STDIN](https://en.wikipedia.org/wiki/Standard_streams#Standard_input_.28stdin.29) of any process, specified by a command.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'errorlog',
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
+                'options' => [
+                    'command' => 'some-command', // Command for the process to start. Absolute paths are recommended, especially if you do not use the $cwd parameter.
+                    'level'   => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'  => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                    'cwd'     => __DIR__, // Optional: "Current working directory" (CWD) for the process to be executed in.
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [ProcessHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ProcessHandler.php)
+
 ### Send alerts and emails
 
 #### NativeMailerHandler
@@ -819,36 +854,6 @@ return [
 ```
 Monolog Docs: [PushoverHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/PushoverHandler.php)
 
-#### HipChatHandler
-Sends notifications through the [HipChat](http://hipchat.com/) api to a hipchat room
-
-```php
-<?php
-
-return [
-    'monolog' => [
-        'handlers' => [
-            'myHandlerName' => [
-                'type' => 'hipChat',
-                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
-                'options' => [
-                    'token'  => 'sometokenhere', // HipChat API Token
-                    'room'   => 'some-room', // The room that should be alerted of the message (Id or Name)
-                    'name'   => 'Error Log', // Optional: Name used in the "from" field.
-                    'notify' => false, // Optional: Trigger a notification in clients or not
-                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
-                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
-                    'useSSL' => false, // Optional: Whether to connect via SSL
-                    'format' => 'text', // Optional: The format of the messages (default to text, can be set to html if you have html in the messages)
-                    'host'   => 'api.hipchat.com', // Optional: The HipChat server hostname.
-                ],
-            ],
-        ],
-    ],
-];
-```
-Monolog Docs: [HipChatHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/HipChatHandler.php)
-
 #### FlowdockHandler
 Logs records to a [Flowdock](https://www.flowdock.com/) account.
 
@@ -872,33 +877,6 @@ return [
 ];
 ```
 Monolog Docs: [FlowdockHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/FlowdockHandler.php)
-
-
-#### SlackbotHandler
-Logs records to a [Slack](https://www.slack.com/) account using the Slackbot incoming hook.
-
-```php
-<?php
-
-return [
-    'monolog' => [
-        'handlers' => [
-            'myHandlerName' => [
-                'type' => 'slackbot',
-                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
-                'options' => [
-                    'slackTeam' => 'Team', // Slackbot token
-                    'token'     => 'sometokenhere', // HipChat API Token
-                    'channel'   => '#channel', // Slack channel (encoded ID or name)
-                    'level'     => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
-                    'bubble'    => true, // Optional: Whether the messages that are handled can bubble up the stack or not
-                ],
-            ],
-        ],
-    ],
-];
-```
-Monolog Docs: [SlackbotHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SlackbotHandler.php)
 
 #### SlackWebhookHandler
 Logs records to a [Slack](https://www.slack.com/) account using Slack Webhooks.
@@ -962,6 +940,34 @@ return [
 ```
 Monolog Docs: [SlackHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SlackHandler.php)
 
+#### SendGridHandler
+Sends emails via the SendGrid API.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'sendgrid',
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
+                'options' => [
+                    'apiUser'                => 'apiUser', // The SendGrid API User
+                    'apiKey'                 => 'apiKey', // The SendGrid API Key
+                    'from'                   => 'from', // The sender of the email
+                    'to'                     => 'to', // string or array of recipients
+                    'subject'                => 'subject', // The subject of the mail
+                    'level'                  => \Monolog\Logger::INFO, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'                 => false, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [SendGridHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SendGridHandler.php)
+
 #### MandrillHandler
 Sends emails via the [Mandrill](http://www.mandrill.com/) API using a [Swift_Message](http://swiftmailer.org/) instance.
 
@@ -1011,8 +1017,8 @@ return [
 ```
 Monolog Docs: [FleepHookHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/FleepHookHandler.php)
 
-#### IFTTTHandler
-Notifies an [IFTTT](https://ifttt.com/maker) trigger with the log channel, level name and message.
+#### TelegramBotHandler
+Logs records to a [Telegram](https://core.telegram.org/bots/api) bot account.
 
 ```php
 <?php
@@ -1021,10 +1027,11 @@ return [
     'monolog' => [
         'handlers' => [
             'myHandlerName' => [
-                'type' => 'IFTTT',
+                'type' => 'telegrambot',
                 'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
-                    'apiToken' => 'sometokenhere', // Webhook token
+                    'apiKey' => 'api-key', // Api Key
+                    'channel' => 'api-key', // Channel
                     'level'    => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
                     'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
                 ],
@@ -1033,7 +1040,7 @@ return [
     ],
 ];
 ```
-Monolog Docs: [IFTTTHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/IFTTTHandler.php)
+Monolog Docs: [TelegramBotHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/TelegramBotHandler.php)
 
 ### Log specific servers and networked logging
 
@@ -1138,29 +1145,6 @@ return [
 ];
 ```
 Monolog Docs: [CubeHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/CubeHandler.php)
-
-#### RavenHandler
-Logs records to a [Sentry](http://getsentry.com/) server using [raven](https://packagist.org/packages/raven/raven).
-```php
-<?php
-
-return [
-    'monolog' => [
-        'handlers' => [
-            'myHandlerName' => [
-                'type' => 'raven',
-                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
-                'options' => [
-                    'client' => 'my-service', // A \Raven_Client object.  Must be a valid service.
-                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
-                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
-                ],
-            ],
-        ],
-    ],
-];
-```
-Monolog Docs: [RavenHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/RavenHandler.php)
 
 #### ZendMonitorHandler
 Logs records to the Zend Monitor present in [Zend Server](http://www.zend.com/en/products/zend_server).
@@ -1292,6 +1276,85 @@ return [
 ];
 ```
 Monolog Docs: [LogEntriesHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/LogEntriesHandler.php)
+
+#### InsightOpsHandler
+Logs records to an [InsightOps](https://www.rapid7.com/products/insightops/) account.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'insightops',
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
+                'options' => [
+                    'token'  => 'sometokenhere', // Log token supplied by InsightOps
+                    'region' => 'region', // Region where InsightOps account is hosted. Could be 'us' or 'eu'.
+                    'useSSL' => true, // Optional: Whether or not SSL encryption should be used.
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [InsightOpsHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/InsightOpsHandler.php)
+
+#### LogmaticHandler
+Logs records to a [Logmatic](http://logmatic.io/) account.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'logmatic',
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
+                'options' => [
+                    'token'  => 'sometokenhere', // Log token supplied by Logmatic.
+                    'hostname' => 'region', //  Optional: Host name supplied by Logmatic.
+                    'appname' => 'region', //  Optional: Application name supplied by Logmatic.
+                    'useSSL' => true, // Optional: Whether or not SSL encryption should be used.
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [LogmaticHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/LogmaticHandler.php)
+
+#### SqsHandler
+Logs records to an [AWS SQS](http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-sqs.html) queue.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'sqs',
+                'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
+                'options' => [
+                    'sqsClient' => 'my-service', // SQS Client.  Must be a valid service name in the container.
+                    'queueUrl'  => 'url', // URL to SQS Queue
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble' => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [SqsHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SqsHandler.php)
+
 
 ### Logging in development
 
@@ -1502,7 +1565,7 @@ return [
 ```
 Monolog Docs: [DoctrineCouchDBHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/DoctrineCouchDBHandler.php)
 
-#### ElasticSearchHandler
+#### ElasticaHandler
 Logs records to an Elastic Search server.
 
 ```php
@@ -1512,7 +1575,7 @@ return [
     'monolog' => [
         'handlers' => [
             'myHandlerName' => [
-                'type' => 'doctrineCouchDb',
+                'type' => 'elastica',
                 'formatter' => 'formatterName', // Optional: Formatter for the handler.  Default for the handler will be used if not supplied
                 'options' => [
                     'client'      => 'my-service', //  Elastica Client object.  Must be a valid container service
@@ -1527,7 +1590,7 @@ return [
     ],
 ];
 ```
-Monolog Docs: [ElasticSearchHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ElasticSearchHandler.php)
+Monolog Docs: [ElasticSearchHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/ElasticaHandler.php)
 
 #### DynamoDbHandler
 Logs records to a DynamoDB table with the [AWS SDK](https://github.com/aws/aws-sdk-php).
@@ -1646,6 +1709,31 @@ return [
 ```
 Monolog Docs: [WhatFailureGroupHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/WhatFailureGroupHandler.php)
 
+#### FallbackGroupHandler
+This handler extends the GroupHandler ignoring exceptions raised by 
+each child handler, until one has handled without throwing. This allows 
+you to ignore issues where a remote tcp connection may have died but you 
+do not want your entire application to crash and may wish to continue to 
+attempt log to other handlers, until one does not throw.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'fallbackgroup',
+                'options' => [
+                    'handlers' => ['my-handler-one'. 'my-handler-two'], // Required: Array of Registered Handlers to wrap
+                    'bubble'   => true,                                 // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [FallbackGroupHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/FallbackGroupHandler.php)
 
 #### BufferHandler
 This handler will buffer all the log records it receives until close() is called at which point it 
@@ -1752,6 +1840,26 @@ return [
 ```
 Monolog Docs: [SamplingHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/SamplingHandler.php)
 
+#### NoopHandler
+This handler handles anything by doing nothing. It does not stop 
+processing the rest of the stack. This can be used for testing, or to 
+disable a handler when overriding a configuration.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type'    => 'noop',
+                'options' => [],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [NoopHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/NullHandler.php)
 
 #### NullHandler
 Any record it can handle will be thrown away. This can be used
@@ -1821,6 +1929,43 @@ return [
 ];
 ```
 Monolog Docs: [TestHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/TestHandler.php)
+
+#### OverflowHandler
+This handler will buffer all the log messages it receives, up until a 
+configured threshold of number of messages of a certain lever is 
+reached, after it will pass all log messages to the wrapped handler. 
+Useful for applying in batch processing when you're only interested in 
+significant failures instead of minor, single erroneous events.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'handlers' => [
+            'myHandlerName' => [
+                'type' => 'overflow',
+                'options' => [
+                    'handlers' => 'my-handler', // Required: Registered Handler to wrap
+                    'thresholdMap' => [  // Optional: threshold map
+                        'debug' => 2, // Optional: debug threshold.  Default: 0
+                        'info' => 2, // Optional: info threshold.  Default: 0
+                        'notice' => 2, // Optional: notice threshold.  Default: 0
+                        'warning' => 2, // Optional: warning threshold.  Default: 0
+                        'error' => 2, // Optional: error threshold.  Default: 0
+                        'critical' => 2, // Optional: critical threshold.  Default: 0
+                        'alert' => 2, // Optional: alert threshold.  Default: 0
+                        'emergency' => 2, // Optional: emergency threshold.  Default: 0
+                    ],
+                    'level'  => \Monolog\Logger::DEBUG, // Optional: The minimum logging level at which this handler will be triggered
+                    'bubble'   => true, // Optional: Whether the messages that are handled can bubble up the stack or not
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [OverflowHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/OverflowHandler.php)
 
 
 ## Formatters
@@ -2110,6 +2255,32 @@ return [
 ```
 Monolog Docs: [MongoDBFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/MongoDBFormatter.php)
 
+### LogmaticFormatter
+User to format log records to [Logmatic](http://logmatic.io/) messages, only useful for the 
+LogmaticHandler.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'formatters' => [
+            'myFormatterName' => [
+                'type' => 'json',
+                'options' => [
+                    'batchMode'     => \Monolog\Formatter\LogmaticFormatter::BATCH_MODE_JSON, //optional
+                    'appendNewline' => true, //optional
+                    'hostname' => 'my-host', //optional 'hostname' parameter for indexing by Logmatic
+                    'appName' => 'app name', //optional 'appname' parameter for indexing by Logmatic
+                ],
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [LogmaticFormatter](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Formatter/LogmaticFormatter.php)
+
+
 ## Processors
 
 ### PsrLogMessageProcessor
@@ -2322,7 +2493,34 @@ return [
 Monolog Docs: [TagProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/TagProcessor.php)
 
 
+### HostnameProcessor
+Adds the current hostname to a log record.
+
+```php
+<?php
+
+return [
+    'monolog' => [
+        'processors' => [
+            'myProcessorsName' => [
+                'type' => 'hostname',
+                'options' => [], // No options
+            ],
+        ],
+    ],
+];
+```
+Monolog Docs: [HostnameProcessor](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/HostnameProcessor.php)
+
+
 ### Upgrades
+
+#### Version 2 to Version 3
+Version 3 upgrade the Monolog package from version 1 to version 2.  This
+has many breaking changes with it.  Please see the [UPGRADE.md](https://github.com/Seldaek/monolog/blob/2.0.0/UPGRADE.md)
+for a list changes upstream.
+
+This package also now requires PHP 7.2.
 
 #### Version 1 to Version 2
 When upgrading from version 1 to version 2, there shouldn't be any changes needed.   Please note

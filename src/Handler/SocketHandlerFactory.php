@@ -12,8 +12,8 @@ class SocketHandlerFactory implements FactoryInterface
     public function __invoke(array $options)
     {
         $connectionString  = (string)  ($options['connectionString'] ?? '');
-        $timeout           = (string)  ($options['timeout']          ?? '');
-        $writeTimeout      = (int)     ($options['writeTimeout']     ?? '');
+        $timeout           = (float)   ($options['timeout']          ?? ini_get('default_socket_timeout'));
+        $writeTimeout      = (int)     ($options['writeTimeout']     ?? ini_get('default_socket_timeout'));
         $level             = (int)     ($options['level']            ?? Logger::DEBUG);
         $bubble            = (boolean) ($options['bubble']           ?? true);
 

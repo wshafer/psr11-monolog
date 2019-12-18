@@ -16,7 +16,7 @@ class DynamoDbHandlerFactory implements FactoryInterface, ContainerAwareInterfac
     public function __invoke(array $options)
     {
         $client  = $this->getService($options['client'] ?? null);
-        $table   =            $options['table']  ?? null;
+        $table   = (string)  ($options['table']  ?? null);
         $level   = (int)     ($options['level']  ?? Logger::DEBUG);
         $bubble  = (boolean) ($options['bubble'] ?? true);
 

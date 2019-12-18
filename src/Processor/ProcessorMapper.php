@@ -41,6 +41,8 @@ class ProcessorMapper implements MapperInterface
                 return MercurialProcessorFactory::class;
             case 'tags':
                 return TagProcessorFactory::class;
+            case 'hostname':
+                return HostnameProcessorFactory::class;
         }
 
         return null;

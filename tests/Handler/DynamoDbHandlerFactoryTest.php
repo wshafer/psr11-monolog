@@ -32,6 +32,7 @@ class DynamoDbHandlerFactoryTest extends TestCase
     {
         $options = [
             'client'  => 'my-service',
+            'table'   => 'monolog',
             'level'   => Logger::INFO,
             'bubble'  => false
         ];

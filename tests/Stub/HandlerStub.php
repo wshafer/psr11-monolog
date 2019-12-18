@@ -4,42 +4,50 @@ declare(strict_types=1);
 namespace WShafer\PSR11MonoLog\Test\Stub;
 
 use Monolog\Formatter\FormatterInterface;
+use Monolog\Handler\FormattableHandlerInterface;
 use Monolog\Handler\HandlerInterface;
+use Monolog\Handler\ProcessableHandlerInterface;
 
-class HandlerStub implements HandlerInterface
+class HandlerStub implements HandlerInterface, FormattableHandlerInterface, ProcessableHandlerInterface
 {
-    public function isHandling(array $record)
+
+    public function isHandling(array $record): bool
     {
         // TODO: Implement isHandling() method.
     }
 
-    public function handle(array $record)
+    public function handle(array $record): bool
     {
         // TODO: Implement handle() method.
     }
 
-    public function handleBatch(array $records)
+    public function handleBatch(array $records): void
     {
         // TODO: Implement handleBatch() method.
     }
 
-    public function pushProcessor($callback)
+    public function close(): void
     {
-        // TODO: Implement pushProcessor() method.
+        // TODO: Implement close() method.
     }
 
-    public function popProcessor()
+    public function setFormatter(FormatterInterface $formatter): HandlerInterface
     {
-        // TODO: Implement popProcessor() method.
+        return $this;
     }
 
-    public function setFormatter(FormatterInterface $formatter)
-    {
-        // TODO: Implement setFormatter() method.
-    }
-
-    public function getFormatter()
+    public function getFormatter(): FormatterInterface
     {
         // TODO: Implement getFormatter() method.
+    }
+
+    public function pushProcessor(callable $callback): HandlerInterface
+    {
+        return $this;
+    }
+
+    public function popProcessor(): callable
+    {
+        // TODO: Implement popProcessor() method.
     }
 }

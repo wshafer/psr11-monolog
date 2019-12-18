@@ -12,7 +12,7 @@ fi
 # Install dependencies
 add-apt-repository ppa:ondrej/php
 apt-get update
-apt-get install -y git curl php7.1-bcmath php7.1-bz2 php7.1-cli php7.1-curl php7.1-intl php7.1-json php7.1-mbstring php7.1-opcache php7.1-soap php7.1-sqlite3 php7.1-xml php7.1-xsl php7.1-zip php-mongodb
+apt-get install -y git curl php7.3-bcmath php7.3-bz2 php7.3-cli php7.3-curl php7.3-intl php7.3-json php7.3-mbstring php7.3-opcache php7.3-soap php7.3-sqlite3 php7.3-xml php7.3-xsl php7.3-zip php-mongodb
 
 if [ -e /usr/local/bin/composer ]; then
     /usr/local/bin/composer self-update
@@ -30,7 +30,7 @@ echo "    vagrant ssh -c 'composer install'"
 SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = 'ubuntu/xenial64'
+  config.vm.box = 'ubuntu/bionic64'
   config.vm.synced_folder '.', '/var/www'
   config.vm.provision 'shell', inline: @script
 

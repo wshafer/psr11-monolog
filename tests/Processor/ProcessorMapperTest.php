@@ -6,6 +6,7 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 use PHPUnit\Framework\TestCase;
 
 use WShafer\PSR11MonoLog\Processor\GitProcessorFactory;
+use WShafer\PSR11MonoLog\Processor\HostnameProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\IntrospectionProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\MemoryPeakUsageProcessorFactory;
 use WShafer\PSR11MonoLog\Processor\MemoryUsageProcessorFactory;
@@ -97,6 +98,13 @@ class ProcessorMapperTest extends TestCase
     {
         $expected = TagProcessorFactory::class;
         $result = $this->mapper->map('tags');
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testHostnameProcessor()
+    {
+        $expected = HostnameProcessorFactory::class;
+        $result = $this->mapper->map('hostname');
         $this->assertEquals($expected, $result);
     }
 

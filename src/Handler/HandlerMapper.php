@@ -35,12 +35,8 @@ class HandlerMapper implements MapperInterface
                 return SwiftMailerHandlerFactory::class;
             case 'pushover':
                 return PushoverHandlerFactory::class;
-            case 'hipchat':
-                return HipChatHandlerFactory::class;
             case 'flowdock':
                 return FlowdockHandlerFactory::class;
-            case 'slackbot':
-                return SlackbotHandlerFactory::class;
             case 'slackwebhook':
                 return SlackWebhookHandlerFactory::class;
             case 'slack':
@@ -59,8 +55,6 @@ class HandlerMapper implements MapperInterface
                 return GelfHandlerFactory::class;
             case 'cube':
                 return CubeHandlerFactory::class;
-            case 'raven':
-                return RavenHandlerFactory::class;
             case 'zend':
                 return ZendMonitorHandlerFactory::class;
             case 'newrelic':
@@ -87,8 +81,8 @@ class HandlerMapper implements MapperInterface
                 return CouchDBHandlerFactory::class;
             case 'doctrinecouchdb':
                 return DoctrineCouchDBHandlerFactory::class;
-            case 'elasticsearch':
-                return ElasticSearchHandlerFactory::class;
+            case 'elastica':
+                return ElasticaHandlerFactory::class;
             case 'dynamodb':
                 return DynamoDbHandlerFactory::class;
             case 'fingerscrossed':
@@ -109,6 +103,24 @@ class HandlerMapper implements MapperInterface
                 return NullHandlerFactory::class;
             case 'psr':
                 return PsrHandlerFactory::class;
+            case 'process':
+                return ProcessHandlerFactory::class;
+            case 'sendgrid':
+                return SendGridHandlerFactory::class;
+            case 'telegrambot':
+                return TelegramBotHandlerFactory::class;
+            case 'insightops':
+                return InsightOpsHandlerFactory::class;
+            case 'logmatic':
+                return LogmaticHandlerFactory::class;
+            case 'sqs':
+                return SqsHandlerFactory::class;
+            case 'fallbackgroup':
+                return FallbackGroupHandlerFactory::class;
+            case 'noop':
+                return NoopHandlerFactory::class;
+            case 'overflow':
+                return OverflowHandlerFactory::class;
             case 'test':
                 return TestHandlerFactory::class;
         }

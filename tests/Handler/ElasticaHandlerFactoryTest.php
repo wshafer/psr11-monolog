@@ -4,18 +4,18 @@ declare(strict_types=1);
 namespace WShafer\PSR11MonoLog\Test\Handler;
 
 use Elastica\Client;
-use Monolog\Handler\ElasticSearchHandler;
+use Monolog\Handler\ElasticaHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
-use WShafer\PSR11MonoLog\Handler\ElasticSearchHandlerFactory;
+use WShafer\PSR11MonoLog\Handler\ElasticaHandlerFactory;
 
 /**
- * @covers \WShafer\PSR11MonoLog\Handler\ElasticSearchHandlerFactory
+ * @covers \WShafer\PSR11MonoLog\Handler\ElasticaHandlerFactory
  */
-class ElasticSearchHandlerFactoryTest extends TestCase
+class ElasticaHandlerFactoryTest extends TestCase
 {
-    /** @var ElasticSearchHandlerFactory */
+    /** @var ElasticaHandlerFactory */
     protected $factory;
 
     /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
@@ -23,7 +23,7 @@ class ElasticSearchHandlerFactoryTest extends TestCase
 
     public function setup()
     {
-        $this->factory = new ElasticSearchHandlerFactory();
+        $this->factory = new ElasticaHandlerFactory();
         $this->mockContainer = $this->createMock(ContainerInterface::class);
         $this->factory->setContainer($this->mockContainer);
     }
@@ -53,6 +53,6 @@ class ElasticSearchHandlerFactoryTest extends TestCase
 
         $handler = $this->factory->__invoke($options);
 
-        $this->assertInstanceOf(ElasticSearchHandler::class, $handler);
+        $this->assertInstanceOf(ElasticaHandler::class, $handler);
     }
 }

@@ -42,6 +42,8 @@ class FormatterMapper implements MapperInterface
                 return FlowdockFormatterFactory::class;
             case 'mongodb':
                 return MongoDBFormatterFactory::class;
+            case 'logmatic':
+                return LogmaticFormatterFactory::class;
         }
 
         return null;
