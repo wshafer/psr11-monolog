@@ -6,6 +6,7 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 use Aws\DynamoDb\DynamoDbClient;
 use Monolog\Handler\DynamoDbHandler;
 use Monolog\Logger;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Handler\DynamoDbHandlerFactory;
@@ -18,10 +19,10 @@ class DynamoDbHandlerFactoryTest extends TestCase
     /** @var DynamoDbHandlerFactory */
     protected $factory;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
+    /** @var MockObject|ContainerInterface */
     protected $mockContainer;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->factory = new DynamoDbHandlerFactory();
         $this->mockContainer = $this->createMock(ContainerInterface::class);

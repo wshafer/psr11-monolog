@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace WShafer\PSR11MonoLog\Test;
 
 use PHPUnit\Framework\TestCase;
+use WShafer\PSR11MonoLog\Exception\MissingServiceException;
 use WShafer\PSR11MonoLog\HandlerManagerTrait;
 use WShafer\PSR11MonoLog\Service\HandlerManager;
 
@@ -26,11 +27,10 @@ class HandlerManagerTraitTest extends TestCase
         $this->assertEquals($mockManager, $container);
     }
 
-    /**
-     * @expectedException \WShafer\PSR11MonoLog\Exception\MissingServiceException
-     */
     public function testGetHandlerManagerNoManagerSet()
     {
+        $this->expectException(MissingServiceException::class);
+
         /** @var HandlerManagerTrait $trait */
         $trait = $this->getMockForTrait(HandlerManagerTrait::class);
         $trait->getHandlerManager();

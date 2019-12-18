@@ -5,7 +5,9 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 
 use Monolog\Handler\WhatFailureGroupHandler;
 use Monolog\Handler\HandlerInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use WShafer\PSR11MonoLog\Exception\MissingConfigException;
 use WShafer\PSR11MonoLog\Handler\WhatFailureGroupHandlerFactory;
 use WShafer\PSR11MonoLog\Service\HandlerManager;
 
@@ -14,13 +16,13 @@ use WShafer\PSR11MonoLog\Service\HandlerManager;
  */
 class WhatFailureGroupHandlerTest extends TestCase
 {
-    /** @var GroupHandlerFactory */
+    /** @var WhatFailureGroupHandlerFactory */
     protected $factory;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|HandlerManager */
+    /** @var MockObject|HandlerManager */
     protected $mockHandlerManager;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->factory = new WhatFailureGroupHandlerFactory();
 
@@ -58,11 +60,10 @@ class WhatFailureGroupHandlerTest extends TestCase
         $this->assertInstanceOf(WhatFailureGroupHandler::class, $handler);
     }
 
-    /**
-     * @expectedException \WShafer\PSR11MonoLog\Exception\MissingConfigException
-     */
     public function testInvokeMissingHandlers()
     {
+        $this->expectException(MissingConfigException::class);
+
         $options = [
             'handlers'  => [],
             'bubble' => true,
@@ -74,11 +75,10 @@ class WhatFailureGroupHandlerTest extends TestCase
         $this->factory->__invoke($options);
     }
 
-    /**
-     * @expectedException \WShafer\PSR11MonoLog\Exception\MissingConfigException
-     */
     public function testInvokeMissingHandlersKey()
     {
+        $this->expectException(MissingConfigException::class);
+
         $options = [
             'bubble' => true,
         ];

@@ -5,7 +5,9 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 
 use Monolog\Handler\SamplingHandler;
 use Monolog\Handler\HandlerInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use WShafer\PSR11MonoLog\Exception\InvalidConfigException;
 use WShafer\PSR11MonoLog\Handler\SamplingHandlerFactory;
 use WShafer\PSR11MonoLog\Service\HandlerManager;
 
@@ -17,10 +19,10 @@ class SamplingHandlerFactoryTest extends TestCase
     /** @var SamplingHandlerFactory */
     protected $factory;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|HandlerManager */
+    /** @var MockObject|HandlerManager */
     protected $mockHandlerManager;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->factory = new SamplingHandlerFactory();
 
@@ -50,11 +52,10 @@ class SamplingHandlerFactoryTest extends TestCase
         $this->assertInstanceOf(SamplingHandler::class, $handler);
     }
 
-    /**
-     * @expectedException \WShafer\PSR11MonoLog\Exception\InvalidConfigException
-     */
     public function testInvokeErrorsWithNoFactor()
     {
+        $this->expectException(InvalidConfigException::class);
+
         $options = [
             'handler'=> 'my-handler',
         ];

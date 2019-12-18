@@ -7,6 +7,8 @@ use Monolog\Handler\SwiftMailerHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use WShafer\PSR11MonoLog\Exception\MissingConfigException;
+use WShafer\PSR11MonoLog\Exception\MissingServiceException;
 use WShafer\PSR11MonoLog\Handler\SwiftMailerHandlerFactory;
 use WShafer\PSR11MonoLog\Handler\SwiftMessageTrait;
 
@@ -18,7 +20,7 @@ class SwiftMessageTraitTest extends TestCase
     /** @var SwiftMessageTrait */
     protected $trait;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->trait = $this->getMockForTrait(SwiftMessageTrait::class);
     }
@@ -72,11 +74,10 @@ class SwiftMessageTraitTest extends TestCase
         $this->assertEquals($mockMessage, $message);
     }
 
-    /**
-     * @expectedException \WShafer\PSR11MonoLog\Exception\MissingConfigException
-     */
     public function testInvokeWithMissingMailerConfig()
     {
+        $this->expectException(MissingConfigException::class);
+
         $options = [];
 
         $mockContainer = $this->createMock(ContainerInterface::class);
@@ -91,11 +92,10 @@ class SwiftMessageTraitTest extends TestCase
         $this->trait->getSwiftMessage($options);
     }
 
-    /**
-     * @expectedException \WShafer\PSR11MonoLog\Exception\MissingServiceException
-     */
     public function testInvokeWithMissingMailerService()
     {
+        $this->expectException(MissingServiceException::class);
+
         $options = [
             'message' => 'my-message',
         ];

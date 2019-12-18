@@ -6,6 +6,7 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 use Doctrine\CouchDB\CouchDBClient;
 use Monolog\Handler\DoctrineCouchDBHandler;
 use Monolog\Logger;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Handler\DoctrineCouchDBHandlerFactory;
@@ -18,10 +19,10 @@ class DoctrineCouchDBHandlerFactoryTest extends TestCase
     /** @var DoctrineCouchDBHandlerFactory */
     protected $factory;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
+    /** @var MockObject|ContainerInterface */
     protected $mockContainer;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->factory = new DoctrineCouchDBHandlerFactory();
         $this->mockContainer = $this->createMock(ContainerInterface::class);

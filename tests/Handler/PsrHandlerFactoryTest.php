@@ -5,6 +5,7 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 
 use Monolog\Handler\PsrHandler;
 use Monolog\Logger;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
@@ -18,10 +19,10 @@ class PsrHandlerFactoryTest extends TestCase
     /** @var PsrHandlerFactory */
     protected $factory;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
+    /** @var MockObject|ContainerInterface */
     protected $mockContainer;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->factory = new PsrHandlerFactory();
         $this->mockContainer = $this->createMock(ContainerInterface::class);

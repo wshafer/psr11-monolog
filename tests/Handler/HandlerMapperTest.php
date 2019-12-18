@@ -65,7 +65,7 @@ class HandlerMapperTest extends TestCase
     /** @var HandlerMapper */
     protected $mapper;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->mapper = new HandlerMapper();
     }

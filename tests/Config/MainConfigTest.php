@@ -22,7 +22,7 @@ class MainConfigTest extends TestCase
 
     use ConfigTrait;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->config = new MainConfig($this->getConfigArray());
 

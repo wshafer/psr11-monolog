@@ -27,7 +27,7 @@ class ProcessorConfigTest extends TestCase
         ];
     }
 
-    public function setup()
+    protected function setup(): void
     {
         $this->config = new ProcessorConfig($this->getConfigArray());
 

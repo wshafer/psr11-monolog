@@ -26,7 +26,7 @@ class ProcessorMapperTest extends TestCase
     /** @var ProcessorMapper */
     protected $mapper;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->mapper = new ProcessorMapper();
     }

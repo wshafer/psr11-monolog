@@ -16,7 +16,7 @@ class TestHandlerFactoryTest extends TestCase
     /** @var TestHandlerFactory */
     protected $factory;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->factory = new TestHandlerFactory();
     }

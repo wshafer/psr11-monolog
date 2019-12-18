@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Service;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Config\MainConfig;
@@ -18,19 +19,19 @@ class ProcessorManagerTest extends TestCase
     /** @var ProcessorManager */
     protected $service;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
+    /** @var MockObject|ContainerInterface */
     protected $mockContainer;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|MainConfig */
+    /** @var MockObject|MainConfig */
     protected $mockConfig;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|MapperInterface */
+    /** @var MockObject|MapperInterface */
     protected $mockMapper;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ConfigInterface */
+    /** @var MockObject|ConfigInterface */
     protected $mockServiceConfig;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->mockContainer = $this->createMock(ContainerInterface::class);
 

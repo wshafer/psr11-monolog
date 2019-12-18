@@ -6,6 +6,7 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 use Monolog\Handler\BufferHandler;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Handler\BufferHandlerFactory;
 use WShafer\PSR11MonoLog\Service\HandlerManager;
@@ -18,10 +19,10 @@ class BufferHandlerFactoryTest extends TestCase
     /** @var BufferHandlerFactory */
     protected $factory;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|HandlerManager */
+    /** @var MockObject|HandlerManager */
     protected $mockHandlerManager;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->factory = new BufferHandlerFactory();
 

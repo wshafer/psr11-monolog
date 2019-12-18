@@ -27,7 +27,7 @@ class FormatterConfigTest extends TestCase
         ];
     }
 
-    public function setup()
+    protected function setup(): void
     {
         $this->config = new FormatterConfig($this->getConfigArray());
 

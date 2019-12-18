@@ -5,10 +5,13 @@ namespace WShafer\PSR11MonoLog\Test\Service;
 
 use Monolog\Formatter\LineFormatter;
 use Monolog\Processor\GitProcessor;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Config\HandlerConfig;
 use WShafer\PSR11MonoLog\Config\MainConfig;
+use WShafer\PSR11MonoLog\Exception\MissingServiceException;
+use WShafer\PSR11MonoLog\Exception\UnknownServiceException;
 use WShafer\PSR11MonoLog\MapperInterface;
 use WShafer\PSR11MonoLog\Service\FormatterManager;
 use WShafer\PSR11MonoLog\Service\HandlerManager;
@@ -23,25 +26,25 @@ class HandlerManagerTest extends TestCase
     /** @var HandlerManager */
     protected $service;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
+    /** @var MockObject|ContainerInterface */
     protected $mockContainer;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|MainConfig */
+    /** @var MockObject|MainConfig */
     protected $mockConfig;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|MapperInterface */
+    /** @var MockObject|MapperInterface */
     protected $mockMapper;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|HandlerConfig */
+    /** @var MockObject|HandlerConfig */
     protected $mockServiceConfig;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|FormatterManager */
+    /** @var MockObject|FormatterManager */
     protected $mockFormatterManager;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|FormatterManager */
+    /** @var MockObject|FormatterManager */
     protected $mockProcessorManager;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->mockContainer = $this->createMock(ContainerInterface::class);
 
@@ -217,9 +220,10 @@ class HandlerManagerTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    /** @expectedException \WShafer\PSR11MonoLog\Exception\MissingServiceException */
     public function testGetMissingFormatterManager()
     {
+        $this->expectException(MissingServiceException::class);
+
         $expected = $this->getMockBuilder(HandlerStub::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -256,9 +260,10 @@ class HandlerManagerTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    /** @expectedException \WShafer\PSR11MonoLog\Exception\UnknownServiceException */
     public function testGetMissingFormatterService()
     {
+        $this->expectException(UnknownServiceException::class);
+
         $expected = $this->getMockBuilder(HandlerStub::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -357,9 +362,10 @@ class HandlerManagerTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    /** @expectedException \WShafer\PSR11MonoLog\Exception\MissingServiceException */
     public function testGetMissingProcessorManager()
     {
+        $this->expectException(MissingServiceException::class);
+
         $expected = $this->getMockBuilder(HandlerStub::class)
             ->disableOriginalConstructor()
             ->getMock();

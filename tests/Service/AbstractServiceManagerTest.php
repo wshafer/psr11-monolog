@@ -3,11 +3,14 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test\Service;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\ChannelChanger;
 use WShafer\PSR11MonoLog\Config\HandlerConfig;
 use WShafer\PSR11MonoLog\Config\MainConfig;
+use WShafer\PSR11MonoLog\Exception\InvalidConfigException;
+use WShafer\PSR11MonoLog\Exception\UnknownServiceException;
 use WShafer\PSR11MonoLog\MapperInterface;
 use WShafer\PSR11MonoLog\Service\AbstractServiceManager;
 use WShafer\PSR11MonoLog\Test\Stub\FactoryStub;
@@ -22,19 +25,19 @@ class AbstractServiceManagerTest extends TestCase
     /** @var ServiceManagerStub */
     protected $service;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
+    /** @var MockObject|ContainerInterface */
     protected $mockContainer;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|MainConfig */
+    /** @var MockObject|MainConfig */
     protected $mockConfig;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|MapperInterface */
+    /** @var MockObject|MapperInterface */
     protected $mockMapper;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|HandlerConfig */
+    /** @var MockObject|HandlerConfig */
     protected $mockHandlerConfig;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->mockContainer = $this->createMock(ContainerInterface::class);
 
@@ -202,9 +205,10 @@ class AbstractServiceManagerTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    /** @expectedException \WShafer\PSR11MonoLog\Exception\UnknownServiceException */
     public function testGetServiceNotFound()
     {
+        $this->expectException(UnknownServiceException::class);
+
         $this->mockContainer->expects($this->exactly(1))
             ->method('has')
             ->with('my-service')
@@ -225,9 +229,10 @@ class AbstractServiceManagerTest extends TestCase
         $this->service->get('my-service');
     }
 
-    /** @expectedException \WShafer\PSR11MonoLog\Exception\InvalidConfigException */
     public function testGetServiceInvalidFactory()
     {
+        $this->expectException(InvalidConfigException::class);
+
         $this->mockContainer->expects($this->exactly(2))
             ->method('has')
             ->with('my-service')

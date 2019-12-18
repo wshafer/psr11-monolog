@@ -5,6 +5,7 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 
 use Monolog\Handler\RedisHandler;
 use Monolog\Logger;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Predis\Client;
 use Psr\Container\ContainerInterface;
@@ -18,10 +19,10 @@ class RedisHandlerFactoryTest extends TestCase
     /** @var RedisHandlerFactory */
     protected $factory;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
+    /** @var MockObject|ContainerInterface */
     protected $mockContainer;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->factory = new RedisHandlerFactory();
         $this->mockContainer = $this->createMock(ContainerInterface::class);

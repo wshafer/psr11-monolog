@@ -6,6 +6,7 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 use Monolog\Handler\AmqpHandler;
 use Monolog\Logger;
 use PhpAmqpLib\Channel\AMQPChannel;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Handler\AmqpHandlerFactory;
@@ -18,10 +19,10 @@ class AmqpHandlerFactoryTest extends TestCase
     /** @var AmqpHandlerFactory */
     protected $factory;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
+    /** @var MockObject|ContainerInterface */
     protected $mockContainer;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->factory = new AmqpHandlerFactory();
         $this->mockContainer = $this->createMock(ContainerInterface::class);

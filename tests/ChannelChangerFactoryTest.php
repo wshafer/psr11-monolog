@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -23,10 +24,10 @@ class ChannelChangerFactoryTest extends TestCase
     /** @var ChannelChangerFactory */
     protected $factory;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
+    /** @var MockObject|ContainerInterface */
     protected $mockContainer;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->factory = new ChannelChangerFactory();
         $this->mockContainer = $this->createMock(ContainerInterface::class);

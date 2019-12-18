@@ -6,6 +6,7 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\OverflowHandler;
 use Monolog\Logger;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\Exception\UnknownServiceException;
 use WShafer\PSR11MonoLog\Handler\OverflowHandlerFactory;
@@ -19,10 +20,10 @@ class OverflowHandlerFactoryTest extends TestCase
     /** @var OverflowHandlerFactory */
     protected $factory;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|HandlerManager */
+    /** @var MockObject|HandlerManager */
     protected $mockHandlerManager;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->factory = new OverflowHandlerFactory();
 
@@ -63,11 +64,10 @@ class OverflowHandlerFactoryTest extends TestCase
         $this->assertInstanceOf(OverflowHandler::class, $handler);
     }
 
-    /**
-     * @expectedException \WShafer\PSR11MonoLog\Exception\UnknownServiceException
-     */
     public function testInvokeMissingHandlers()
     {
+        $this->expectException(UnknownServiceException::class);
+
         $options = [
             'handler'  => 'my-handler-two',
             'thresholdMap' => [

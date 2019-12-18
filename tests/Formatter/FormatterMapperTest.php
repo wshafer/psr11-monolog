@@ -28,7 +28,7 @@ class FormatterMapperTest extends TestCase
     /** @var FormatterMapper */
     protected $mapper;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->mapper = new FormatterMapper();
     }

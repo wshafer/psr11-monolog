@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace WShafer\PSR11MonoLog\Test\Handler;
 
 use Monolog\Processor\WebProcessor;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use WShafer\PSR11MonoLog\Exception\MissingServiceException;
 use WShafer\PSR11MonoLog\Processor\WebProcessorFactory;
 
 /**
@@ -16,10 +18,10 @@ class WebProcessorFactoryTest extends TestCase
     /** @var WebProcessorFactory */
     protected $factory;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
+    /** @var MockObject|ContainerInterface */
     protected $mockContainer;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->factory = new WebProcessorFactory();
         $this->mockContainer = $this->createMock(ContainerInterface::class);
@@ -108,11 +110,10 @@ class WebProcessorFactoryTest extends TestCase
         $this->assertEmpty($result);
     }
 
-    /**
-     * @expectedException \WShafer\PSR11MonoLog\Exception\MissingServiceException
-     */
     public function testGetAmqpExchangeMissingService()
     {
+        $this->expectException(MissingServiceException::class);
+
         $options = [
             'serverData' => 'my-service',
         ];

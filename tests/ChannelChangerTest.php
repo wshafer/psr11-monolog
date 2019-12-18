@@ -7,10 +7,13 @@ use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use WShafer\PSR11MonoLog\ChannelChanger;
 use WShafer\PSR11MonoLog\Config\ChannelConfig;
 use WShafer\PSR11MonoLog\Config\MainConfig;
+use WShafer\PSR11MonoLog\Exception\MissingConfigException;
+use WShafer\PSR11MonoLog\Exception\UnknownServiceException;
 use WShafer\PSR11MonoLog\Service\HandlerManager;
 use WShafer\PSR11MonoLog\Service\ProcessorManager;
 
@@ -24,25 +27,25 @@ class ChannelChangerTest extends TestCase
     /** @var ChannelChanger */
     protected $service;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|MainConfig */
+    /** @var MockObject|MainConfig */
     protected $mockConfig;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|HandlerManager */
+    /** @var MockObject|HandlerManager */
     protected $mockHandlerManager;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ProcessorManager */
+    /** @var MockObject|ProcessorManager */
     protected $mockProcessorManager;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ChannelConfig */
+    /** @var MockObject|ChannelConfig */
     protected $mockChannelConfig;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|HandlerInterface */
+    /** @var MockObject|HandlerInterface */
     protected $mockHandler;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|PsrLogMessageProcessor */
+    /** @var MockObject|PsrLogMessageProcessor */
     protected $mockProcessor;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->mockConfig = $this->getMockBuilder(MainConfig::class)
             ->disableOriginalConstructor()
@@ -209,11 +212,9 @@ class ChannelChangerTest extends TestCase
         $this->assertInstanceOf(Logger::class, $result);
     }
 
-    /**
-     * @expectedException \WShafer\PSR11MonoLog\Exception\MissingConfigException
-     */
     public function testGetWithMissingChannelConfig()
     {
+        $this->expectException(MissingConfigException::class);
         $this->mockConfig->expects($this->once())
             ->method('hasChannelConfig')
             ->with('myChannel')
@@ -251,11 +252,10 @@ class ChannelChangerTest extends TestCase
         $this->assertInstanceOf(Logger::class, $result);
     }
 
-    /**
-     * @expectedException \WShafer\PSR11MonoLog\Exception\UnknownServiceException
-     */
     public function testGetWithMissingHandler()
     {
+        $this->expectException(UnknownServiceException::class);
+
         $this->mockConfig->expects($this->once())
             ->method('hasChannelConfig')
             ->with('myChannel')
@@ -299,11 +299,10 @@ class ChannelChangerTest extends TestCase
         $this->assertInstanceOf(Logger::class, $result);
     }
 
-    /**
-     * @expectedException \WShafer\PSR11MonoLog\Exception\UnknownServiceException
-     */
     public function testGetWithMissingProcessor()
     {
+        $this->expectException(UnknownServiceException::class);
+
         $this->mockConfig->expects($this->once())
             ->method('hasChannelConfig')
             ->with('myChannel')

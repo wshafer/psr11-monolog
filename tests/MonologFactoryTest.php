@@ -3,23 +3,25 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Test;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\ChannelChanger;
+use WShafer\PSR11MonoLog\Exception\InvalidContainerException;
 use WShafer\PSR11MonoLog\MonologFactory;
 
 class MonologFactoryTest extends TestCase
 {
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ChannelChanger */
+    /** @var MockObject|ChannelChanger */
     protected $mockChannelChanger;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
+    /** @var MockObject|ContainerInterface */
     protected $mockContainer;
 
     /** @var MonologFactory */
     protected $factory;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->mockChannelChanger = $this->getMockBuilder(ChannelChanger::class)
             ->disableOriginalConstructor()
@@ -65,11 +67,10 @@ class MonologFactoryTest extends TestCase
         $this->assertTrue($result);
     }
 
-    /**
-     * @expectedException \WShafer\PSR11MonoLog\Exception\InvalidContainerException
-     */
     public function testCallStaticNoContainer()
     {
+        $this->expectException(InvalidContainerException::class);
+
         $this->mockChannelChanger->expects($this->never())
             ->method('get');
 

@@ -6,6 +6,7 @@ namespace WShafer\PSR11MonoLog\Test\Handler;
 use MongoDB\Client;
 use Monolog\Handler\MongoDBHandler;
 use Monolog\Logger;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use WShafer\PSR11MonoLog\Handler\MongoDBHandlerFactory;
@@ -18,10 +19,10 @@ class MongoDBHandlerFactoryTest extends TestCase
     /** @var MongoDBHandlerFactory */
     protected $factory;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface */
+    /** @var MockObject|ContainerInterface */
     protected $mockContainer;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->factory = new MongoDBHandlerFactory();
         $this->mockContainer = $this->createMock(ContainerInterface::class);

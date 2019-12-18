@@ -36,7 +36,7 @@ class HandlerConfigTest extends TestCase
         ];
     }
 
-    public function setup()
+    protected function setup(): void
     {
         $this->config = new HandlerConfig($this->getConfigArray());
 
