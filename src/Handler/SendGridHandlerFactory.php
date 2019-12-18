@@ -10,6 +10,9 @@ use WShafer\PSR11MonoLog\FactoryInterface;
 
 class SendGridHandlerFactory implements FactoryInterface
 {
+    /**
+     * * @SuppressWarnings(PHPMD.ShortVariable)
+     */
     public function __invoke(array $options)
     {
         $apiUser    = (string)  ($options['apiUser'] ?? '');

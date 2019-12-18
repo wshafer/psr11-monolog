@@ -8,15 +8,12 @@ use WShafer\PSR11MonoLog\MapperInterface;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
  */
 class HandlerMapper implements MapperInterface
 {
-    /**
-     * @param string $type
-     * @return null|string
-     *
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-     */
     public function map(string $type)
     {
         $type = strtolower($type);
