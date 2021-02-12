@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/wshafer/psr11-monolog.svg?branch=master)](https://travis-ci.org/wshafer/psr11-monolog)
 # PSR-11 Monolog
 
+This repository has moved and is no longer maintained.  Please visit the new repo here: https://gitlab.com/blazon/psr11-monolog
+
 [Monolog](https://github.com/Seldaek/monolog) Factories for PSR-11
 
 #### Table of Contents
