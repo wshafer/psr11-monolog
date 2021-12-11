@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WShafer\PSR11MonoLog\Handler;
 
+use Antidot\Async\Logger\EchoHandler;
 use WShafer\PSR11MonoLog\MapperInterface;
 
 /**
@@ -19,8 +20,12 @@ class HandlerMapper implements MapperInterface
         $type = strtolower($type);
 
         switch ($type) {
+            case 'echo':
+                return EchoHandlerFactory::class;
             case 'stream':
                 return StreamHandlerFactory::class;
+            case 'react_filesystem':
+                return ReactFilesystemHandlerFactory::class;
             case 'rotating':
                 return RotatingFileHandlerFactory::class;
             case 'syslog':
